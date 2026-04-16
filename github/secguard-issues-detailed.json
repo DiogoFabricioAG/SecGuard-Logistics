@@ -1,0 +1,294 @@
+{
+  "total": 34,
+  "issues": [
+    {
+      "title": "2.1 Diagrama casos de uso de negocio",
+      "body": "**Objetivo**: Modelar procesos alto nivel RANSA\n\n**Actores**:\n- Admin RANSA\n- Camiones/Operadores\n- Técnicos de campo\n\n**Checklist**:\n- [ ] Identificar casos negocio\n- [ ] Dibujar en Draw.io\n- [ ] Export PNG/PDF\n- [ ] Validar con equipo\n\n**Deliverable**: `diagrams/2.1-casos-negocio.drawio`\n**Ref**: Perfil PDF pág 5-8",
+      "labels": [
+        "uml",
+        "priority-high",
+        "sprint1"
+      ]
+    },
+    {
+      "title": "2.2.1 BPMN principal - Acceso vehicular",
+      "body": "**Flujo end-to-end**:\n1. Captura cámara IP\n2. ALPR cloud (OpenALPR)\n3. Validar PostgreSQL\n4. Abrir barrera + Log\n\n**Swimlanes**: Sistema, BD, Barrera física\n\n**Checklist**:\n- [ ] Modelar BPMN 2.0\n- [ ] Incluir eventos/puertas\n- [ ] Export PNG\n\n**Dependencia**: #1",
+      "labels": [
+        "bpmn",
+        "alpr",
+        "priority-high",
+        "sprint1"
+      ]
+    },
+    {
+      "title": "2.2.2 BPMN subproceso - Acceso normal",
+      "body": "**Subproceso detallado**: Flujo acceso autorizado\n\n**Pasos**:\n1. Validar en BD\n2. Log en PostgreSQL\n3. Activar barrera\n4. Registrar timestamp\n\n**Checklist**:\n- [ ] Detallar cada actividad\n- [ ] Incluir decisiones\n\n**Dependencia**: #2",
+      "labels": [
+        "bpmn",
+        "priority-medium",
+        "sprint1"
+      ]
+    },
+    {
+      "title": "2.2.3 BPMN - Acceso con excepciones/cambios",
+      "body": "**Subproceso**: Placa no encontrada o cambios\n\n**Escenarios**:\n- Placa no en BD → Alerta manual\n- Mantenimiento barrera → Bypass\n- Cambio de decoración/datos\n\n**Checklist**:\n- [ ] Flujos alternativos\n- [ ] Notificaciones\n\n**Dependencia**: #2",
+      "labels": [
+        "bpmn",
+        "priority-medium"
+      ]
+    },
+    {
+      "title": "2.2.4 BPMN - Acceso especial/producción",
+      "body": "**Subproceso**: Accesos VIP o especiales\n\n**Casos**:\n- Proveedores autorizados\n- Vehículos de mantenimiento\n- Entregas urgentes\n\n**Checklist**:\n- [ ] Validaciones diferentes\n- [ ] Notificaciones gerente\n\n**Dependencia**: #2",
+      "labels": [
+        "bpmn",
+        "priority-medium"
+      ]
+    },
+    {
+      "title": "2.3.1 Requerimientos Funcionales",
+      "body": "**RF - Funcionalidades del sistema**:\n\n| ID | Requerimiento | Prioridad |\n|----|---------------|-----------|\n| RF01 | Capturar/validar placa <2s | Alta |\n| RF02 | Dashboard React monitoreo real-time | Alta |\n| RF03 | CRUD flota autorizada | Alta |\n| RF04 | Auditoría completa accesos | Alta |\n| RF05 | Alertas anomalías | Media |\n| RF06 | Export reportes PDF/CSV | Media |\n| RF07 | API integraciones terceros | Baja |\n\n**Checklist**:\n- [ ] Validar con cliente (RANSA)\n- [ ] Tabla completa\n- [ ] Dependencias entre reqs\n\n**Dependencia**: #4 #5 #6",
+      "labels": [
+        "reqs",
+        "priority-high",
+        "sprint1"
+      ]
+    },
+    {
+      "title": "2.3.2 Requerimientos No Funcionales",
+      "body": "**NFR - Atributos de calidad**:\n\n| ID | Atributo | Métrica | Prioridad |\n|----|----------|---------|-----------|\n| NFR01 | Disponibilidad | 99.9% uptime | Alta |\n| NFR02 | Rendimiento | <2s respuesta ALPR | Alta |\n| NFR03 | Escalabilidad | >100 veh/hora | Alta |\n| NFR04 | Seguridad | GDPR-compliant | Alta |\n| NFR05 | Mantenibilidad | Modular 4 paquetes | Media |\n| NFR06 | Compatibilidad | Múltiples cámaras IP | Media |\n\n**Checklist**:\n- [ ] Métricas medibles\n- [ ] AWS compliance\n- [ ] Testing performance\n\n**Dependencia**: #7",
+      "labels": [
+        "reqs",
+        "priority-high",
+        "aws-infra",
+        "sprint1"
+      ]
+    },
+    {
+      "title": "2.4 Reglas de Negocio",
+      "body": "**Reglas que rigen el sistema**:\n\n| ID | Regla | Condición | Acción |\n|----|-------|-----------|--------|\n| RN01 | Validación placa | No en BD | Alerta + Bloqueo |\n| RN02 | Tiempo acceso | Max 5 min | Cierre automático |\n| RN03 | Auditoría | Todos accesos | Log 1 año (GDPR) |\n| RN04 | VIP bypass | Si autorizado | Abrir directo |\n| RN05 | Mantenimiento | Si modo On | Desactivar ALPR |\n\n**Checklist**:\n- [ ] 5+ reglas mínimo\n- [ ] Validar consistencia\n- [ ] Link a casos uso\n\n**Dependencia**: #7 #8",
+      "labels": [
+        "reqs",
+        "seguridad",
+        "priority-high"
+      ]
+    },
+    {
+      "title": "2.5 Diagrama casos de uso del sistema",
+      "body": "**Actores principales**:\n- Usuario Admin (RANSA)\n- Sistema ALPR\n- Barrera física\n- BD PostgreSQL\n\n**Casos agregados**: 18 (ver 2.6.x)\n\n**Checklist**:\n- [ ] Diagrama UML use cases\n- [ ] Relaciones extend/include\n- [ ] Export PNG/PDF\n\n**Dependencia**: #1 #4 #5 #6 #8 #9",
+      "labels": [
+        "uml",
+        "casos-uso",
+        "priority-high",
+        "sprint1"
+      ]
+    },
+    {
+      "title": "2.6.1 CU: Acceder al sistema (Login)",
+      "body": "**Pre-condición**: Usuario no autenticado\n**Actor**: Admin RANSA\n**Flujo**:\n1. Ingresar credenciales\n2. AWS Cognito valida\n3. Dashboard visible\n\n**Post-condición**: Sesión activa\n\n**Deliverable**: Descripción texto + diagrama secuencia",
+      "labels": [
+        "casos-uso",
+        "uml",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.6.2 CU: Visualizar vehículos autorizados",
+      "body": "**Pre-condición**: Autenticado\n**Actor**: Admin RANSA\n**Flujo**: \n1. Click en Flota\n2. Listar desde PostgreSQL\n3. Filtros: placa, estado, tipo\n\n**Post-condición**: Tabla visible con: Placa, Tipo veh, Fecha reg, Estado, Último acceso\n\n**UI**: React DataTable con paginación",
+      "labels": [
+        "casos-uso",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.6.3 CU: Capturar placa ALPR",
+      "body": "**Actor**: Cámara IP + OpenALPR Cloud\n**Pre-condición**: Vehículo en rango (<10m)\n**Flujo**:\n1. Cámara captura imagen \n2. OpenALPR API procesa (OCR)\n3. Retorna: placa + confianza (%)\n4. Guardar en caché local\n\n**Post-condición**: Placa identificada en tiempo real\n**NFR**: <2 segundos\n**Hardware**: Cámara IP PoE\n\n**Dependencia**: OpenALPR Cloud API",
+      "labels": [
+        "casos-uso",
+        "alpr",
+        "priority-high"
+      ]
+    },
+    {
+      "title": "2.6.4 CU: Validar placa vs BD PostgreSQL",
+      "body": "**Actor**: AccessController\n**Pre-condición**: Placa capturada por ALPR\n**Flujo**:\n1. Query a PostgreSQL: SELECT FROM vehiculos WHERE placa = ?\n2. IF encontrada:\n   - Retorna: tipo, estado, fecha_registro\n   - Status = AUTORIZADO\n3. ELSE:\n   - Crear registro pendiente\n   - Status = NO_ENCONTRADA\n   - Trigger alerta\n\n**Tiempo**: <500ms\n**Tabla**: vehículos (placa PK, tipo, estado, fecha_registro)\n**Índices**: placa (B-tree para búsquedas rápidas)\n\n**Dependencia**: #12",
+      "labels": [
+        "casos-uso",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.6.5 CU: Abrir/Cerrar barrera automática",
+      "body": "**Actor**: Sistema + Barrera física\n**Pre-condición**: Validación placa OK\n**Flujo**:\n1. Validación OK → Enviar señal GPIO HIGH\n2. Barrera abre (3s motor)\n3. Sensor cierre detecta: vehículo pasó\n4. Registrar timestamp salida\n5. GPIO LOW → Barrera cierra\n\n**Post-condición**: Vehículo pasó + Log generado\n**Hardware**: Barrera motorizada + sensor infrarrojo + relé 24V\n**Fallback**: Manual override botón (seguridad)\n**Timeout**: 5min automático cierre si falla\n\n**Dependencia**: #13",
+      "labels": [
+        "casos-uso",
+        "priority-high"
+      ]
+    },
+    {
+      "title": "2.6.6 CU: Registrar datos entrada/salida",
+      "body": "**Actor**: Sistema automático\n**Pre-condición**: Barrera se abrió\n**Flujo**:\n1. Captura timestamp entrada\n2. ALPR captura imagen + placa\n3. Datos estructurados:\n   - placa: String\n   - timestamp_entrada: DateTime\n   - tipo: ENTRADA | SALIDA\n   - usuario: Admin username\n   - ip_camara: 192.168.x.x\n4. INSERT en PostgreSQL tabla accesos\n5. Foto uploaded a S3 (AWS)\n6. Generate log audit\n\n**Tabla accesos**:\n- id (UUID PK)\n- placa (FK vehiculos)\n- timestamp (TIMESTAMP)\n- tipo (VARCHAR)\n- usuario (VARCHAR)\n- foto_url (VARCHAR S3)\n- estado (VARCHAR)\n\n**Post-condición**: Registro persistente + respaldo S3",
+      "labels": [
+        "casos-uso",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.6.7 CU: Confirmar y cancelar acceso",
+      "body": "**Actor**: Admin RANSA (intervención manual)\n**Pre-condición**: Sistema detectó anomalía (placa sospechosa)\n**Flujo Confirmación**:\n1. Alert aparece en Dashboard\n2. Admin verifica:\n   - Placa capturada\n   - Foto de vehículo\n   - Historial previo\n3. Click CONFIRMAR → Abre barrera\n4. Log: 'Manual override by admin'\n\n**Flujo Cancelación**:\n1. Click CANCELAR\n2. Bloquear vehículo temporalmente\n3. Notificación: 'Acceso denegado'\n4. Crear TICKET para investigación\n\n**UI**: Modal con preview imagen + botones\n\n**Dependencia**: #15",
+      "labels": [
+        "casos-uso",
+        "docs"
+      ]
+    },
+    {
+      "title": "2.6.8 CU: Emitir comprobante/log acceso",
+      "body": "**Actor**: Sistema automático\n**Pre-condición**: Acceso completado\n**Flujo**:\n1. Generar registro digital (JSON)\n2. Crear PDF comprobante:\n   - Header: SECGUARD LOGISTICS\n   - Placa: XXX-XXX\n   - Hora: 2026-04-16 12:45:30\n   - Tipo: ENTRADA\n   - Firma digital (hash)\n   - QR (contiene ID acceso)\n3. Enviar email a operador\n4. Guardar en PostgreSQL + S3\n\n**Datos PDF**:\n- Placa, Timestamp, Garita, Foto thumbnail\n- Durabilidad: 1 año (GDPR compliance)\n\n**Almacenamiento**: \n- PostgreSQL: accesos table\n- S3: s3://secguard/comprobantes/YYYYMM/\n\n**Dependencia**: #15",
+      "labels": [
+        "casos-uso",
+        "docs"
+      ]
+    },
+    {
+      "title": "2.6.9 CU: Actualizar stock/flota en almacén",
+      "body": "**Actor**: Sistema (webhook trigger)\n**Pre-condición**: Acceso ENTRADA registrado\n**Flujo**:\n1. Acceso entrada → stock -1\n2. Query PostgreSQL: stock = stock - 1\n3. Publicar evento SNS AWS\n4. Webhook → ERP RANSA API\n5. ERP recibe: {placa, timestamp, accion: ENTRADA}\n6. ERP actualiza inventario automático\n\n**Acceso salida**: stock +1\n**Sincronización**: Real-time (< 1s)\n\n**Integración**: \n- API REST POST /webhook/acceso\n- Headers: Authorization Bearer token\n- Body: {placa, tipo, timestamp}\n\n**Error handling**: Retry 3x con backoff exponencial\n\n**Dependencia**: #15",
+      "labels": [
+        "casos-uso",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.6.10 CU: Calcular métricas de acceso",
+      "body": "**Actor**: Sistema + Dashboard Analytics\n**Pre-condición**: Al menos 10 accesos registrados\n**Flujo**:\n1. Admin abre Insights\n2. Dashboard ejecuta queries agregadas:\n   - SELECT COUNT(*) FROM accesos WHERE DATE(timestamp) = TODAY\n   - SELECT AVG(DATEDIFF(salida, entrada)) AS tiempo_promedio\n   - SELECT COUNT(*) WHERE estado = 'RECHAZADO'\n3. Renderizar gráficos React:\n   - Line chart: Accesos/hora\n   - Bar chart: Top placas\n   - Pie chart: Autorizado vs rechazado\n4. Export a CSV\n\n**Período**: Hoy, Última semana, Mes, Custom range\n**Data source**: PostgreSQL con índices en timestamp\n**Caching**: Redis 5min (performance)\n\n**Métricas clave**:\n- Total accesos\n- Tiempo promedio paso\n- Tasa rechazo\n- Anomalías detectadas\n\n**Dependencia**: #15 #19",
+      "labels": [
+        "casos-uso",
+        "docs"
+      ]
+    },
+    {
+      "title": "2.6.11 CU: Modificar registro de acceso",
+      "body": "**Actor**: Admin RANSA (Auditoría)\n**Pre-condición**: Admin autenticado\n**Flujo**:\n1. Buscar acceso histórico (filtro placa/fecha)\n2. Seleccionar registro\n3. Editar campos permitidos:\n   - Notas: texto libre (max 500 char)\n   - Clasificación: NORMAL | ANOMALIA | INVESTIGAR\n   - Tags: custom labels\n4. Click GUARDAR\n5. Sistema registra cambio:\n   - Quién modificó\n   - Cuándo\n   - Antes/después valores\n6. Log entry en audit_trail\n\n**Auditoría**:\n- Tabla: accesos_modificaciones\n- Campos: id_acceso, usuario, timestamp, cambios_json\n\n**Permisos**: Solo Admin role\n\n**Dependencia**: #15",
+      "labels": [
+        "casos-uso",
+        "seguridad"
+      ]
+    },
+    {
+      "title": "2.6.12 CU: Visualizar estado de acceso",
+      "body": "**Actor**: Admin o Operador\n**Pre-condición**: Autenticado\n**Flujo**:\n1. Ingresar/escanear placa\n2. Sistema busca:\n   - Último acceso (timestamp)\n   - Historial últimos 30 días (tabla)\n   - Estado actual: ACTIVA | BLOQUEADA | VENCIDA\n   - Próximo vencimiento (si tiene)\n3. Mostrar:\n   - Timeline gráfica\n   - Estado badge (color)\n   - Botones: BLOQUEAR, RENOVAR, DETALLES\n\n**Timeline vista**:\n- Axis X: Tiempo (30 días)\n- Axis Y: Tipo (entrada/salida)\n- Hover: muestra timestamp, foto thumbnail\n\n**UI**: React component Timeline + DataTable histórico\n\n**Dependencia**: #15 #11",
+      "labels": [
+        "casos-uso",
+        "docs"
+      ]
+    },
+    {
+      "title": "2.6.13 CU: Realizar acceso estándar (Happy Path)",
+      "body": "**Actor**: Camión/Operador (automático)\n**Pre-condición**: Vehículo en rango cámara\n**Flujo normal (COMPLETO)**:\n1. Cámara captura imagen\n2. ALPR reconoce placa (confianza >80%)\n3. Valida BD → Placa encontrada ✓\n4. Estado = AUTORIZADO\n5. Envía GPIO a barrera\n6. Barrera abre (motor 3s)\n7. Log en PostgreSQL\n8. Foto uploaded S3\n9. Email generado\n10. Barrera cierra automático\n\n**Tiempo total**: <2 segundos\n**SLA**: 99.9% uptime\n**Métricas**:\n- Latencia ALPR: <1s\n- Latencia BD: <0.5s\n- Latencia barrera: <0.5s\n\n**Happy path**: Placa autorizada + sin anomalías\n\n**Dependencia**: #12 #13 #14 #15 #16 #18",
+      "labels": [
+        "casos-uso",
+        "priority-high",
+        "alpr"
+      ]
+    },
+    {
+      "title": "2.6.14 CU: Realizar acceso especial/VIP",
+      "body": "**Actor**: Proveedor autorizado o Directivo\n**Pre-condición**: Vehículo marcado como VIP en BD\n**Flujo diferenciado**:\n1. ALPR captura placa\n2. Valida BD → Tipo = VIP\n3. Bypass confirmación manual\n4. Abre barrera INMEDIATO (sin delay)\n5. Notificación gerente: 'VIP ENTRADA: Placa XXXX a las 12:45'\n6. Email prioritario\n\n**Casos VIP**:\n- Proveedores clave RANSA\n- Directivos empresa\n- Vehículos ejecutivos\n- Entregas urgentes (tiempo limitado)\n\n**Diferencia con normal**:\n- Sin esperar confirmación admin\n- Notif gerencial inmediata\n- Log especial en audit\n\n**Dependencia**: #13 #18",
+      "labels": [
+        "casos-uso",
+        "priority-medium"
+      ]
+    },
+    {
+      "title": "2.6.15 CU: Visualizar opciones excepciones",
+      "body": "**Actor**: Admin RANSA\n**Pre-condición**: Sistema detectó anomalía\n**Flujo**:\n1. Dashboard muestra ALERTA (badge rojo)\n   - Placa rechazada\n   - Múltiples intentos fallidos\n   - Placa bloqueada encontrada\n2. Admin click derecha → Menú contextual:\n   - OVERRIDE MANUAL (abre barrera)\n   - REPORTAR ANOMALIA (crea ticket)\n   - CONTACTAR PROPIETARIO (email template)\n   - AGREGAR LISTA BLANCA (temporal)\n   - BLOQUEAR PERMANENTE\n   - VER DETALLES (expandir)\n\n**UI**: Contextual menu + modal detalles\n**Opciones**: Dinámicas según tipo anomalía\n\n**Dependencia**: #15 #23",
+      "labels": [
+        "casos-uso",
+        "docs"
+      ]
+    },
+    {
+      "title": "2.6.16 CU: Adjuntar documentos/fotos",
+      "body": "**Actor**: Admin RANSA\n**Pre-condición**: Acceso en estado ANOMALIA\n**Flujo**:\n1. Seleccionar acceso en Dashboard\n2. Click ADJUNTAR ARCHIVO\n3. Sube documento:\n   - Foto alta res: JPG/PNG (max 20MB)\n   - PDF autorización: (max 10MB)\n   - Video evento: MP4 (max 50MB)\n4. Sistema valida tipo MIME\n5. Upload a S3: s3://secguard/documentos/{id_acceso}/\n6. Genera thumbnail\n7. Link guardado en PostgreSQL\n\n**Tipos permitidos**:\n- Imagen: .jpg, .png, .gif\n- PDF: .pdf\n- Video: .mp4, .mov\n\n**Almacenamiento**: AWS S3 con versionado\n**Retención**: 1 año (GDPR)\n\n**Dependencia**: #15 #23",
+      "labels": [
+        "casos-uso",
+        "docs"
+      ]
+    },
+    {
+      "title": "2.6.17 CU: Generar alertas anomalías",
+      "body": "**Actor**: Sistema automático\n**Pre-condición**: Evento trigger detectado\n**Triggers activos**:\n1. Placa NO encontrada en BD\n2. Múltiples entradas <5 minutos (mismo vehículo)\n3. Placa en lista negra/bloqueada\n4. ALPR confianza <70%\n5. Barrera timeout (no cerró en 5min)\n6. Acceso en horario NO permitido\n\n**Acciones por trigger**:\n- Alert dashboard ROJO (blink)\n- Notificación email a admin\n- SMS urgente si crítico\n- Log CRITICAL en PostgreSQL\n- Crear TICKET automático\n\n**Frecuencia**: Real-time (< 100ms)\n**Escalation**: Si 3+ alertas en 1hora → Call gerente\n\n**Tabla**: alertas (id, tipo, timestamp, resuelto)\n\n**Dependencia**: #13 #17 #22",
+      "labels": [
+        "casos-uso",
+        "priority-high",
+        "seguridad"
+      ]
+    },
+    {
+      "title": "2.6.18 CU: Reportes exportación PDF/CSV",
+      "body": "**Actor**: Admin RANSA\n**Pre-condición**: Al menos 1 acceso en período\n**Flujo**:\n1. Dashboard → Click EXPORTAR\n2. Selecciona rango fechas:\n   - From: 2026-04-01\n   - To: 2026-04-30\n3. Filtros opcionales:\n   - Placa específica\n   - Tipo (ENTRADA/SALIDA)\n   - Estado (AUTORIZADO/RECHAZADO)\n4. Click GENERAR\n5. Sistema construye reporte:\n   - Tabla: Placa | Hora | Tipo | Estado | Usuario\n   - Gráficos: Total accesos, anomalías, trending\n   - Resumen: KPIs principales\n6. Download: `reporte_202604.pdf` o `.csv`\n\n**Formato**:\n- PDF: A4 landscape, logo SECGUARD, timestamp\n- CSV: ISO 8601 timestamps, UTF-8 encoding\n- Excel: Múltiples hojas (resumen, detalles, gráficos)\n\n**Datos**: Max 90 días histórico\n**Almacenamiento**: Temporal 24h en S3\n\n**Dependencia**: #15 #19",
+      "labels": [
+        "casos-uso",
+        "docs"
+      ]
+    },
+    {
+      "title": "2.7.1 Clases Entidad (UML)",
+      "body": "**Clases de persistencia - Data Model**:\n\n```\nclass Vehiculo {\n  - placa: String (PK, unique)\n  - tipo: String (NORMAL, VIP, MANTENIMIENTO)\n  - estado: String (ACTIVA, BLOQUEADA, VENCIDA)\n  - fecha_registro: DateTime\n  - fecha_vencimiento: DateTime (nullable)\n  - proprietario: String\n  - email_contacto: String\n  + getHistorial(): List<Acceso>\n  + bloquear(): void\n  + activar(): void\n}\n\nclass Acceso {\n  - id: UUID (PK)\n  - placa: String (FK → Vehiculo)\n  - timestamp_entrada: DateTime\n  - timestamp_salida: DateTime (nullable)\n  - tipo: String (ENTRADA, SALIDA)\n  - estado: String (AUTORIZADO, RECHAZADO, PENDIENTE)\n  - usuario_admin: String (FK → Usuario)\n  - foto_url: String (S3)\n  - confianza_alpr: Float (0-100)\n  - notas: String (500 max)\n  + getDuracion(): TimeSpan\n  + marcarResuelto(): void\n}\n\nclass Usuario {\n  - id: UUID (PK)\n  - email: String (unique)\n  - nombre: String\n  - rol: String (ADMIN, OPERATOR, VIEWER)\n  - activo: Boolean\n  - fecha_creacion: DateTime\n  + autenticar(pwd): Boolean\n  + cambiarRol(rol): void\n}\n\nclass Barrera {\n  - id: UUID (PK)\n  - garita: String (ENTRADA, SALIDA, LATERAL)\n  - estado: Boolean (ABIERTA, CERRADA)\n  - fecha_ultim_mantenimiento: DateTime\n  - sensores_activos: Integer\n  + abrir(): void\n  + cerrar(): void\n  + getEstado(): String\n}\n\nclass Alerta {\n  - id: UUID (PK)\n  - tipo: String (PLACA_NO_ENCONTRADA, ANOMALIA, etc)\n  - timestamp: DateTime\n  - resuelto: Boolean\n  - id_acceso: UUID (FK)\n  + resolver(notas): void\n}\n```\n\n**Relaciones**:\n- Vehiculo 1 ← N Acceso\n- Usuario 1 ← N Acceso\n- Barrera 1 ← N Acceso\n- Acceso 1 ← N Alerta\n\n**Diagrama**: PlantUML class diagram\n**DB**: PostgreSQL con constraint PK/FK",
+      "labels": [
+        "uml",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.7.2 Clases Control (UML)",
+      "body": "**Controllers - Business Logic Layer**:\n\n```\nclass ALPRController {\n  - openAlprClient: OpenALPRService\n  - logger: Logger\n  + capturarPlaca(imagen: Buffer): PlacaDTO\n  + procesarOCR(imagen: Buffer): String\n  + validarConfianza(placa: String, conf: Float): Boolean\n  - comprimirImagen(img): Buffer\n}\n\nclass AccessController {\n  - vehiculoService: VehiculoService\n  - barrService: BarreraService\n  - alprCtrl: ALPRController\n  + validarPlaca(placa: String): Boolean\n  + procesarAcceso(acceso: Acceso): void\n  + abrirBarrera(barrId: UUID): void\n  + cerrarBarrera(barrId: UUID): void\n  + registrarAcceso(acceso: Acceso): void\n  - generarLog(evento: String): void\n}\n\nclass AuthController {\n  - usuarioService: UsuarioService\n  - jwtService: JWTService\n  + login(email: String, pwd: String): TokenDTO\n  + logout(token: String): void\n  + validateToken(token: String): Boolean\n  + refreshToken(token: String): TokenDTO\n  + crearUsuario(usr: Usuario): void\n}\n\nclass AnalyticsController {\n  - accessoService: AccesoService\n  + getMetricas(fechaInicio, fechaFin): MetricasDTO\n  + getAlertas(filtro): List<Alerta>\n  + generarReporte(opciones): PDF | CSV\n  + getTop10Placas(): List<PlacaStats>\n}\n\nclass BarreraController {\n  - barrService: BarreraService\n  - alertaService: AlertaService\n  + abrirBarrera(id): Status\n  + cerrarBarrera(id): Status\n  + getEstado(id): BarreraDTO\n  + detectarAnomalia(evento): void\n}\n```\n\n**Métodos**: REST endpoints (POST/GET/PUT)\n**Patrones**: Dependency Injection, Middleware\n**Errores**: Exception handling con logging",
+      "labels": [
+        "uml",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.7.3 Clases Service/Interface (UML)",
+      "body": "**Services & Interfaces - Data Access & External**:\n\n```\ninterface IVehiculoService {\n  + obtenerPorPlaca(placa: String): Vehiculo\n  + crear(vehiculo: Vehiculo): UUID\n  + actualizar(id: UUID, data): void\n  + bloquear(placa: String): void\n  + listarActivos(): List<Vehiculo>\n}\n\nclass VehiculoService implements IVehiculoService {\n  - db: DatabaseService\n  + obtenerPorPlaca(placa): Vehiculo\n  + crear(v): UUID\n  + actualizar(id, data): void\n  - validarPlaca(p): Boolean\n}\n\nclass AWSService {\n  - s3Client: S3Client\n  - snsClient: SNSClient\n  - cognitoClient: CognitoClient\n  + uploadToS3(file, path): String (URL)\n  + publishSNS(topic, mensaje): void\n  + validateCognito(token): Boolean\n  + downloadFromS3(url): Buffer\n}\n\nclass DatabaseService {\n  - pool: PostgreSQL.Pool\n  - cache: Redis\n  + query(sql, params): List\n  + execute(sql, params): int\n  + transaction(callback): void\n  + cacheGet(key): any\n  + cacheSet(key, value, ttl): void\n}\n\nclass NotificationService {\n  - mailClient: SendGrid\n  - smsClient: Twilio\n  + sendEmail(to, template, data): void\n  + sendSMS(phone, msg): void\n  + sendPushNotif(userId, msg): void\n  - getTemplate(nombre): String\n}\n\ninterface IALPRProvider {\n  + recognize(imagen): PlacaDTO\n  + getBatchPrice(): Float\n}\n\nclass OpenALPRService implements IALPRProvider {\n  - apiKey: String\n  - apiUrl: String\n  + recognize(img): PlacaDTO\n  + getBatchPrice(): Float\n  - comprimirImagenAntesEnvio(img): Buffer\n}\n\nclass AlertaService {\n  - dbService: DatabaseService\n  - notifService: NotificationService\n  + crearAlerta(tipo, acceso): void\n  + resolverAlerta(id, notas): void\n  + escalateIfNeeded(alerta): void\n}\n```\n\n**Patrones**: \n- Dependency Injection\n- Repository Pattern\n- Service Locator\n- Caching strategy\n\n**Dependencia**: PostgreSQL, AWS SDK, Redis, SendGrid, Twilio",
+      "labels": [
+        "uml",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.8 Análisis de paquetes",
+      "body": "**Estructura modular del proyecto**:\n\n```\nsecguard-logistics/\n│\n├── core-alpr/                    # Motor de reconocimiento\n│   ├── controllers/\n│   │   └── ALPRController.ts\n│   ├── services/\n│   │   └── OpenALPRService.ts\n│   └── models/\n│       └── PlacaDTO.ts\n│\n├── ui-dashboard/                 # Frontend React\n│   ├── components/\n│   │   ├── AccessMonitor.tsx\n│   │   ├── Timeline.tsx\n│   │   └── AlertPanel.tsx\n│   ├── pages/\n│   │   ├── Dashboard.tsx\n│   │   ├── Flota.tsx\n│   │   └── Reportes.tsx\n│   └── services/\n│       └── APIClient.ts\n│\n├── infra-aws/                    # Cloud & Base datos\n│   ├── postgres/\n│   │   ├── schema.sql\n│   │   └── migrations/\n│   ├── s3/\n│   │   └── bucket-config.ts\n│   └── cognito/\n│       └── auth-setup.ts\n│\n├── api-gateway/                  # REST API\n│   ├── routes/\n│   │   ├── accesos.ts\n│   │   ├── vehiculos.ts\n│   │   └── reportes.ts\n│   ├── middleware/\n│   │   ├── auth.ts\n│   │   └── errorHandler.ts\n│   └── index.ts\n│\n├── config/                       # Configuración\n│   ├── env.ts\n│   ├── database.ts\n│   └── aws.ts\n│\n└── tests/                        # Testing\n    ├── unit/\n    ├── integration/\n    └── e2e/\n```\n\n**Dependencias entre paquetes**:\n```\ncore-alpr → api-gateway\nui-dashboard → api-gateway\napi-gateway → infra-aws\ninfra-aws → config\n```\n\n**Diagrama**: PlantUML package diagram\n**Modularidad**: Cada paquete independiente, composable\n\n**Dependencia**: #28 #29 #30",
+      "labels": [
+        "docs",
+        "aws-infra"
+      ]
+    },
+    {
+      "title": "2.9 Diagrama Gantt - Cronograma integrado",
+      "body": "**Planificación temporal del proyecto**:\n\n| Fase | Actividades | Duración | Hitos | Recursos |\n|------|-------------|----------|-------|----------|\n| **Cap 2 - Análisis** | Reqs, Diagramas, Casos uso, UML | 2 sem | 33 issues | Diogo, equipo |\n| **Cap 3 - Diseño** | BD schema, API contracts, UI mockups | 1 sem | DB design ✓ | Nicole, Steven |\n| **Cap 4 - Desarrollo** | Backend CRUD, ALPR integración, Frontend | 3 sem | PoC ALPR ✓ | Steven, Nelson |\n| **Cap 5 - Testing** | Unit tests, Integration, UAT | 1 sem | 80% cobertura | Equipo |\n| **Cap 6 - Deploy** | Setup AWS, Configuración RANSA, Go-live | 3 días | Pilot RANSA | Diogo, José |\n\n**Timeline visual**:\n```\nSemana 1-2: ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ Cap 2\nSemana 3:   ░░░░████░░░░░░░░░░░░░░░░░░░░░░░░░░░░ Cap 3\nSemana 4-6: ░░░░░░░░████████████░░░░░░░░░░░░░░░░░░ Cap 4\nSemana 7:   ░░░░░░░░░░░░░░░░░░░░░░░░████░░░░░░░░░ Cap 5\nSemana 8:   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████ Cap 6\n```\n\n**Hitos críticos**:\n- 10 Abril: Cap 2 ✓ (entrega inicial)\n- 24 Abril: Cap 3 ✓ (diseño aprobado)\n- 13 Mayo: Cap 4 ✓ (features implementados)\n- 20 Mayo: Cap 5 ✓ (testing completo)\n- 23 Mayo: Go-live RANSA pilot\n\n**Dependencias**:\n- Cap 2 → Cap 3 (no puede empezar sin reqs)\n- Cap 3 → Cap 4 (diseño antes de código)\n\n**Total**: ~6 semanas\n**Herramienta**: MS-Project export PNG",
+      "labels": [
+        "docs",
+        "sprint1"
+      ]
+    },
+    {
+      "title": "2.10 Matriz trazabilidad Req→Caso→Clase",
+      "body": "**Mapping completo: Requerimientos → Casos Uso → Clases UML**:\n\n| Tipo | ID | Descripción | Caso Uso | Clase | Regla Negocio | Estado |\n|------|-----|------------|----------|-------|---------------|--------|\n| RF | RF01 | Capturar/validar placa <2s | 2.6.3, 2.6.13 | ALPRController | RN01 | ✓ |\n| RF | RF02 | Dashboard monitoreo real-time | 2.6.1, 2.6.12 | AccessController | RN02 | ✓ |\n| RF | RF03 | CRUD flota autorizada | 2.6.2 | VehiculoService | RN03 | ✓ |\n| RF | RF04 | Auditoría completa | 2.6.11, 2.6.17 | AlertaService | RN04 | ✓ |\n| RF | RF05 | Alertas anomalías | 2.6.17 | AlertaService | RN05 | ✓ |\n| RF | RF06 | Reportes PDF/CSV | 2.6.18 | AnalyticsController | RN03 | ✓ |\n| NFR | NFR01 | 99.9% uptime | Todos | DatabaseService | Global | ✓ |\n| NFR | NFR02 | <2s respuesta | 2.6.13 | AWSService | RN01 | ✓ |\n| NFR | NFR03 | >100 veh/hora | Todos | Pool PostgreSQL | RN02 | ✓ |\n| NFR | NFR04 | GDPR compliance | 2.6.6 | NotificationService | RN03 | ✓ |\n\n**Cobertura**:\n- Total Reqs: 10 (4 RF + 6 NFR)\n- Total Casos: 18\n- Total Clases: 12\n- **Cobertura: 100%** (cada req tiene casos + clases)\n\n**Validación**:\n- [ ] Ningún req sin casos\n- [ ] Ningún caso sin clase\n- [ ] Todas reglas negocio mapeadas\n\n**Formato**: Markdown tabla exportable a Excel\n\n**Dependencia**: #6 #7 #8 #9 #10-27 #28-30",
+      "labels": [
+        "reqs",
+        "review-needed",
+        "priority-high"
+      ]
+    },
+    {
+      "title": "EPIC: Cap 2 Análisis Sistemas - Compilación final",
+      "body": "**HITO: Capítulo 2 Análisis de Sistemas - COMPLETO Y APROBADO**\n\n**Checklist compilación final**:\n- [ ] Issue 2.1: Casos negocio diagrama ✓\n- [ ] Issue 2.2.1-4: Todos diagramas BPMN ✓\n- [ ] Issue 2.3.1-2: Requerimientos func/no func tabla ✓\n- [ ] Issue 2.4: Reglas negocio documento ✓\n- [ ] Issue 2.5: Diagrama casos uso UML ✓\n- [ ] Issue 2.6.1-18: Descripciones 18 casos ✓\n- [ ] Issue 2.7.1-3: Diagramas clases UML ✓\n- [ ] Issue 2.8: Análisis paquetes ✓\n- [ ] Issue 2.9: Gantt cronograma ✓\n- [ ] Issue 2.10: Matriz trazabilidad 100% ✓\n\n**Acciones finales**:\n- [ ] Compilar documento PDF Cap 2 (30 páginas)\n- [ ] Diagramas PNG en `/diagrams` folder\n- [ ] README.md actualizado con estado\n- [ ] PR creado → merge a main\n- [ ] Deploy docs site (GitHub Pages)\n- [ ] Presentación equipo (15 min)\n- [ ] Feedback profesor → Revisiones\n\n**Responsable**: Diogo Abregu (Gerente)\n**Aprobador**: Prof. SI707U - Ingeniería Software\n**Fecha Entrega**: 10 de Abril 2026\n\n**Dependencias**: TODOS issues previos (1-33) deben estar DONE\n\n**Post-Epic**:\n- Sprint 1: Cap 3 Diseño inicia\n- GitHub Projects: Sprint Backlog siguiente",
+      "labels": [
+        "epic",
+        "review-needed",
+        "docs",
+        "sprint1"
+      ]
+    }
+  ]
+}
