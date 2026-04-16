@@ -5,6 +5,15 @@
 [![Issues][badge-issues]][link-issues]
 [![Pull Requests][badge-pr]][link-pr]
 
+[badge-status]: https://img.shields.io/badge/status-planning-blue.svg?style=flat&logo=github&logoColor=white
+[badge-license]: https://img.shields.io/badge/license-MIT-green.svg?style=flat&logo=github&logoColor=white
+[badge-issues]: https://img.shields.io/github/issues/DiogoFabricioAG/SecGuard-Logistics?logo=github
+[badge-pr]: https://img.shields.io/github/issues-pr/DiogoFabricioAG/SecGuard-Logistics?logo=github
+[link-status]: https://github.com/DiogoFabricioAG/SecGuard-Logistics
+[link-license]: https://github.com/DiogoFabricioAG/SecGuard-Logistics/blob/main/LICENSE
+[link-issues]: https://github.com/DiogoFabricioAG/SecGuard-Logistics/issues
+[link-pr]: https://github.com/DiogoFabricioAG/SecGuard-Logistics/pulls
+
 **SecGuard Logistics** es una plataforma SaaS basada en la nube que automatiza el control de acceso vehicular en centros de distribución mediante **reconocimiento de placas ALPR** (Automatic License Plate Recognition). Desarrollada para **RANSA** (líder logístico en Latinoamérica), optimiza eficiencia operativa, seguridad perimetral y trazabilidad de flota tercerizada.
 
 ## 🎯 Objetivos
@@ -75,7 +84,7 @@ Proyecto académico/universitario (UNI - Ingeniería Software). Contacto: equipo
 
 ---
 
-_Desarrollado con ❤️ por Grupo 5 - Entrega: 10 Abril 2026_
+_Desarrollado con ❤️ por Grupo 5_
 
 [badge-status]: https://img.shields.io/badge/status-planning-blue
 [badge-license]: https://img.shields.io/badge/license-MIT-green
