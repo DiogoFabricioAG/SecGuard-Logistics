@@ -9,7 +9,9 @@
     <main aria-label="Pantalla de login SecGuard">
       <wired-card elevation="2">
         <h1>SecGuard</h1>
-        <p>Login de prototipo</p>
+        <p>Acceso de usuarios internos</p>
+
+        <wired-divider></wired-divider>
 
         <p>
           <label for="usuario">Usuario o email</label>
@@ -29,11 +31,73 @@
         </p>
 
         <p>
+          <label for="pin">PIN de seguridad</label>
+          <wired-input
+            id="pin"
+            type="password"
+            placeholder="000000"
+          ></wired-input>
+        </p>
+
+        <p>
+          <label for="rol">Rol</label>
+          <wired-combo id="rol" selected="0">
+            <wired-item value="analista">Analista SOC</wired-item>
+            <wired-item value="admin">Administrador</wired-item>
+            <wired-item value="auditor">Auditor</wired-item>
+          </wired-combo>
+        </p>
+
+        <p>Metodo de autenticacion</p>
+        <wired-radio-group selected="correo">
+          <wired-radio name="correo">Codigo por correo</wired-radio>
+          <wired-radio name="sms">Codigo por SMS</wired-radio>
+          <wired-radio name="app">App autenticadora</wired-radio>
+        </wired-radio-group>
+
+        <p>
           <wired-checkbox checked>Recordar equipo</wired-checkbox>
         </p>
 
         <p>
+          <wired-checkbox>Acepto terminos y politicas</wired-checkbox>
+        </p>
+
+        <p>
+          <wired-toggle checked></wired-toggle>
+          Activar doble factor (MFA)
+        </p>
+
+        <p>
+          <label for="timeout">Tiempo maximo de sesion (minutos)</label>
+          <wired-slider
+            id="timeout"
+            min="5"
+            max="120"
+            value="45"
+          ></wired-slider>
+        </p>
+
+        <p>
+          <label for="nota">Nota de acceso</label>
+          <wired-textarea
+            id="nota"
+            placeholder="Motivo de acceso o ticket relacionado"
+          ></wired-textarea>
+        </p>
+
+        <p>Nivel de verificacion</p>
+        <wired-progress value="70" min="0" max="100"></wired-progress>
+
+        <wired-divider></wired-divider>
+
+        <p>
+          <wired-link href="#">Olvide mi contrasena</wired-link>
+        </p>
+
+        <p>
           <wired-button elevation="2">Entrar al sistema</wired-button>
+          <wired-button elevation="1">Limpiar formulario</wired-button>
         </p>
       </wired-card>
     </main>
