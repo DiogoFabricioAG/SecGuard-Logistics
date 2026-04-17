@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecGuard - Login Prototipo</title>
+  </head>
+  <body>
+    <main aria-label="Pantalla de login SecGuard">
+      <wired-card elevation="2">
+        <h1>SecGuard</h1>
+        <p>Login de prototipo</p>
+
+        <p>
+          <label for="usuario">Usuario o email</label>
+          <wired-input
+            id="usuario"
+            placeholder="usuario@secguard.com"
+          ></wired-input>
+        </p>
+
+        <p>
+          <label for="password">Contrasena</label>
+          <wired-input
+            id="password"
+            type="password"
+            placeholder="********"
+          ></wired-input>
+        </p>
+
+        <p>
+          <wired-checkbox checked>Recordar equipo</wired-checkbox>
+        </p>
+
+        <p>
+          <wired-button elevation="2">Entrar al sistema</wired-button>
+        </p>
+      </wired-card>
+    </main>
+
+    <script
+      type="module"
+      src="https://unpkg.com/wired-elements?module"
+    ></script>
+  </body>
+</html>
