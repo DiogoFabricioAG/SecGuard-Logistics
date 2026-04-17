@@ -80,15 +80,25 @@ SecGuard-Logistics/
 
 ## 📄 Licencia & Contacto
 
-Proyecto académico/universitario (UNI - Ingeniería Software). Contacto: equipo5.seguard@gmail.com
+Proyecto académico/universitario (UNI - Ingeniería Software). Contacto: equipo2.seguard@gmail.com
 
 ---
-
-_Desarrollado con ❤️ por Grupo 5_
 
 [badge-status]: https://img.shields.io/badge/status-planning-blue
 [badge-license]: https://img.shields.io/badge/license-MIT-green
 [badge-issues]: https://img.shields.io/github/issues-raw/tu-user/SecGuard-Logistics
 [badge-pr]: https://img.shields.io/github/issues-pr/tu-user/SecGuard-Logistics
 
+## ⚙️ Casos de Uso
+
+![Diagrama de Caso de Uso](https://raw.githubusercontent.com/DiogoFabricioAG/SecGuard-Logistics/main/business/images/Registro%20de%20datos%20caso%20de%20uso.png)
+
 ---
+### 🏢 Diagrama de Secuencia 
+
+![Diagrama de Caso de Uso](https://github.com/DiogoFabricioAG/SecGuard-Logistics/blob/main/business/images/Diagrama%20de%20secuencia.png)
+
+---
+### 🛠️ Diagrama de Actividad
+
+![Diagrama de Caso de Uso](https://github.com/DiogoFabricioAG/SecGuard-Logistics/blob/main/business/images/Registrar%20datos%20entrada%20salida.png)
