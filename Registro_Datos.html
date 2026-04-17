@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso de Uso - Registro de Acceso ALPR</title>
+    <script type="module" src="https://unpkg.com/wired-elements?module"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background-color: #f5f5f5;
+        }
+        
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            border: 1px solid #4a7ebb; 
+        }
+
+        th, td { 
+            border: 1px solid #4a7ebb; 
+            padding: 10px; 
+            font-size: 14px; 
+            text-align: left; 
+            vertical-align: top;
+        }
+        
+        .header-bg { 
+            background-color: #bad3ed; 
+            font-weight: bold; 
+            color: #333;
+        }
+
+        .title-text {
+            color: #1a4d8a;
+            text-decoration: underline;
+            font-size: 16px;
+        }
+        
+        .label { width: 25%; }
+        .step-num { width: 5%; text-align: center; }
+
+        /* Contenedor del prototipo */
+        .wired-prototype-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 10px;
+            background-color: #ffffff;
+        }
+
+        .camera-feed {
+            width: 100%;
+            height: 200px;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            border: 1px solid #999;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .status-badge { color: green; font-weight: bold; }
+
+        /* Tipografía manuscrita */
+        .hand-drawn {
+            font-family: 'Gloria Hallelujah', cursive;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="main-container">
+    <table>
+        <tr>
+            <td class="header-bg label">Casos de uso del sistema</td>
+            <td colspan="2">Registrar datos entrada/salida</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="header-bg">Descripción del caso de uso</td>
+        </tr>
+        <tr>
+            <td colspan="3">El sistema registra el ingreso o salida de vehículos capturando placa, timestamp y respaldando evidencia en S3.</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="header-bg">Actor(es)</td>
+        </tr>
+        <tr>
+            <td colspan="3">Sistema automático</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="header-bg">Precondiciones</td>
+        </tr>
+        <tr>
+            <td colspan="3">Barrera se abrió</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="header-bg">Postcondiciones</td>
+        </tr>
+        <tr>
+            <td colspan="3">Registro persistente + respaldo S3</td>
+        </tr>
+
+        <tr class="header-bg">
+            <td class="step-num">Nro.</td>
+            <td style="width: 40%;">Acción del actor</td>
+            <td style="width: 55%;">Respuesta del sistema</td>
+        </tr>
+        <tr>
+            <td class="step-num">1</td>
+            <td>Captura de timestamp y activación de cámara ALPR</td>
+            <td>Captura imagen y extrae placa (String)</td>
+        </tr>
+        <tr>
+            <td class="step-num">2</td>
+            <td>Estructura datos (placa, usuario, ip_camara)</td>
+            <td>Realiza INSERT en PostgreSQL (tabla accesos)</td>
+        </tr>
+        <tr>
+            <td class="step-num">3</td>
+            <td>Inicia carga de archivo a la nube</td>
+            <td>Foto subida a S3 (AWS) y genera log de auditoría</td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="header-bg">Flujo alternativo</td>
+        </tr>
+        <tr>
+            <td class="step-num">1</td>
+            <td>Fallo en lectura ALPR de placa</td>
+            <td>Se registra como "Pendiente" para revisión manual</td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="header-bg">Requerimiento asociado</td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>RNF</b> Disponibilidad y persistencia de accesos vehiculares en tiempo real</td>
+        </tr>
+
+        <tr>
+            <td colspan="3" class="header-bg">Prototipo de interfaz de usuario</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="padding: 0;">
+                <div class="wired-prototype-container">
+                    
+                    <wired-card elevation="3" style="padding: 25px; width: 90%; max-width: 800px; background: white;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2 class="hand-drawn" style="margin: 0;">Módulo ALPR - Estación Principal</h2>
+                            <wired-link href="#" elevation="2" class="hand-drawn">Configuración</wired-link>
+                        </div>
+
+                        <div class="camera-feed">
+                            <div style="text-align: center;">
+                                <wired-spinner spinning duration="3000"></wired-spinner>
+                                <p class="hand-drawn">FEED DE CÁMARA EN VIVO (IP_CAM_01)</p>
+                            </div>
+                        </div>
+
+                        <div class="grid-layout">
+                            <div>
+                                <p class="hand-drawn" style="margin-bottom: 5px;">Placa detectada:</p>
+                                <wired-input placeholder="Placa" value="ABC-1234" style="width: 100%;"></wired-input>
+                                <p class="hand-drawn"><small>Timestamp: 2026-04-17 10:30:15</small></p>
+                                <wired-button elevation="2" class="hand-drawn" onclick="alert('Registro Manual Exitoso')">REGISTRO MANUAL</wired-button>
+                            </div>
+
+                            <div>
+                                <wired-card elevation="1" style="padding: 10px; background: #f9f9f9; display: block;">
+                                    <p class="hand-drawn"><strong>Estado del Sistema:</strong></p>
+                                    <ul class="hand-drawn" style="font-size: 13px;">
+                                        <li>DB PostgreSQL: <span class="status-badge">CONECTADO</span></li>
+                                        <li>Storage AWS S3: <span class="status-badge">LISTO</span></li>
+                                    </ul>
+                                    <wired-checkbox checked class="hand-drawn">Notificar auditoría</wired-checkbox>
+                                </wired-card>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <p class="hand-drawn">Últimos Registros:</p>
+                            <wired-listbox selected="ABC-1234">
+                                <wired-item value="ABC-1234" class="hand-drawn">ABC-1234 - Ingreso - 10:30 AM</wired-item>
+                                <wired-item value="XYZ-9876" class="hand-drawn">XYZ-9876 - Salida - 10:15 AM</wired-item>
+                                <wired-item value="ERR-0000" class="hand-drawn">LECTURA FALLIDA - Pendiente - 10:05 AM</wired-item>
+                            </wired-listbox>
+                        </div>
+
+                        <div style="margin-top: 25px; text-align: right;">
+                            <wired-divider></wired-divider>
+                            <p class="hand-drawn" style="font-size: 12px; margin-top: 10px;">ID Requerimiento: RF_ACC</p>
+                        </div>
+                    </wired-card>
+
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
