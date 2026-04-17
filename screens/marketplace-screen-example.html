@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecGuard - Marketplace Prototipo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="font-family: &quot;Gloria Hallelujah&quot;, cursive">
+    <main aria-label="Pantalla marketplace SecGuard">
+      <wired-card elevation="2">
+        <h1>SecGuard Marketplace</h1>
+        <p>Catalogo de modulos, licencias y servicios de seguridad</p>
+
+        <wired-divider></wired-divider>
+
+        <h2>Filtros</h2>
+
+        <p>
+          <label for="buscar">Buscar producto</label>
+          <wired-input
+            id="buscar"
+            placeholder="Ej: SIEM, EDR, Auditoria"
+          ></wired-input>
+        </p>
+
+        <p>
+          <label for="categoria">Categoria</label>
+          <wired-combo id="categoria" selected="0">
+            <wired-item value="todos">Todas</wired-item>
+            <wired-item value="monitoreo">Monitoreo</wired-item>
+            <wired-item value="analitica">Analitica</wired-item>
+            <wired-item value="respuesta">Respuesta</wired-item>
+            <wired-item value="capacitacion">Capacitacion</wired-item>
+          </wired-combo>
+        </p>
+
+        <p>
+          <label for="plan">Tipo de plan</label>
+          <wired-radio-group id="plan" selected="mensual">
+            <wired-radio name="mensual">Mensual</wired-radio>
+            <wired-radio name="anual">Anual</wired-radio>
+            <wired-radio name="enterprise">Enterprise</wired-radio>
+          </wired-radio-group>
+        </p>
+
+        <p>
+          <wired-checkbox checked>Mostrar solo disponibles</wired-checkbox>
+        </p>
+
+        <p>
+          <wired-checkbox>Incluir productos beta</wired-checkbox>
+        </p>
+
+        <p>
+          <wired-toggle checked></wired-toggle>
+          Recomendados para mi perfil
+        </p>
+
+        <p>
+          <label for="presupuesto">Presupuesto maximo (USD)</label>
+          <wired-slider
+            id="presupuesto"
+            min="10"
+            max="1000"
+            value="350"
+          ></wired-slider>
+        </p>
+
+        <p>
+          <wired-button elevation="2">Aplicar filtros</wired-button>
+          <wired-button elevation="1">Limpiar filtros</wired-button>
+        </p>
+
+        <wired-divider></wired-divider>
+
+        <h2>Productos destacados</h2>
+
+        <wired-card elevation="1">
+          <h3>SIEM Cloud Essentials</h3>
+          <p>Correlacion de eventos y alertas en tiempo real para SOC.</p>
+          <p>Precio: USD 149 / mes</p>
+          <p>Nivel de adopcion</p>
+          <wired-progress value="82" min="0" max="100"></wired-progress>
+          <p>
+            <wired-link href="#">Ver detalle tecnico</wired-link>
+          </p>
+          <p>
+            <wired-button elevation="2">Agregar al carrito</wired-button>
+            <wired-button elevation="1">Comparar</wired-button>
+          </p>
+        </wired-card>
+
+        <wired-card elevation="1">
+          <h3>EDR Endpoint Shield</h3>
+          <p>Proteccion avanzada para estaciones con respuesta automatizada.</p>
+          <p>Precio: USD 89 / endpoint</p>
+          <p>Nivel de adopcion</p>
+          <wired-progress value="67" min="0" max="100"></wired-progress>
+          <p>
+            <wired-link href="#">Ver detalle tecnico</wired-link>
+          </p>
+          <p>
+            <wired-button elevation="2">Agregar al carrito</wired-button>
+            <wired-button elevation="1">Comparar</wired-button>
+          </p>
+        </wired-card>
+
+        <wired-card elevation="1">
+          <h3>Pack Auditoria ISO 27001</h3>
+          <p>Plantillas y acompanamiento para auditoria de cumplimiento.</p>
+          <p>Precio: USD 399 / proyecto</p>
+          <p>Nivel de adopcion</p>
+          <wired-progress value="54" min="0" max="100"></wired-progress>
+          <p>
+            <wired-link href="#">Ver detalle tecnico</wired-link>
+          </p>
+          <p>
+            <wired-button elevation="2">Agregar al carrito</wired-button>
+            <wired-button elevation="1">Comparar</wired-button>
+          </p>
+        </wired-card>
+
+        <wired-divider></wired-divider>
+
+        <h2>Resumen de compra</h2>
+        <p>Items seleccionados: 2</p>
+        <p>Subtotal estimado: USD 238</p>
+
+        <p>
+          <label for="notas">Notas para el proveedor</label>
+          <wired-textarea
+            id="notas"
+            placeholder="Requisitos de integracion, volumen esperado, etc."
+          ></wired-textarea>
+        </p>
+
+        <p>
+          <wired-checkbox checked>Acepto terminos de servicio</wired-checkbox>
+        </p>
+
+        <p>
+          <wired-button elevation="2">Finalizar solicitud</wired-button>
+          <wired-button elevation="1">Guardar para despues</wired-button>
+        </p>
+      </wired-card>
+    </main>
+
+    <script
+      type="module"
+      src="https://unpkg.com/wired-elements?module"
+    ></script>
+  </body>
+</html>
