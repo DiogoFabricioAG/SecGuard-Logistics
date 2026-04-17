@@ -63,18 +63,29 @@ if not "%selectedBranch%"=="%currentBranch%" (
 echo.
 echo %C_INFO%Selecciona el tipo de commit:%C_RESET%
 set "type1=feat"
+set "desc1=Nueva funcionalidad para el sistema."
 set "type2=fix"
+set "desc2=Correccion de un bug o error existente."
 set "type3=chore"
+set "desc3=Tarea de mantenimiento sin impacto funcional directo."
 set "type4=docs"
+set "desc4=Cambios en documentacion (README, guias, notas)."
 set "type5=refactor"
+set "desc5=Mejora interna del codigo sin cambiar comportamiento."
 set "type6=style"
+set "desc6=Ajustes de formato/estilo (espacios, lint, orden), sin logica."
 set "type7=test"
+set "desc7=Agregar o actualizar pruebas automatizadas."
 set "type8=perf"
+set "desc8=Optimizaciones para mejorar rendimiento."
 set "type9=ci"
+set "desc9=Cambios en integracion continua o pipelines."
 set "type10=build"
+set "desc10=Cambios en compilacion, dependencias o empaquetado."
 set "type11=revert"
+set "desc11=Revertir un commit anterior."
 
-for /l %%I in (1,1,11) do echo %%I^) !type%%I!
+for /l %%I in (1,1,11) do echo %%I^) !type%%I! - !desc%%I!
 
 set /p "typeChoice=Ingresa el numero del tipo de commit: "
 echo %typeChoice%| findstr /r "^[0-9][0-9]*$" >nul || (
