@@ -1,0 +1,836 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Comando de Flota Ransa - LogisticsPro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="../tailwind-config/tailwind_config.js"></script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background flex h-screen overflow-hidden font-body-md text-body-md antialiased"
+  >
+    <!-- SideNavBar -->
+    <nav
+      class="bg-slate-50 dark:bg-slate-950 fixed left-0 top-0 h-full w-[260px] border-r border-r border-slate-200 dark:border-slate-800 flex flex-col h-screen fixed left-0 top-0 z-50"
+    >
+      <div
+        class="px-6 py-8 border-b border-surface-variant flex items-center gap-3"
+      >
+        <span
+          class="material-symbols-outlined text-primary-container text-[32px]"
+          >local_shipping</span
+        >
+        <div class="flex flex-col">
+          <span class="text-lg font-black text-teal-900 dark:text-teal-50"
+            >Comando de Flota</span
+          >
+          <span class="text-label-sm text-on-surface-variant"
+            >Centro Logístico Global</span
+          >
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto py-4">
+        <ul class="space-y-1 px-3">
+          <li>
+            <a
+              class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-manrope text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition-all active:opacity-80 duration-150 rounded"
+              href="#"
+            >
+              <span class="material-symbols-outlined">dashboard</span>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-3 px-4 py-3 bg-teal-50 dark:bg-teal-900/20 text-teal-900 dark:text-teal-400 border-r-4 border-teal-900 dark:border-teal-400 font-manrope text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition-all active:opacity-80 duration-150 rounded"
+              href="#"
+            >
+              <span class="material-symbols-outlined">local_shipping</span>
+              Flota
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-manrope text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition-all active:opacity-80 duration-150 rounded"
+              href="registrar_viaje.html"
+            >
+              <span class="material-symbols-outlined">route</span>
+              Rutas
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-manrope text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition-all active:opacity-80 duration-150 rounded"
+              href="#"
+            >
+              <span class="material-symbols-outlined">build</span>
+              Mantenimiento
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-manrope text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition-all active:opacity-80 duration-150 rounded"
+              href="#"
+            >
+              <span class="material-symbols-outlined">analytics</span>
+              Analítica
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="p-4 border-t border-surface-variant">
+        <ul class="space-y-1">
+          <li>
+            <a
+              class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-manrope text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition-all active:opacity-80 duration-150 rounded"
+              href="#"
+            >
+              <span class="material-symbols-outlined">help</span>
+              Soporte
+            </a>
+          </li>
+          <li>
+            <a
+              class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-manrope text-sm hover:bg-slate-100 dark:hover:bg-slate-900 transition-all active:opacity-80 duration-150 rounded"
+              href="#"
+            >
+              <span class="material-symbols-outlined">logout</span>
+              Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Main Layout -->
+    <div class="flex-1 ml-[260px] flex flex-col h-screen overflow-hidden">
+      <!-- TopNavBar -->
+      <header
+        class="bg-white dark:bg-slate-900 font-manrope text-sm font-medium border-b border-slate-200 dark:border-slate-800 flex justify-between items-center h-16 px-6 w-full sticky top-0 z-40 transition-colors duration-200"
+      >
+        <div class="flex items-center gap-4 w-1/2">
+          <h1
+            class="text-teal-900 dark:text-teal-50 font-headline-md text-headline-md"
+          >
+            Gestión de Flota
+          </h1>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded transition-colors"
+          >
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+          <button
+            class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded transition-colors"
+          >
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+          <button
+            class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded transition-colors ml-2"
+          >
+            <img
+              alt="User Profile"
+              class="w-8 h-8 rounded-full border border-surface-variant"
+              data-alt="professional corporate headshot of logistics manager"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEHJal1ooVz4YD6GfvLmzzxCVycYjvx8WFBa2yQyx5rhhRIvtU_tnxnfeS0pNXID-uqMtNw9pfc4MqcDUmrrPVO1-5T0jLRENVmVygyHA-J4OjzAaEP_GwE89MMGPDl3DrYuiUZ8WZLh7d9DclOckn43ouyiTbnKg-jAlWGzNrlAR4D3JyPocC3hFT35ak0-tJKGaO1zNmOxpz1uEMWwdmI5zdc-RQ9DbG9yKDAAMKtDob3M1NBhulQ4JY0l37UYeuQlOnXefaPUM"
+            />
+          </button>
+        </div>
+      </header>
+      <!-- Content Area -->
+      <main class="flex-1 overflow-x-hidden flex flex-row">
+        <!-- Fleet List Canvas -->
+        <div
+          class="flex-1 flex flex-col h-full bg-background border-r border-surface-variant overflow-y-auto"
+        >
+          <div class="p-lg">
+            <!-- Filters -->
+            <div
+              class="flex items-center justify-between mb-lg bg-surface-lowest p-4 rounded-xl border border-surface-variant shadow-sm"
+            >
+              <div class="flex gap-4">
+                <button
+                  class="px-4 py-2 bg-primary-container text-on-primary rounded font-label-md text-label-md shadow-sm"
+                >
+                  Todos los Vehículos
+                </button>
+                <button
+                  class="px-4 py-2 bg-surface text-on-surface border border-surface-variant hover:bg-surface-variant rounded font-label-md text-label-md transition-colors"
+                >
+                  Disponible
+                </button>
+                <button
+                  class="px-4 py-2 bg-surface text-on-surface border border-surface-variant hover:bg-surface-variant rounded font-label-md text-label-md transition-colors"
+                >
+                  En Ruta
+                </button>
+                <button
+                  class="px-4 py-2 bg-surface text-on-surface border border-surface-variant hover:bg-surface-variant rounded font-label-md text-label-md transition-colors"
+                >
+                  Mantenimiento
+                </button>
+              </div>
+              <div class="flex gap-4">
+                <select
+                  class="bg-surface text-on-surface border border-surface-variant rounded pr-10 py-2 font-label-md text-label-md focus:border-primary-container focus:ring-0"
+                >
+                  <option>Tipo de Vehículo</option>
+                  <option>Carga Pesada</option>
+                  <option>Carga Media</option>
+                  <option>Comercial Ligero</option>
+                </select>
+                <button
+                  class="flex items-center gap-2 px-4 py-2 bg-surface text-on-surface border border-surface-variant hover:bg-surface-variant rounded font-label-md text-label-md transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >filter_list</span
+                  >
+                  Filtrar
+                </button>
+              </div>
+            </div>
+            <!-- Data Table -->
+            <div
+              class="bg-surface-lowest border border-surface-variant rounded-xl shadow-sm overflow-hidden"
+            >
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-surface border-b border-surface-variant">
+                    <th
+                      class="p-sm font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider pl-4"
+                    >
+                      Vehículo
+                    </th>
+                    <th
+                      class="p-sm font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider"
+                    >
+                      Placa
+                    </th>
+                    <th
+                      class="p-sm font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider"
+                    >
+                      Modelo
+                    </th>
+                    <th
+                      class="p-sm font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider"
+                    >
+                      Tipo / Cap
+                    </th>
+                    <th
+                      class="p-sm font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider"
+                    >
+                      Estado
+                    </th>
+                    <th
+                      class="p-sm font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider pr-4"
+                    >
+                      Próx. Mantenimiento
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="divide-y divide-surface-variant font-body-md text-body-md"
+                >
+                  <!-- Active Row -->
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer bg-primary-fixed/20 border-l-4 border-l-primary-container transition-colors"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="modern heavy duty logistics truck cab isolated"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Z-rZQoyrNqobq1OsjYV-gGAXVF1GxVvUfzXBCbvU4kjXJabtsRa-vSCAGUOW7joOKXoyucxr63OPqSKRvkVdMt0BfvF8PrGe-ezWhiBAyju5Ycyk_i8gjXekX-vx1SjXzV25N5VvKafmUW5HBN6xS0v5FNMhF8t-3Vnurej9Ayj5gY4Xb6TliJZBFPPKASIANtkYQdG7e5phoVnEjCdoGfbX1FgdVf1x7W3RjsIgCEko4qw7N4AfgiNs0IRh-NCYboKz67s4EHA"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      ABC-123
+                    </td>
+                    <td class="p-sm text-on-surface-variant">Volvo FH16</td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Pesada / 40T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                        >Disponible</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">
+                      12 Oct, 2024
+                    </td>
+                  </tr>
+                  <!-- Inactive Rows -->
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="white commercial delivery truck on highway"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiPAQwyXnCp75VLIS5WC-XrEpmlYi9SqZWy7vrnIo_RLqSIc6TI7ZxYYcyBBs_yXwLfAv9GOpjfXkEb0G4fjivXEPOoOGcQFVHssgj4JG3wTOezwpxN53yojHCEb2RIaQM43itt1qWxmx-8AqgwgRxdUxoHpX3YR7y_azNgj5csb3JTGtEVpYhBu0E8N9BvulFES_lysRafSRdY1VOIJgepUKMS3OjfVp7ldLgHUKqDw1BR_dZiIR8S9Fzkq3J8KXV6QdrthPbNqQ"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      XYZ-789
+                    </td>
+                    <td class="p-sm text-on-surface-variant">Scania R500</td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Pesada / 35T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-surface-variant text-on-surface font-label-sm text-label-sm border border-outline-variant"
+                        >En Ruta</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">
+                      05 Nov, 2024
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="front view of modern logistics truck"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCciu_mGNXmxAIyUNetjPVN-o1_X-L1Q6GMNT14LzL8gWEEi2OdnrrA1LDTalVhAS6f7Qy6zv75o1vkJSzE7wrX4-ytMIqFspKbp3rIci2fGr_iHtOJ7PEHqvb9KBLDAtQAYH-0Ff1J96vbQ7TiG1jiTzzx6MaGNAmBTZs-6qaeW0AQ4pU97AJfOz46mjLAf9ralDOFr-jwAnzbBiDmbo-IV45RChb7RVPsb-OUVg-opV-fKRpfrzDIpXZluOCEHUhuiWNhIG3wzoA"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      DEF-456
+                    </td>
+                    <td class="p-sm text-on-surface-variant">
+                      Mercedes Actros
+                    </td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Pesada / 42T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-[#F39200]/10 text-[#F39200] font-label-sm text-label-sm border border-[#F39200]/20"
+                        >Mantenimiento</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">Hoy</td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="side view of refrigerated logistics truck"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_vR3B17IR67ovYL8pR2xfhDOeSQ8Zil6wj7c3U8jW4nCa8zEJZEwriurHebZZgL0NQE1xbM8G8AhlHu5NtgkrgHiWwZBKpRgBC4w85fMREOX6OmLD0CkgdRkFYe3U2Dxx_504y1xk0J_AkX-wNWDBYtXacw6snbu-DxvhMerO8givyTVkGaxomJYB-5hzySk7HVdKn0G1sd7rPng4ktBHtuokQ2fgI4GlH3cAc5YV60FPwTg9JMVb2K9pqt6b3QoofAX0SrENHC8"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      GHI-012
+                    </td>
+                    <td class="p-sm text-on-surface-variant">Isuzu FTR</td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Media / 15T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                        >Disponible</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">
+                      20 Dic, 2024
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="side view of refrigerated logistics truck"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_vR3B17IR67ovYL8pR2xfhDOeSQ8Zil6wj7c3U8jW4nCa8zEJZEwriurHebZZgL0NQE1xbM8G8AhlHu5NtgkrgHiWwZBKpRgBC4w85fMREOX6OmLD0CkgdRkFYe3U2Dxx_504y1xk0J_AkX-wNWDBYtXacw6snbu-DxvhMerO8givyTVkGaxomJYB-5hzySk7HVdKn0G1sd7rPng4ktBHtuokQ2fgI4GlH3cAc5YV60FPwTg9JMVb2K9pqt6b3QoofAX0SrENHC8"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      JKL-345
+                    </td>
+                    <td class="p-sm text-on-surface-variant">Volvo FH16</td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Pesada / 40T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-surface-variant text-on-surface font-label-sm text-label-sm border border-outline-variant"
+                        >En Ruta</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">
+                      15 Ene, 2025
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="front view of modern logistics truck"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCciu_mGNXmxAIyUNetjPVN-o1_X-L1Q6GMNT14LzL8gWEEi2OdnrrA1LDTalVhAS6f7Qy6zv75o1vkJSzE7wrX4-ytMIqFspKbp3rIci2fGr_iHtOJ7PEHqvb9KBLDAtQAYH-0Ff1J96vbQ7TiG1jiTzzx6MaGNAmBTZs-6qaeW0AQ4pU97AJfOz46mjLAf9ralDOFr-jwAnzbBiDmbo-IV45RChb7RVPsb-OUVg-opV-fKRpfrzDIpXZluOCEHUhuiWNhIG3wzoA"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      MNO-678
+                    </td>
+                    <td class="p-sm text-on-surface-variant">Scania R500</td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Pesada / 35T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                        >Disponible</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">
+                      22 Feb, 2025
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="modern heavy duty logistics truck cab isolated"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Z-rZQoyrNqobq1OsjYV-gGAXVF1GxVvUfzXBCbvU4kjXJabtsRa-vSCAGUOW7joOKXoyucxr63OPqSKRvkVdMt0BfvF8PrGe-ezWhiBAyju5Ycyk_i8gjXekX-vx1SjXzV25N5VvKafmUW5HBN6xS0v5FNMhF8t-3Vnurej9Ayj5gY4Xb6TliJZBFPPKASIANtkYQdG7e5phoVnEjCdoGfbX1FgdVf1x7W3RjsIgCEko4qw7N4AfgiNs0IRh-NCYboKz67s4EHA"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      PQR-901
+                    </td>
+                    <td class="p-sm text-on-surface-variant">Isuzu FTR</td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Media / 15T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                        >Disponible</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">
+                      10 Mar, 2025
+                    </td>
+                  </tr>
+                  <tr
+                    class="hover:bg-slate-50 cursor-pointer transition-colors border-l-4 border-l-transparent"
+                  >
+                    <td class="p-sm pl-4">
+                      <div
+                        class="w-12 h-12 bg-surface-variant rounded flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          alt="Truck"
+                          class="object-cover w-full h-full"
+                          data-alt="white commercial delivery truck on highway"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiPAQwyXnCp75VLIS5WC-XrEpmlYi9SqZWy7vrnIo_RLqSIc6TI7ZxYYcyBBs_yXwLfAv9GOpjfXkEb0G4fjivXEPOoOGcQFVHssgj4JG3wTOezwpxN53yojHCEb2RIaQM43itt1qWxmx-8AqgwgRxdUxoHpX3YR7y_azNgj5csb3JTGtEVpYhBu0E8N9BvulFES_lysRafSRdY1VOIJgepUKMS3OjfVp7ldLgHUKqDw1BR_dZiIR8S9Fzkq3J8KXV6QdrthPbNqQ"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      class="p-sm font-label-md text-label-md text-on-surface"
+                    >
+                      STU-234
+                    </td>
+                    <td class="p-sm text-on-surface-variant">
+                      Mercedes Actros
+                    </td>
+                    <td class="p-sm text-on-surface-variant">
+                      Carga Pesada / 42T
+                    </td>
+                    <td class="p-sm">
+                      <span
+                        class="inline-flex items-center px-2 py-1 rounded bg-[#F39200]/10 text-[#F39200] font-label-sm text-label-sm border border-[#F39200]/20"
+                        >Mantenimiento</span
+                      >
+                    </td>
+                    <td class="p-sm text-on-surface-variant pr-4">
+                      18 Abr, 2025
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                class="p-4 border-t border-surface-variant flex justify-between items-center bg-surface"
+              >
+                <span class="font-body-md text-body-md text-on-surface-variant"
+                  >Mostrando 1-8 de 124 vehículos</span
+                >
+                <div class="flex gap-2">
+                  <button
+                    class="p-1 border border-surface-variant rounded text-on-surface-variant hover:bg-surface-variant"
+                  >
+                    <span class="material-symbols-outlined text-[20px]"
+                      >chevron_left</span
+                    >
+                  </button>
+                  <button
+                    class="p-1 border border-surface-variant rounded text-on-surface-variant hover:bg-surface-variant"
+                  >
+                    <span class="material-symbols-outlined text-[20px]"
+                      >chevron_right</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Detail Panel (Right Sidebar) -->
+        <div
+          class="w-[400px] bg-surface-lowest h-full overflow-y-auto border-l border-surface-variant flex flex-col shrink-0"
+        >
+          <!-- Detail Header -->
+          <div
+            class="p-lg border-b border-surface-variant flex justify-between items-start sticky top-0 bg-surface-lowest z-10"
+          >
+            <div>
+              <h2
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                Camión ABC-123
+              </h2>
+              <span
+                class="inline-flex items-center px-2 py-1 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                >Disponible</span
+              >
+            </div>
+            <div class="flex gap-2">
+              <button
+                class="p-2 border border-surface-variant rounded hover:bg-surface transition-colors text-on-surface-variant"
+              >
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+              <button
+                class="p-2 border border-surface-variant rounded hover:bg-surface transition-colors text-on-surface-variant"
+              >
+                <span class="material-symbols-outlined">more_vert</span>
+              </button>
+            </div>
+          </div>
+          <div class="p-lg flex-1 flex flex-col gap-lg">
+            <!-- Truck Hero Image -->
+            <div
+              class="w-full aspect-video bg-surface-variant rounded-xl overflow-hidden border border-surface-variant relative"
+            >
+              <img
+                alt="Truck Image"
+                class="object-cover w-full h-full"
+                data-alt="high quality corporate shot of heavy duty truck parked in logistics facility"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV05a_KAM93Urvf8BLBCti1mO2fiSGwV3EMCX0ZNV4U5vQytrCj_n5T0WKNNJ6ScyISnobX0iFDWTxd5cYsg7v7nJZI2VH0FJREEe_xXBKZfbCADBpkpeyBL9E0SaLTW6Paq9HQKLlrOA7xQIz2PY3BpCItKCPwNGLnfS4EvPxVKAEZpddBp8b38nBKqMob46MF4_Cf65W4yTuk2qVJgYQW_fS0nnL_Gah2yxYsTXO-jrREwnZhsY_ahLj5yPj8VHQ-pLFuoN5Nok"
+              />
+              <div
+                class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white px-2 py-1 rounded font-label-sm text-label-sm"
+              >
+                Volvo FH16
+              </div>
+            </div>
+            <!-- General Data Bento -->
+            <div
+              class="bg-surface rounded-xl border border-surface-variant p-4"
+            >
+              <h3
+                class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-4 border-b border-surface-variant pb-2"
+              >
+                Especificaciones Técnicas
+              </h3>
+              <div class="grid grid-cols-2 gap-y-4 gap-x-2">
+                <div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant block mb-1"
+                    >Número VIN</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-medium"
+                    >YV2G4C0C8GA123456</span
+                  >
+                </div>
+                <div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant block mb-1"
+                    >Año</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-medium"
+                    >2023</span
+                  >
+                </div>
+                <div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant block mb-1"
+                    >Motor</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-medium"
+                    >D16K600, 16L</span
+                  >
+                </div>
+                <div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant block mb-1"
+                    >Odómetro</span
+                  >
+                  <span
+                    class="font-body-md text-body-md text-on-surface font-medium"
+                    >145,200 km</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- Availability Forecast -->
+            <div
+              class="bg-surface rounded-xl border border-surface-variant p-4"
+            >
+              <h3
+                class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-4 border-b border-surface-variant pb-2 flex justify-between items-center"
+              >
+                Pronóstico 7 Días
+                <span
+                  class="material-symbols-outlined text-[16px] text-on-surface-variant"
+                  >calendar_month</span
+                >
+              </h3>
+              <div class="flex justify-between items-end h-20 gap-1 mt-2">
+                <div class="flex flex-col items-center gap-2 flex-1">
+                  <div
+                    class="w-full bg-[#009A3F] h-full rounded-sm opacity-80 hover:opacity-100 transition-opacity"
+                    title="Disponible"
+                  ></div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant"
+                    >Lun</span
+                  >
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1">
+                  <div
+                    class="w-full bg-[#009A3F] h-full rounded-sm opacity-80 hover:opacity-100 transition-opacity"
+                    title="Disponible"
+                  ></div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant"
+                    >Mar</span
+                  >
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1">
+                  <div
+                    class="w-full bg-surface-variant h-full rounded-sm border border-outline-variant relative overflow-hidden"
+                    title="En Ruta"
+                  >
+                    <div
+                      class="absolute inset-0 bg-outline-variant/20 pattern-diagonal-lines-sm text-outline-variant/10"
+                    ></div>
+                  </div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant"
+                    >Mié</span
+                  >
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1">
+                  <div
+                    class="w-full bg-[#F39200] h-1/2 rounded-sm opacity-80 hover:opacity-100 transition-opacity"
+                    title="Mantenimiento"
+                  ></div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant"
+                    >Jue</span
+                  >
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1">
+                  <div
+                    class="w-full bg-[#009A3F] h-full rounded-sm opacity-80 hover:opacity-100 transition-opacity"
+                    title="Disponible"
+                  ></div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant"
+                    >Vie</span
+                  >
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1">
+                  <div
+                    class="w-full bg-[#009A3F] h-full rounded-sm opacity-80 hover:opacity-100 transition-opacity"
+                    title="Disponible"
+                  ></div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant"
+                    >Sáb</span
+                  >
+                </div>
+                <div class="flex flex-col items-center gap-2 flex-1">
+                  <div
+                    class="w-full bg-[#009A3F] h-full rounded-sm opacity-80 hover:opacity-100 transition-opacity"
+                    title="Disponible"
+                  ></div>
+                  <span
+                    class="font-label-sm text-label-sm text-on-surface-variant"
+                    >Dom</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- Maintenance Log -->
+            <div
+              class="bg-surface rounded-xl border border-surface-variant p-0 overflow-hidden"
+            >
+              <div class="p-4 border-b border-surface-variant bg-surface">
+                <h3
+                  class="font-label-md text-label-md text-on-surface uppercase tracking-wider"
+                >
+                  Registro de Mantenimiento
+                </h3>
+              </div>
+              <table class="w-full text-left border-collapse">
+                <tbody
+                  class="divide-y divide-surface-variant font-body-md text-body-md"
+                >
+                  <tr class="hover:bg-surface-variant transition-colors">
+                    <td class="p-3 pl-4">
+                      <div class="font-label-md text-label-md text-on-surface">
+                        15 Ago, 2024
+                      </div>
+                      <div
+                        class="font-label-sm text-label-sm text-on-surface-variant"
+                      >
+                        Preventivo 100k
+                      </div>
+                    </td>
+                    <td class="p-3 text-right pr-4">
+                      <span
+                        class="inline-flex items-center px-2 py-0.5 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                        >Completado</span
+                      >
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-surface-variant transition-colors">
+                    <td class="p-3 pl-4">
+                      <div class="font-label-md text-label-md text-on-surface">
+                        02 Jun, 2024
+                      </div>
+                      <div
+                        class="font-label-sm text-label-sm text-on-surface-variant"
+                      >
+                        Reemplazo de Pastillas
+                      </div>
+                    </td>
+                    <td class="p-3 text-right pr-4">
+                      <span
+                        class="inline-flex items-center px-2 py-0.5 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                        >Completado</span
+                      >
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-surface-variant transition-colors">
+                    <td class="p-3 pl-4">
+                      <div class="font-label-md text-label-md text-on-surface">
+                        10 Mar, 2024
+                      </div>
+                      <div
+                        class="font-label-sm text-label-sm text-on-surface-variant"
+                      >
+                        Aceite y Filtro
+                      </div>
+                    </td>
+                    <td class="p-3 text-right pr-4">
+                      <span
+                        class="inline-flex items-center px-2 py-0.5 rounded bg-[#009A3F]/10 text-[#009A3F] font-label-sm text-label-sm border border-[#009A3F]/20"
+                        >Completado</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                class="p-3 text-center border-t border-surface-variant bg-surface hover:bg-surface-variant cursor-pointer transition-colors"
+              >
+                <span class="font-label-md text-label-md text-primary-container"
+                  >Ver Historial Completo</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
