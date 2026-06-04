@@ -26,3 +26,9 @@ CREATE TABLE viaje_camion_asignado (
 
 ALTER TABLE pedido_cliente
 ADD COLUMN descripcion_restricciones TEXT;
+    ADD COLUMN contacto_nombre    VARCHAR(100),
+    ADD COLUMN contacto_telefono  VARCHAR(15),
+    ADD COLUMN contacto_correo    VARCHAR(150),
+    ADD COLUMN direccion_entrega  VARCHAR(255),   -- texto legible: "Av. Los Alamos 234, Ate Vitarte"
+    ADD COLUMN latitud            DECIMAL(10, 7), -- ej: -12.0431800
+    ADD COLUMN longitud           DECIMAL(10, 7); -- ej: -77.0282400
