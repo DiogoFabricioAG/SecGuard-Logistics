@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SecGuard Logistics - Registro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body { font-family: 'Hanken Grotesk', sans-serif; background-color: #f8faff; height: 100vh; overflow: hidden; margin: 0; }
+        
+        .sidebar { background-color: #ffffff; border-right: 1px solid #e2e8f0; width: 240px; }
+        .nav-item { display: flex; align-items: center; padding: 0.5rem 1.25rem; color: #475569; font-weight: 600; font-size: 13px; gap: 0.75rem; transition: all 0.2s; margin: 0.1rem 0.75rem; }
+        .nav-item-active { background-color: #003038; color: #ffffff !important; border-radius: 8px; }
+        
+        .section-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.25rem; margin-bottom: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .section-title { display: flex; align-items: center; gap: 0.6rem; color: #002b32; font-weight: 800; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.4rem; margin-bottom: 0.75rem; }
+        
+        .field-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 2px; display: block; }
+        
+        input, select { 
+            font-size: 13px !important; 
+            font-weight: 600 !important; 
+            padding: 8px 12px !important; 
+            border-radius: 8px !important; 
+            border: 1px solid #e2e8f0 !important; 
+            width: 100%; 
+            color: #1e293b;
+            background-color: #fff !important;
+        }
+
+        .btn-confirm { background-color: #057a18; color: white; padding: 10px 24px; border-radius: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; font-size: 15px; transition: opacity 0.2s; }
+        .btn-cancel { background-color: #bc1c1c; color: white; padding: 10px 24px; border-radius: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; font-size: 15px; transition: opacity 0.2s; }
+        .btn-confirm:hover, .btn-cancel:hover { opacity: 0.9; }
+        
+        .header-icon { color: #64748b; font-size: 24px; cursor: pointer; }
+        .user-avatar { width: 36px; height: 36px; background-color: #001e23; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; }
+
+        /* Estilos para el Modal (Imagen 1) */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 50; }
+        .modal-container { background: white; width: 850px; border-radius: 16px; 
+            overflow: hidden; display: flex; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .modal-left { background-color: #065f24; color: white; width: 450px; padding: 48px; position: relative; }
+        .modal-right { flex: 1; padding: 40px; background: #fcfcfc; }
+        
+        /* Estilos para el Toast (Base de datos actualizada) */
+        .toast-db { position: fixed; bottom: 24px; right: 24px; background: #001e23; color: white; padding: 16px 24px; border-radius: 12px; display: flex; align-items: center; gap: 16px; z-index: 60; border: 1px solid #0a3a40; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body class="flex">
+
+    <aside class="sidebar flex flex-col h-full py-6 shrink-0">
+        <div class="px-6 mb-8 flex items-start gap-2">
+            <span class="material-symbols-outlined text-[#002b32] text-3xl font-bold">local_shipping</span>
+            <div>
+                <h1 class="font-extrabold text-[#002b32] text-xl leading-tight">SecGuard Logistics</h1>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Centro Logístico Global</p>
+            </div>
+        </div>
+
+        <nav class="flex-1">
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">grid_view</span> Dashboard</a>
+            <a href="#" class="nav-item nav-item-active"><span class="material-symbols-outlined text-white">local_shipping</span> Flota</a>
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">alt_route</span> Rutas</a>
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">analytics</span> Analítica</a>
+        </nav>
+
+        <div class="mt-auto border-t border-slate-100 pt-4">
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">help</span> Soporte</a>
+            <a href="#" class="nav-item !text-[#bc1c1c]"><span class="material-symbols-outlined">logout</span> Cerrar Sesión</a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <header class="bg-white px-8 py-4 flex justify-between items-center border-b border-slate-200 shrink-0">
+            <h2 class="text-xl font-black text-[#002b32] uppercase tracking-tighter">Registrar Datos de Entrada / Salida</h2>
+            
+            <div class="flex items-center gap-6">
+                <div class="relative">
+                    <span class="material-symbols-outlined header-icon">notifications</span>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 rounded-full border-2 border-white">3</span>
+                </div>
+                <span class="material-symbols-outlined header-icon">settings</span>
+                <div class="flex items-center gap-3 border-l border-slate-200 pl-6">
+                    <div class="text-right">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase leading-none mb-1">Operador</p>
+                        <p class="text-sm font-bold text-[#002b32]">ID_Admin01</p>
+                    </div>
+                    <div class="user-avatar"><span class="material-symbols-outlined">person</span></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto opacity-50 pointer-events-none">
+            <div class="p-6 flex gap-6">
+                <div class="w-[360px] flex flex-col shrink-0">
+                    <div class="section-card">
+                        <h3 class="text-5xl font-black text-[#002b32] tracking-tighter mb-1">ABC-123</h3>
+                        <p class="text-sm font-semibold text-slate-500 mb-3">Volvo FH16 - Carga Pesada (40T)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay">
+            <div class="modal-container">
+                <div class="modal-left">
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-8">
+                        <span class="material-symbols-outlined text-white text-3xl">check_circle</span>
+                    </div>
+                    <h2 class="text-4xl font-extrabold mb-4 leading-tight">Acceso Confirmado</h2>
+                    <p class="text-green-100 text-lg opacity-90 leading-relaxed mb-12">
+                        La solicitud de ingreso para el vehículo <strong class="text-white">ABC-123</strong> ha sido procesada exitosamente.
+                    </p>
+                    
+                    <div class="bg-black/20 p-5 rounded-xl border border-white/10">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined text-xs">sensors</span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest">Señal de Apertura Enviada</span>
+                        </div>
+                        <p class="text-sm text-green-50 font-medium">Barrera Norte (Acceso A-4) respondiendo en tiempo real...</p>
+                    </div>
+                </div>
+
+                <div class="modal-right flex flex-col">
+                    <div class="flex justify-between items-start mb-8">
+                        <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">Resumen del Evento</span>
+                        <span class="bg-green-700 text-white text-[10px] font-bold px-3 py-1 rounded-full">REGISTRO ACTIVO</span>
+                    </div>
+
+                    <div class="space-y-6 flex-1">
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 bg-[#002b32] rounded flex items-center justify-center text-white shrink-0">
+                                <span class="material-symbols-outlined text-xl">tag</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Estado del Vehículo</p>
+                                <p class="font-bold text-[#002b32] text-lg">Ingreso Registrado</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 bg-[#002b32] rounded flex items-center justify-center text-white shrink-0">
+                                <span class="material-symbols-outlined text-xl">schedule</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Timestamp</p>
+                                <p class="font-bold text-[#002b32] text-lg">29 may 2026, 14:31:33</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 bg-[#002b32] rounded flex items-center justify-center text-white shrink-0">
+                                <span class="material-symbols-outlined text-xl">location_on</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Ubicación Actual</p>
+                                <p class="font-bold text-[#002b32] text-lg">En Patio - Zona de Carga B</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 space-y-3">
+                        <button class="w-full bg-[#001e23] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-[#002b32] transition-colors">
+                            Ver Detalles del Viaje <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>
+                        <button class="w-full bg-white border border-slate-200 text-slate-600 font-bold py-4 rounded-xl hover:bg-slate-50 transition-colors">
+                            Cerrar Notificación
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast-db">
+            <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-green-500 text-xl font-bold">check</span>
+            </div>
+            <div>
+                <p class="font-bold text-base leading-tight">Base de Datos Actualizada</p>
+                <p class="text-sm text-slate-400">El registro de ABC-123 ha sido sincronizado.</p>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
