@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>SecGuard Logistics - Validación ALPR</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#001d22",
+            "on-primary": "#ffffff",
+            "primary-container": "#00333c",
+            "on-primary-container": "#659eab",
+            "secondary": "#006e2b",
+            "surface": "#faf9fb",
+            "surface-container": "#eeedf0",
+            "surface-variant": "#e2e2e3",
+            "on-surface": "#1a1c1d",
+            "on-surface-variant": "#41484a",
+            "outline": "#70787b",
+            "outline-variant": "#bfc8ca",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#96d0de",
+            "border-subtle": "#EEEEEF"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "xs": "4px",
+            "lg": "24px",
+            "sm": "8px",
+            "md": "16px",
+            "sidebar-width": "220px"
+          },
+          fontFamily: {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
+    <div class="px-md mb-xl">
+      <div class="flex items-center gap-sm mb-1">
+        <span class="material-symbols-outlined text-[24px]" style="color: #00333c;">local_shipping</span>
+        <div class="flex flex-col">
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">SecGuard</span>
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">Logistics</span>
+        </div>
+      </div>
+      <p class="text-[10px] font-normal text-outline pl-[32px]">Centro Logístico Global</p>
+    </div>
+    <nav class="flex-1 px-sm space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+        <span class="text-[13px] font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] transition-colors rounded-[6px] bg-primary-container text-white" href="#">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+        <span class="text-[13px] font-medium">Flota</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">route</span>
+        <span class="text-[13px] font-medium">Rutas</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">analytics</span>
+        <span class="text-[13px] font-medium">Analítica</span>
+      </a>
+    </nav>
+    <div class="px-sm mt-auto space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        <span class="text-[13px] font-medium">Soporte</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        <span class="text-[13px] font-medium">Cerrar Sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ÁREA PRINCIPAL -->
+  <main class="ml-[220px] flex flex-col h-screen">
+
+    <!-- Header -->
+    <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+      <h1 class="font-headline text-[20px] font-semibold text-on-surface">
+        Resultado de Validación ALPR
+      </h1>
+      <div class="flex items-center gap-md">
+        <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute top-1 right-1 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full font-bold">4</span>
+        </button>
+        <button class="w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+        <div class="relative w-9 h-9 rounded-full flex items-center justify-center cursor-pointer overflow-hidden" style="background-color: #00333c;">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <rect width="40" height="40" fill="#00333c"></rect>
+            <path d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z" fill="white"></path>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENIDO -->
+    <section class="flex-1 p-lg overflow-y-auto bg-surface flex flex-col gap-lg">
+
+      <!-- 1. Alerta banner -->
+      <div class="bg-[#ffdcbd] border-l-[4px] border-[#fd9a12] rounded-xl p-md flex items-center justify-between">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-[#462600]" style="font-size: 20px;">warning</span>
+          <p class="text-[13px] font-medium text-[#462600]">Anomalía detectada — Se ha generado una alerta de auditoría automática. Revise el panel de alertas.</p>
+        </div>
+        <button class="text-[12px] font-semibold text-[#462600] hover:underline px-md py-1">Ver alerta →</button>
+      </div>
+
+      <!-- 2. Main Card -->
+      <div class="bg-white border-[2px] border-[#fd9a12] rounded-xl p-lg grid grid-cols-1 lg:grid-cols-[60%_40%] gap-lg">
+
+        <!-- Columna izquierda -->
+        <div class="flex flex-col gap-md">
+          <div class="relative aspect-video bg-[#1a1c1d] rounded-lg border-[3px] border-dotted border-[#fd9a12] overflow-hidden">
+            <img alt="ALPR Camera Feed" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq3NW8oM1I7mj2WujrQrKuyKD4oq-HO4PNrKMWLSZDkyOT5jM1Avb9Wy9tDasWBnPE-yzEDnz_Gdc8z_Bt-hkyA93XqJ-n_zsB31LvItoyXzxEacaEOuH3denOnhILFEDeOdNkva9UTWBvwI_F2xrRrZckag_SoTkY0jsT1yw0by_EcmSD8Ozm3L9p0KMYprSPJhbnZgZfi_6PGYyzbJeNrQMSTaNMikl6VbpFsT8-52K9HPtU3-naeSKkrQ5vkfBRz0v3rqI81n4"/>
+            <div class="absolute top-[49%] left-[38%] w-[23%] h-[14%] border-2 border-dotted border-[#fd9a12] z-10 pointer-events-none">
+              <div class="absolute -top-6 left-0 bg-[#ffdcbd] text-[#462600] text-[10px] font-bold px-1.5 py-0.5 rounded-[2px] whitespace-nowrap">PLACA DETECTADA</div>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-md flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#fd9a12] text-[20px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+              <span class="text-[13px] font-semibold text-[#fd9a12]">Ingreso preventivo activo</span>
+            </div>
+          </div>
+          <div class="bg-[#ffdcbd] rounded-xl p-md flex flex-col items-center justify-center">
+            <span class="text-[10px] font-bold text-[#462600] opacity-60 mb-1">LECTURA DE SISTEMA</span>
+            <h2 class="font-headline text-[32px] font-bold text-[#462600] tracking-widest uppercase">DFT-5521</h2>
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="bg-[#ffdcbd] rounded-xl p-lg flex flex-col gap-md">
+          <div class="flex flex-col gap-xs">
+            <div class="inline-flex items-center gap-1.5 bg-[#653a00] text-[#fd9a12] px-sm py-0.5 rounded-full w-fit">
+              <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+              <span class="text-[11px] font-semibold uppercase">Anomalía detectada</span>
+            </div>
+            <h3 class="font-headline text-[18px] font-semibold text-[#462600] mt-sm">Ingreso preventivo autorizado</h3>
+            <p class="text-[13px] text-[#462600] leading-relaxed opacity-90">Se detectó una anomalía en el sistema durante la validación. El acceso fue autorizado de forma preventiva y el evento fue registrado para auditoría.</p>
+          </div>
+          <div class="h-px w-full bg-[#fd9a12] opacity-20"></div>
+          <div class="flex flex-col gap-sm">
+            <div class="flex flex-col gap-xs">
+              <span class="text-[11px] font-semibold text-[#40484a] uppercase">Tipo de anomalía</span>
+              <span class="text-[13px] text-[#1a1c1d] font-medium">Datos No actualizados en BD</span>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <span class="text-[11px] font-semibold text-[#40484a] uppercase">Placa detectada</span>
+              <span class="text-[13px] text-[#1a1c1d] font-medium">DFT-5521</span>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <span class="text-[11px] font-semibold text-[#40484a] uppercase">Empresa/Cliente</span>
+              <span class="text-[13px] text-[#1a1c1d] font-medium">Falabella</span>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <span class="text-[11px] font-semibold text-[#40484a] uppercase">Punto de control</span>
+              <span class="text-[13px] text-[#1a1c1d] font-medium">Hangar 4 — Entrada</span>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <span class="text-[11px] font-semibold text-[#40484a] uppercase">Timestamp</span>
+              <span class="text-[13px] text-[#1a1c1d] font-medium">22/05/2026 14:15:00</span>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <span class="text-[11px] font-semibold text-[#40484a] uppercase">Estado de barrera</span>
+              <span class="text-[13px] font-bold" style="color: #006e2b;">Abierta — Preventivo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón acción -->
+        <button class="lg:col-span-2 w-full bg-[#00333c] hover:bg-[#001d22] text-white font-semibold text-[13px] h-10 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.99]">
+          <span class="material-symbols-outlined text-[18px]">verified_user</span>
+          Revisar alerta de auditoría
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

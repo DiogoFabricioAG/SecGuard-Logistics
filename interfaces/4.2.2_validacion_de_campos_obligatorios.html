@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SecGuard Logistics - Iniciar Sesión</title>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-highest": "#e2e2e3",
+                        "on-surface-variant": "#40484a",
+                        "background": "#f9f9fa",
+                        "warning-text": "#f39200",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e2e2e3",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1d",
+                        "on-primary-container": "#659eab",
+                        "primary": "#001d22",
+                        "outline-variant": "#c0c8ca",
+                        "on-tertiary-fixed-variant": "#643e15",
+                        "surface-container": "#eeedf0",
+                        "surface-tint": "#2a6673",
+                        "primary-fixed": "#b2ecfa",
+                        "on-secondary-fixed": "#002108",
+                        "secondary-container": "#97f5a1",
+                        "secondary-fixed": "#9af7a3",
+                        "inverse-primary": "#96d0de",
+                        "surface-dim": "#dadadc",
+                        "on-tertiary-container": "#bc8b5b",
+                        "border-subtle": "#eeeef",
+                        "on-primary-fixed-variant": "#064e5a",
+                        "on-secondary-fixed-variant": "#00531e",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#96d0de",
+                        "on-primary-fixed": "#001f25",
+                        "tertiary-fixed": "#ffdcbe",
+                        "tertiary": "#291400",
+                        "on-secondary-container": "#0a722f",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary": "#006e2b",
+                        "inverse-on-surface": "#f0f1f1",
+                        "neutral-text": "#58595b",
+                        "surface-bright": "#f9f9fa",
+                        "success-text": "#009a3f",
+                        "tertiary-container": "#462600",
+                        "surface-container-low": "#f3f3f4",
+                        "surface": "#faf9fb",
+                        "on-background": "#1a1c1d",
+                        "error-main": "#ba1a1a",
+                        "tertiary-fixed-dim": "#f3bc88",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-container": "#00333c",
+                        "outline": "#70787b",
+                        "secondary-fixed-dim": "#7eda8a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "grid-gutter": "16px",
+                        "grid-margin": "24px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "sidebar-width": "260px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Manrope"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "normal", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "normal", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "letterSpacing": "normal", "fontWeight": "600"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "normal", "fontWeight": "500"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .bg-blur-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .bg-blur-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(8px);
+            transform: scale(1.05);
+        }
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #00333c;
+            opacity: 0.55;
+        }
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            max-width: 420px;
+            width: 100%;
+            border: 1px solid #EEEEEF;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface bg-background min-h-screen flex items-center justify-center p-md">
+<!-- Background Layer -->
+<div class="bg-blur-container">
+<img alt="Logistics Center Background" class="bg-blur-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqCFHA-vWVJ1lklPe7-0vEszXXg-iZFMAUfh5gh2WQr3r5wlr8TmmPGJo8ybJTMZ9aMQNvsvQjoA1GbRWCPUcetL3RiSGMqseDewByNzwW33J9kJ68ZLX1JvU5VBAO0DQOjyxk41BbH1ir0FgCFQZ20SnM5TY1SKJNTuTamgZsB6ulzjTfY9I9FEHsLRYWM9T3G9Chsp7hc8tAFnDhD5_qwmbrJkjWDrxVUrwHOFt9_mIqqIXU64qLOHpfQMhesEEPzDahOC34q3o"/>
+<div class="bg-overlay"></div>
+</div>
+<!-- Login Card -->
+<main class="login-card animate-in fade-in zoom-in duration-500">
+<!-- Header Section -->
+<header class="flex flex-col items-center text-center mb-md">
+<div class="mb-sm">
+<span class="material-symbols-outlined text-[40px] text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">
+                    shield
+                </span>
+</div>
+<h1 class="font-headline-md text-[28px] font-bold text-primary-container leading-tight">
+                SecGuard Logistics
+            </h1>
+<p class="font-label-md text-[14px] font-semibold text-on-surface-variant mt-xs">
+                Control de acceso vehicular
+            </p>
+<p class="font-body-md text-[13px] text-outline mt-xs">
+                Ingrese sus credenciales
+            </p>
+</header>
+<hr class="w-full border-t border-outline-variant my-lg"/>
+<!-- Login Form with Validation Errors -->
+<form class="space-y-md" onsubmit="return false;">
+<!-- Usuario Field -->
+<div class="space-y-base">
+<label class="font-label-md text-[12px] font-semibold text-on-surface-variant block" for="username">
+                    Usuario
+                </label>
+<div class="relative">
+<input autocomplete="username" class="w-full h-[40px] px-md bg-white border border-error-main rounded-lg focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container transition-all outline-none" id="username" name="username" placeholder="ej. jsmith" type="text"/>
+</div>
+<p class="font-label-sm text-[11px] font-medium text-on-error-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                    Este campo es obligatorio
+                </p>
+</div>
+<!-- Contraseña Field -->
+<div class="space-y-base">
+<label class="font-label-md text-[12px] font-semibold text-on-surface-variant block" for="password">
+                    Contraseña
+                </label>
+<div class="relative">
+<input autocomplete="current-password" class="w-full h-[40px] px-md bg-white border border-error-main rounded-lg focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container transition-all outline-none" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+<p class="font-label-sm text-[11px] font-medium text-on-error-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                    Este campo es obligatorio
+                </p>
+</div>
+<!-- Submit Button -->
+<div class="pt-sm">
+<button class="w-full h-[44px] bg-primary-container text-white font-body-md text-[14px] font-semibold rounded-lg hover:bg-primary transition-all active:scale-[0.98] duration-150 flex items-center justify-center" type="submit">
+                    Iniciar sesión
+                </button>
+</div>
+</form>
+<!-- Footer Links & Copyright -->
+<footer class="flex flex-col items-center mt-md">
+<a class="font-body-md text-[13px] text-surface-tint hover:underline transition-all" href="#">
+                ¿Olvidó su contraseña?
+            </a>
+<p class="font-label-sm text-[11px] text-outline text-center mt-xl px-sm leading-relaxed">
+                © 2026 SecGuard Logistics.<br/>Secure Global Supply Chain Management.
+            </p>
+</footer>
+</main>
+<script>
+        // Micro-interaction for input states
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                // Clear errors on focus for a smoother experience
+                const parent = input.parentElement.parentElement;
+                const errorMsg = parent.querySelector('.text-on-error-container');
+                if (errorMsg) {
+                    errorMsg.style.opacity = '0.5';
+                }
+            });
+            input.addEventListener('blur', () => {
+                const parent = input.parentElement.parentElement;
+                const errorMsg = parent.querySelector('.text-on-error-container');
+                if (errorMsg) {
+                    errorMsg.style.opacity = '1';
+                }
+            });
+        });
+    </script>
+</body></html>

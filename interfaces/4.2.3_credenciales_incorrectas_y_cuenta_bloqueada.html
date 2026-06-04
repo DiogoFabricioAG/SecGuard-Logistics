@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SecGuard Logistics - Iniciar Sesión</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9f9fa",
+                        "on-error": "#ffffff",
+                        "tertiary": "#291400",
+                        "on-primary-fixed-variant": "#064e5a",
+                        "on-tertiary-fixed-variant": "#643e15",
+                        "on-surface-variant": "#41484a",
+                        "error-main": "#ba1a1a",
+                        "secondary-fixed": "#9af7a3",
+                        "warning-text": "#f39200",
+                        "surface": "#faf9fb",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e2e2e3",
+                        "surface-dim": "#dadada",
+                        "on-surface": "#1a1c1d",
+                        "surface-variant": "#e2e2e3",
+                        "secondary-fixed-dim": "#7eda8a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f9f9fa",
+                        "primary-container": "#00333c",
+                        "on-tertiary-fixed": "#2c1600",
+                        "outline": "#70787b",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c0c8ca",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#659eab",
+                        "secondary": "#006e2b",
+                        "on-secondary-fixed": "#002108",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-fixed": "#b2ecfa",
+                        "border-subtle": "#eeeef",
+                        "primary-fixed-dim": "#96d0de",
+                        "on-background": "#1a1c1d",
+                        "success-text": "#009a3f",
+                        "tertiary-fixed-dim": "#f3bc88",
+                        "surface-container": "#eeedf0",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-secondary-container": "#0a722f",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f3f3f4",
+                        "neutral-text": "#58595b",
+                        "on-tertiary-container": "#bc8b5b",
+                        "tertiary-fixed": "#ffdcbe",
+                        "error-container": "#ffdad6",
+                        "primary": "#001d22",
+                        "inverse-primary": "#96d0de",
+                        "surface-tint": "#2a6673",
+                        "on-primary-fixed": "#001f25",
+                        "secondary-container": "#97f5a1",
+                        "on-secondary-fixed-variant": "#00531e",
+                        "tertiary-container": "#462600"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "grid-margin": "24px",
+                        "grid-gutter": "16px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "base": "4px",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "normal", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "normal", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "normal", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "letterSpacing": "normal", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .bg-blur-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .bg-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDThiOZAvILb1iCHlptsHuYiFaPkaJ7wZcippebnzvZ3CrbcZ1H2izZC53_Z818TQ2ku1o-gBe-ci-Ud2JqdYuv3Y_d2M19jWWRY_rMQ5vfBEX8cuGzUxNuMil5fPyxyngADIqIBFt1yba57ZScjTCLK5-qkjtz0q4EwiK78G_WXPPBSItvTkK6L_BEcfDBtkZLAwVLBxAk2kVkoF-Q7QCu9EDmmgUIHiWVWSyghqykciElHHLh4gj3fkeH0LdxEuEDcs1paJxRGj0');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px);
+            transform: scale(1.05);
+        }
+
+        .bg-color-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #00333c;
+            opacity: 0.55;
+        }
+
+        .card-shadow {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        input:focus {
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(0, 75, 87, 0.1);
+        }
+    </style>
+</head>
+<body class="h-full flex items-center justify-center p-md font-body-md bg-background">
+<!-- Background Layer -->
+<div class="bg-blur-container">
+<div class="bg-image-overlay"></div>
+<div class="bg-color-overlay"></div>
+</div>
+<!-- Login Card -->
+<main class="w-full max-w-[420px] bg-white/95 border border-outline-variant rounded-lg p-xl card-shadow flex flex-col items-center">
+<!-- Header Section -->
+<header class="text-center w-full">
+<div class="mb-sm">
+<span class="material-symbols-outlined text-[40px] text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<h1 class="font-headline-md text-[28px] text-primary-container font-bold leading-tight mb-xs">
+                SecGuard Logistics
+            </h1>
+<p class="font-label-md text-on-surface-variant font-semibold mb-xs">
+                Control de acceso vehicular
+            </p>
+<p class="font-body-md text-[13px] text-outline">
+                Ingrese sus credenciales
+            </p>
+</header>
+<!-- Separator -->
+<hr class="w-full border-t border-outline-variant my-lg"/>
+<!-- Form Section -->
+<form class="w-full space-y-md" onsubmit="return false;">
+<div class="space-y-xs">
+<label class="font-label-md text-on-surface-variant block" for="username">Usuario</label>
+<input class="w-full px-md py-sm bg-white border border-error-main rounded-lg text-body-md text-on-surface transition-all" id="username" type="text" value="j.rodriguez@secguard.com"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-on-surface-variant block" for="password">Contraseña</label>
+<input class="w-full px-md py-sm bg-white border border-error-main rounded-lg text-body-md text-on-surface transition-all" id="password" type="password" value="••••••••"/>
+</div>
+<!-- Alert Block -->
+<div class="bg-error-container border-l-4 border-error-main rounded-lg px-md py-sm flex items-start gap-sm">
+<span class="material-symbols-outlined text-on-error-container text-[20px]" style="font-variation-settings: 'FILL' 1;">error</span>
+<p class="text-[14px] leading-tight text-on-error-container font-body-md">
+                    Credenciales incorrectas. Verifique su usuario y contraseña.
+                </p>
+</div>
+<!-- Attempt Counter -->
+<p class="text-[12px] font-medium text-on-surface-variant text-center">
+                Intento 1 de 3
+            </p>
+<!-- Submit Button -->
+<button class="w-full h-[44px] bg-primary-container text-white font-semibold rounded-lg text-[14px] flex items-center justify-center transition-all active:scale-95 hover:bg-opacity-90" type="submit">
+                Iniciar sesión
+            </button>
+<!-- Help Link -->
+<div class="text-center pt-xs">
+<a class="text-[13px] text-on-primary-fixed-variant hover:underline transition-colors" href="#">
+                    ¿Olvidó su contraseña?
+                </a>
+</div>
+</form>
+<!-- Footer -->
+<footer class="mt-lg pt-lg text-center w-full">
+<p class="text-[11px] text-outline font-normal leading-relaxed">
+                © 2026 SecGuard Logistics.<br/>
+                Secure Global Supply Chain Management.
+            </p>
+</footer>
+</main>
+<script>
+        // Micro-interaction: Subtle shake effect on the card for visual error emphasis
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.querySelector('main');
+            card.style.transform = 'translateX(0)';
+            
+            const shake = () => {
+                const intensity = 4;
+                const duration = 50;
+                const steps = [intensity, -intensity, intensity, -intensity, 0];
+                
+                steps.forEach((offset, index) => {
+                    setTimeout(() => {
+                        card.style.transform = `translateX(${offset}px)`;
+                        card.style.transition = 'transform 0.05s ease-in-out';
+                    }, index * duration);
+                });
+            };
+            
+            // Trigger shake once on load to highlight error state
+            setTimeout(shake, 400);
+        });
+    </script>
+</body></html>
