@@ -1,0 +1,4 @@
+-- AQUI AGREGAN EL CODIGO PARA CREAR TABLAS, VERIFIQUEN LA VERSIÓN ANTERIORS
+
+-- AUTOR: DIOGO ABREGU GONZALES (colocan su nombre aquí, el que crea la tabla)
+
