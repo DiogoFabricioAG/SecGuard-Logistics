@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>SecGuard Logistics - Analítica</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#001d22",
+            "on-primary": "#ffffff",
+            "primary-container": "#00333c",
+            "on-primary-container": "#659eab",
+            "secondary": "#006e2b",
+            "surface": "#faf9fb",
+            "surface-container": "#eeedf0",
+            "surface-variant": "#e2e2e3",
+            "on-surface": "#1a1c1d",
+            "on-surface-variant": "#41484a",
+            "outline": "#70787b",
+            "outline-variant": "#bfc8ca",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#96d0de",
+            "border-subtle": "#EEEEEF"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "xs": "4px",
+            "lg": "24px",
+            "sm": "8px",
+            "md": "16px",
+            "sidebar-width": "220px"
+          },
+          fontFamily: {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+
+  <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
+
+    <div class="px-md mb-xl">
+      <div class="flex items-center gap-sm mb-1">
+        <span class="material-symbols-outlined text-[24px]" style="color: #00333c;">local_shipping</span>
+        <div class="flex flex-col">
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">SecGuard</span>
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">Logistics</span>
+        </div>
+      </div>
+      <p class="text-[10px] font-normal text-outline pl-[32px]">Centro Logístico Global</p>
+    </div>
+
+    <nav class="flex-1 px-sm space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+        <span class="text-[13px] font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="gestion_flota.html">
+        <span class="material-symbols-outlined text-[20px]">local_shipping</span>
+        <span class="text-[13px] font-medium">Flota</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="registrar_viaje.html">
+        <span class="material-symbols-outlined text-[20px]">route</span>
+        <span class="text-[13px] font-medium">Rutas</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] transition-colors rounded-[6px] bg-primary-container text-white" href="#">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+        <span class="text-[13px] font-medium">Analítica</span>
+      </a>
+    </nav>
+
+    <div class="px-sm mt-auto space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        <span class="text-[13px] font-medium">Soporte</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        <span class="text-[13px] font-medium">Cerrar Sesión</span>
+      </a>
+    </div>
+
+  </aside>
+  <main class="ml-[220px] flex flex-col h-screen">
+
+    <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+      <h1 class="font-headline text-[20px] font-semibold text-on-surface">
+        Panel de Métricas
+      </h1>
+      <div class="flex items-center gap-md">
+        <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute top-1 right-1 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+        </button>
+        <button class="w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+        <div class="relative w-9 h-9 rounded-full flex items-center justify-center cursor-pointer overflow-hidden" style="background-color: #00333c;">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <rect width="40" height="40" fill="#00333c"></rect>
+            <path d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z" fill="white"></path>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <section class="flex-1 p-lg overflow-y-auto flex flex-col gap-lg">
+      
+      <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm shrink-0">
+        <div class="flex flex-wrap items-end gap-4">
+          <div class="flex flex-col gap-1 min-w-[160px]">
+            <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Ruta / Zona</label>
+            <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
+              <option value="">Todas las Rutas</option>
+              <option>Callao</option>
+              <option>Huachipa</option>
+              <option>San Juan de Lurigancho</option>
+              <option>Ate Vitarte</option>
+              <option>Villa El Salvador</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-1 min-w-[160px]">
+            <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tipo de Vehículo</label>
+            <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
+              <option value="">Todos los Vehículos</option>
+              <option>Camión Pesado</option>
+              <option>Furgón</option>
+              <option>Semirremolque</option>
+              <option>Camioneta</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-1 min-w-[140px]">
+            <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fecha Inicio</label>
+            <input type="date" value="2025-04-01" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+          </div>
+          <div class="flex flex-col gap-1 min-w-[140px]">
+            <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fecha Fin</label>
+            <input type="date" value="2025-04-30" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+          </div>
+          <div class="ml-auto">
+            <button class="bg-primary-container text-white px-5 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:bg-primary transition-colors shadow-sm">
+              <span class="material-symbols-outlined text-[18px]">filter_list</span>
+              Filtrar Datos
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-md shrink-0">
+        
+        <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Nivel de Servicio</span>
+            <span class="material-symbols-outlined text-primary-container text-[20px]">verified</span>
+          </div>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span class="font-headline text-[32px] font-bold text-primary-container">94.2%</span>
+            <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-[#009A3F]/10 text-[#009A3F] text-[11px] font-medium border border-[#009A3F]/20">
+              <span class="material-symbols-outlined text-[12px]">trending_up</span>+1.5%
+            </span>
+          </div>
+          <p class="text-[12px] font-semibold text-on-surface">OTIF %</p>
+          <div class="mt-1">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-[11px] text-on-surface-variant">Meta: 95.0%</span>
+              <span class="text-[11px] text-on-surface-variant">94.2 / 95.0</span>
+            </div>
+            <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+              <div class="bg-[#009A3F] h-1.5 rounded-full" style="width: 94.2%"></div>
+            </div>
+          </div>
+          <p class="text-[11px] text-on-surface-variant">Meta corporativa: 95.0%</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Utilización de Flota</span>
+            <span class="material-symbols-outlined text-primary-container text-[20px]">local_shipping</span>
+          </div>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span class="font-headline text-[32px] font-bold text-primary-container">87.5%</span>
+            <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-[#009A3F]/10 text-[#009A3F] text-[11px] font-medium border border-[#009A3F]/20">
+              <span class="material-symbols-outlined text-[12px]">trending_up</span>+2.1%
+            </span>
+          </div>
+          <p class="text-[12px] font-semibold text-on-surface">Vehículos Activos</p>
+          <div class="mt-1">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-[11px] text-on-surface-variant">42 activos / 48 total</span>
+            </div>
+            <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+              <div class="bg-[#009A3F] h-1.5 rounded-full" style="width: 87.5%"></div>
+            </div>
+          </div>
+          <p class="text-[11px] text-on-surface-variant">42 camiones activos hoy</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Viajes Sin Retrasos</span>
+            <span class="material-symbols-outlined text-[#F39200] text-[20px]">schedule</span>
+          </div>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span class="font-headline text-[32px] font-bold text-primary-container">91.8%</span>
+            <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-error/10 text-error text-[11px] font-medium border border-error/20">
+              <span class="material-symbols-outlined text-[12px]">trending_down</span>-0.4%
+            </span>
+          </div>
+          <p class="text-[12px] font-semibold text-on-surface">Puntualidad</p>
+          <div class="mt-1">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-[11px] text-on-surface-variant">Meta: 93.0%</span>
+            </div>
+            <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+              <div class="bg-[#F39200] h-1.5 rounded-full" style="width: 91.8%"></div>
+            </div>
+          </div>
+          <p class="text-[11px] text-on-surface-variant">↓ Tendencia negativa este mes</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Gasto de Combustible</span>
+            <span class="material-symbols-outlined text-primary-container text-[20px]">local_gas_station</span>
+          </div>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span class="font-headline text-[32px] font-bold text-primary-container">3.8</span>
+            <span class="text-[20px] font-semibold text-on-surface-variant pl-1">Km/Gal</span>
+          </div>
+          <p class="text-[12px] font-semibold text-on-surface">Rendimiento Promedio</p>
+          <div class="mt-1">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-[11px] text-on-surface-variant">Meta: 3.5 Km/Gal</span>
+            </div>
+            <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+              <div class="bg-[#009A3F] h-1.5 rounded-full" style="width: 76%"></div>
+            </div>
+          </div>
+          <span class="inline-flex items-center gap-1 text-[11px] text-[#009A3F]">
+            <span class="material-symbols-outlined text-[14px]">eco</span>
+            Estado: Eficiente
+          </span>
+        </div>
+
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-md flex-1 min-h-0">
+        
+        <div class="lg:col-span-2 bg-white rounded-xl border border-border-subtle flex flex-col overflow-hidden shadow-sm">
+          <div class="p-4 border-b border-border-subtle flex justify-between items-center bg-white">
+            <div>
+              <h2 class="font-headline text-[20px] font-semibold text-on-surface">Desempeño Operativo por Ruta</h2>
+              <p class="text-[14px] text-on-surface-variant mt-0.5">Últimos 30 días · Todas las zonas</p>
+            </div>
+            <button class="bg-white border border-border-subtle text-primary-container px-3 py-1.5 rounded text-[12px] font-semibold flex items-center gap-1 hover:bg-slate-50 transition-colors">
+              <span class="material-symbols-outlined text-[16px]">download</span>
+              Exportar
+            </button>
+          </div>
+
+          <div class="overflow-y-auto flex-1">
+            <table class="w-full text-left border-collapse">
+              <thead class="sticky top-0 bg-surface-container z-10">
+                <tr>
+                  <th class="p-3 pl-4 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle">Ruta</th>
+                  <th class="p-3 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-right">Viajes Totales</th>
+                  <th class="p-3 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-right">OTIF %</th>
+                  <th class="p-3 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-right">T. Promedio (Hrs)</th>
+                  <th class="p-3 pr-4 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-center">Estado de Meta</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-surface-variant text-[14px]">
+                <tr class="hover:bg-surface-container transition-colors">
+                  <td class="p-3 pl-4">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary-container text-[18px]">route</span>
+                      <div>
+                        <div class="font-semibold text-on-surface">Callao → Ate Vitarte</div>
+                        <div class="text-[11px] text-on-surface-variant">Ruta Norte</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right font-semibold text-on-surface">148</td>
+                  <td class="p-3 text-right">
+                    <span class="font-semibold text-[#009A3F]">96.8%</span>
+                  </td>
+                  <td class="p-3 text-right text-on-surface">2.4</td>
+                  <td class="p-3 pr-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#009A3F]/10 text-[#009A3F] text-[11px] font-medium border border-[#009A3F]/20">
+                      <span class="material-symbols-outlined text-[12px]">check_circle</span>Cumplido
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-surface-container transition-colors">
+                  <td class="p-3 pl-4">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary-container text-[18px]">route</span>
+                      <div>
+                        <div class="font-semibold text-on-surface">Huachipa → San Isidro</div>
+                        <div class="text-[11px] text-on-surface-variant">Ruta Este</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right font-semibold text-on-surface">112</td>
+                  <td class="p-3 text-right">
+                    <span class="font-semibold text-[#009A3F]">95.5%</span>
+                  </td>
+                  <td class="p-3 text-right text-on-surface">3.1</td>
+                  <td class="p-3 pr-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#009A3F]/10 text-[#009A3F] text-[11px] font-medium border border-[#009A3F]/20">
+                      <span class="material-symbols-outlined text-[12px]">check_circle</span>Cumplido
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-surface-container transition-colors">
+                  <td class="p-3 pl-4">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-[#F39200] text-[18px]">route</span>
+                      <div>
+                        <div class="font-semibold text-on-surface">Callao → Villa El Salvador</div>
+                        <div class="text-[11px] text-on-surface-variant">Ruta Sur</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right font-semibold text-on-surface">97</td>
+                  <td class="p-3 text-right">
+                    <span class="font-semibold text-[#F39200]">93.4%</span>
+                  </td>
+                  <td class="p-3 text-right text-on-surface">4.2</td>
+                  <td class="p-3 pr-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F39200]/10 text-[#F39200] text-[11px] font-medium border border-[#F39200]/20">
+                      <span class="material-symbols-outlined text-[12px]">warning</span>Riesgo
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-surface-container transition-colors">
+                  <td class="p-3 pl-4">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-[#F39200] text-[18px]">route</span>
+                      <div>
+                        <div class="font-semibold text-on-surface">SJL → Miraflores</div>
+                        <div class="text-[11px] text-on-surface-variant">Ruta Centro</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right font-semibold text-on-surface">83</td>
+                  <td class="p-3 text-right">
+                    <span class="font-semibold text-[#F39200]">92.1%</span>
+                  </td>
+                  <td class="p-3 text-right text-on-surface">3.8</td>
+                  <td class="p-3 pr-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F39200]/10 text-[#F39200] text-[11px] font-medium border border-[#F39200]/20">
+                      <span class="material-symbols-outlined text-[12px]">warning</span>Riesgo
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-surface-container transition-colors">
+                  <td class="p-3 pl-4">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-error text-[18px]">route</span>
+                      <div>
+                        <div class="font-semibold text-on-surface">Callao → Almacén Sur (KM 25)</div>
+                        <div class="text-[11px] text-on-surface-variant">Almacén Saturado</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right font-semibold text-on-surface">65</td>
+                  <td class="p-3 text-right">
+                    <span class="font-semibold text-error">88.3%</span>
+                  </td>
+                  <td class="p-3 text-right text-on-surface">5.7</td>
+                  <td class="p-3 pr-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error/10 text-error text-[11px] font-medium border border-error/20">
+                      <span class="material-symbols-outlined text-[12px]">cancel</span>Crítico
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-surface-container transition-colors">
+                  <td class="p-3 pl-4">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-error text-[18px]">route</span>
+                      <div>
+                        <div class="font-semibold text-on-surface">Huachipa → Almacén Norte (KM 38)</div>
+                        <div class="text-[11px] text-on-surface-variant">Almacén Saturado</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right font-semibold text-on-surface">54</td>
+                  <td class="p-3 text-right">
+                    <span class="font-semibold text-error">86.9%</span>
+                  </td>
+                  <td class="p-3 text-right text-on-surface">6.1</td>
+                  <td class="p-3 pr-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error/10 text-error text-[11px] font-medium border border-error/20">
+                      <span class="material-symbols-outlined text-[12px]">cancel</span>Crítico
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-surface-container transition-colors">
+                  <td class="p-3 pl-4">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-primary-container text-[18px]">route</span>
+                      <div>
+                        <div class="font-semibold text-on-surface">Ate → Chorrillos</div>
+                        <div class="text-[11px] text-on-surface-variant">Ruta Costera</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-right font-semibold text-on-surface">108</td>
+                  <td class="p-3 text-right">
+                    <span class="font-semibold text-[#009A3F]">97.2%</span>
+                  </td>
+                  <td class="p-3 text-right text-on-surface">2.9</td>
+                  <td class="p-3 pr-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#009A3F]/10 text-[#009A3F] text-[11px] font-medium border border-[#009A3F]/20">
+                      <span class="material-symbols-outlined text-[12px]">check_circle</span>Cumplido
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-3 text-center border-t border-border-subtle bg-white hover:bg-surface-container cursor-pointer transition-colors">
+            <span class="text-[12px] font-semibold text-primary-container">Ver todas las rutas →</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-1 bg-white rounded-xl border border-border-subtle flex flex-col overflow-hidden shadow-sm">
+          <div class="p-4 border-b border-border-subtle">
+            <h2 class="font-headline text-[20px] font-semibold text-on-surface">Principales Motivos de Retraso</h2>
+            <p class="text-[14px] text-on-surface-variant mt-0.5">Distribución porcentual · 30 días</p>
+          </div>
+
+          <div class="p-4 flex flex-col gap-5 overflow-y-auto flex-1">
+
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-container text-[18px]">traffic</span>
+                  <span class="text-[12px] font-semibold text-on-surface">Tráfico Urbano</span>
+                </div>
+                <span class="font-headline text-[20px] font-semibold text-primary-container">45%</span>
+              </div>
+              <div class="w-full bg-surface-container h-2.5 rounded-full overflow-hidden">
+                <div class="bg-primary-container h-2.5 rounded-full transition-all duration-700" style="width: 45%"></div>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">Congestión en vías principales durante horas pico</p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[#F39200] text-[18px]">security</span>
+                  <span class="text-[12px] font-semibold text-on-surface">Garitas de Control</span>
+                </div>
+                <span class="font-headline text-[20px] font-semibold text-[#F39200]">30%</span>
+              </div>
+              <div class="w-full bg-surface-container h-2.5 rounded-full overflow-hidden">
+                <div class="bg-[#F39200] h-2.5 rounded-full transition-all duration-700" style="width: 30%"></div>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">Demoras en inspecciones y trámites documentarios</p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[#2a6673] text-[18px]">inventory</span>
+                  <span class="text-[12px] font-semibold text-on-surface">Carga / Descarga</span>
+                </div>
+                <span class="font-headline text-[20px] font-semibold text-[#2a6673]">18%</span>
+              </div>
+              <div class="w-full bg-surface-container h-2.5 rounded-full overflow-hidden">
+                <div class="bg-[#2a6673] h-2.5 rounded-full transition-all duration-700" style="width: 18%"></div>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">Tiempos excesivos en puntos de carga y descarga</p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-error text-[18px]">build</span>
+                  <span class="text-[12px] font-semibold text-on-surface">Incidentes Mecánicos</span>
+                </div>
+                <span class="font-headline text-[20px] font-semibold text-error">7%</span>
+              </div>
+              <div class="w-full bg-surface-container h-2.5 rounded-full overflow-hidden">
+                <div class="bg-error h-2.5 rounded-full transition-all duration-700" style="width: 7%"></div>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">Fallas técnicas y averías en ruta</p>
+            </div>
+
+            <div class="border-t border-border-subtle pt-4 mt-2">
+              <h3 class="text-[12px] font-semibold text-on-surface uppercase tracking-wider mb-3">Resumen del Período</h3>
+              <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                  <span class="text-on-surface-variant">Total de viajes</span>
+                  <span class="text-[12px] font-semibold text-on-surface">667</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-on-surface-variant">Viajes con retraso</span>
+                  <span class="text-[12px] font-semibold text-error">54</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-on-surface-variant">Retraso promedio</span>
+                  <span class="text-[12px] font-semibold text-[#F39200]">38 min</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-on-surface-variant">Puntualidad general</span>
+                  <span class="text-[12px] font-semibold text-[#009A3F]">91.8%</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      
+    </section>
+    </main>
+  </body>
+</html>

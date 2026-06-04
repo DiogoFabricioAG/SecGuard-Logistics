@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>SecGuard Logistics – Eliminar KPI</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#001d22",
+            "on-primary": "#ffffff",
+            "primary-container": "#00333c",
+            "on-primary-container": "#659eab",
+            "secondary": "#006e2b",
+            "surface": "#faf9fb",
+            "surface-container": "#eeedf0",
+            "surface-variant": "#e2e2e3",
+            "on-surface": "#1a1c1d",
+            "on-surface-variant": "#41484a",
+            "outline": "#70787b",
+            "outline-variant": "#bfc8ca",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "warning": "#7d4e00",
+            "warning-container": "#ffddb3",
+            "on-warning-container": "#7d4e00",
+            "primary-fixed-dim": "#96d0de",
+            "primary-fixed": "#b2ecfa",
+            "border-subtle": "#EEEEEF",
+            "surface-lowest": "#ffffff",
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "xs": "4px",
+            "lg": "24px",
+            "sm": "8px",
+            "md": "16px",
+            "sidebar-width": "220px",
+            "xl": "32px",
+          },
+          fontFamily: {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    @keyframes pulse-active {
+      0%, 100% { background-color: rgb(0 51 60 / 1); }
+      50%       { background-color: rgb(0 51 60 / 0.85); }
+    }
+    .nav-active { animation: pulse-active 2.5s ease-in-out infinite; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.3s ease forwards; }
+
+    @keyframes slideDown {
+      from { max-height: 0; opacity: 0; }
+      to   { max-height: 300px; opacity: 1; }
+    }
+    .slide-down { animation: slideDown 0.35s ease forwards; overflow: hidden; }
+
+    .impact-row { transition: background 0.15s; }
+    .impact-row:hover { background: #faf9fb; }
+
+    .btn-archive {
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-archive:hover { background: #eeedf0; }
+
+    .btn-cancel {
+      transition: background 0.15s;
+    }
+    .btn-cancel:hover { background: #eeedf0; }
+
+    .btn-delete {
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-delete:hover { opacity: 0.9; }
+    .btn-delete:active { transform: scale(0.98); }
+
+    /* Confirm state overlay */
+    #confirm-overlay {
+      transition: opacity 0.2s;
+    }
+
+    .chip-warning {
+      background: #ffddb3;
+      color: #7d4e00;
+    }
+    .chip-error {
+      background: #ffdad6;
+      color: #93000a;
+    }
+    .chip-ok {
+      background: #eeedf0;
+      color: #41484a;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
+    <div class="px-md mb-xl">
+      <div class="flex items-center gap-sm mb-1">
+        <span class="material-symbols-outlined text-[24px]" style="color:#00333c;">local_shipping</span>
+        <div class="flex flex-col">
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">SecGuard</span>
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">Logistics</span>
+        </div>
+      </div>
+      <p class="text-[10px] text-outline pl-[32px]">Centro Logístico Global</p>
+    </div>
+
+    <nav class="flex-1 px-sm space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+        <span class="text-[13px] font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <span class="material-symbols-outlined text-[20px]">local_shipping</span>
+        <span class="text-[13px] font-medium">Flota</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">route</span>
+        <span class="text-[13px] font-medium">Rutas</span>
+      </a>
+      <a class="nav-active flex items-center gap-md px-md py-[10px] transition-colors rounded-[6px] bg-primary-container text-white" href="#">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">analytics</span>
+        <span class="text-[13px] font-medium">Analítica</span>
+      </a>
+    </nav>
+
+    <div class="px-sm mt-auto space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        <span class="text-[13px] font-medium">Soporte</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        <span class="text-[13px] font-medium">Cerrar Sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ===================== ÁREA PRINCIPAL ===================== -->
+  <main class="ml-[220px] flex flex-col h-screen">
+
+    <!-- Header -->
+    <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+      <h1 class="font-headline text-[20px] font-semibold text-primary-container">Eliminar KPI</h1>
+      <div class="flex items-center gap-md">
+        <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute top-1 right-1 w-1.5 h-1.5 bg-error rounded-full"></span>
+        </button>
+        <button class="w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+        <div class="w-8 h-8 rounded-full overflow-hidden cursor-pointer" style="background:#00333c;">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <rect width="40" height="40" fill="#00333c"/>
+            <path d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z" fill="white"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== CONTENIDO ===================== -->
+    <section class="flex-1 overflow-y-auto bg-surface p-lg">
+      <div class="max-w-3xl mx-auto flex flex-col gap-md fade-in">
+
+        <!-- Banner de advertencia superior -->
+        <div class="bg-error-container border border-error/20 rounded-xl px-5 py-4 flex items-start gap-3">
+          <span class="material-symbols-outlined text-error text-[22px] mt-0.5" style="font-variation-settings:'FILL' 1;">warning</span>
+          <div>
+            <p class="text-[13px] font-semibold text-on-error-container">Estás a punto de eliminar un KPI activo</p>
+            <p class="text-[12px] text-on-error-container/80 mt-0.5 leading-relaxed">
+              Esta acción es permanente e irreversible. Revisa los elementos afectados antes de confirmar.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tarjeta del KPI a eliminar -->
+        <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-border-subtle flex items-center gap-2">
+            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">info</span>
+            <h2 class="font-headline text-[15px] font-semibold text-on-surface">KPI seleccionado para eliminar</h2>
+          </div>
+          <div class="p-5 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary-container/10 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-primary-container text-[22px]">speed</span>
+              </div>
+              <div>
+                <p class="text-[14px] font-semibold text-on-surface">Tasa de entregas a tiempo (OTIF)</p>
+                <div class="flex items-center gap-2 mt-1 flex-wrap">
+                  <span class="text-[11px] font-medium bg-surface-container text-on-surface-variant px-2 py-0.5 rounded">Operaciones</span>
+                  <span class="text-[11px] font-medium bg-surface-container text-on-surface-variant px-2 py-0.5 rounded">Mensual</span>
+                  <span class="text-[11px] font-medium bg-surface-container text-on-surface-variant px-2 py-0.5 rounded">Meta: 95%</span>
+                  <span class="text-[11px] font-medium bg-surface-container text-on-surface-variant px-2 py-0.5 rounded">Responsable: Jefe de Operaciones</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col items-end gap-1 shrink-0">
+              <span class="text-[22px] font-bold font-headline text-primary-container">92.3%</span>
+              <span class="text-[11px] text-on-surface-variant">Valor actual</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Análisis de impacto -->
+        <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-border-subtle flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px] text-warning" style="color:#7d4e00;">hub</span>
+              <h2 class="font-headline text-[15px] font-semibold text-on-surface">Impacto en cascada</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold chip-warning px-2.5 py-1 rounded-full">6 elementos afectados</span>
+            </div>
+          </div>
+
+          <div class="divide-y divide-border-subtle">
+
+            <!-- Dashboards -->
+            <div>
+              <button onclick="toggleSection('dashboards')" class="impact-row w-full px-5 py-3.5 flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">dashboard</span>
+                  </div>
+                  <div class="text-left">
+                    <p class="text-[13px] font-medium text-on-surface">Dashboards</p>
+                    <p class="text-[11px] text-on-surface-variant">El widget quedará vacío hasta reemplazar el KPI</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-[11px] font-semibold chip-warning px-2.5 py-0.5 rounded-full">2 afectados</span>
+                  <span class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform duration-200" id="icon-dashboards">expand_more</span>
+                </div>
+              </button>
+              <div id="section-dashboards" class="hidden">
+                <div class="slide-down">
+                  <div class="mx-5 mb-3 rounded-lg border border-border-subtle overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-surface border-b border-border-subtle">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-on-surface-variant">grid_view</span>
+                        <span class="text-[12px] font-medium text-on-surface">Dashboard Operativo Principal</span>
+                      </div>
+                      <span class="text-[11px] text-on-surface-variant">Visto por 12 usuarios</span>
+                    </div>
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-surface">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-on-surface-variant">grid_view</span>
+                        <span class="text-[12px] font-medium text-on-surface">Resumen Gerencial Mensual</span>
+                      </div>
+                      <span class="text-[11px] text-on-surface-variant">Visto por 4 usuarios</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reportes programados -->
+            <div>
+              <button onclick="toggleSection('reportes')" class="impact-row w-full px-5 py-3.5 flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-surface-variant text-[18px]">summarize</span>
+                  </div>
+                  <div class="text-left">
+                    <p class="text-[13px] font-medium text-on-surface">Reportes programados</p>
+                    <p class="text-[11px] text-on-surface-variant">El KPI se omitirá en la próxima generación</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-[11px] font-semibold chip-warning px-2.5 py-0.5 rounded-full">1 afectado</span>
+                  <span class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform duration-200" id="icon-reportes">expand_more</span>
+                </div>
+              </button>
+              <div id="section-reportes" class="hidden">
+                <div class="slide-down">
+                  <div class="mx-5 mb-3 rounded-lg border border-border-subtle overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-surface">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-on-surface-variant">schedule_send</span>
+                        <span class="text-[12px] font-medium text-on-surface">Reporte Operativo Mensual</span>
+                      </div>
+                      <span class="text-[11px] text-on-surface-variant">Envío automático · día 1</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Alertas -->
+            <div>
+              <button onclick="toggleSection('alertas')" class="impact-row w-full px-5 py-3.5 flex items-center justify-between cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-error-container flex items-center justify-center">
+                    <span class="material-symbols-outlined text-error text-[18px]">notifications_active</span>
+                  </div>
+                  <div class="text-left">
+                    <p class="text-[13px] font-medium text-on-surface">Alertas activas</p>
+                    <p class="text-[11px] text-error">Se eliminarán permanentemente junto con el KPI</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-[11px] font-semibold chip-error px-2.5 py-0.5 rounded-full">3 se eliminarán</span>
+                  <span class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform duration-200" id="icon-alertas">expand_more</span>
+                </div>
+              </button>
+              <div id="section-alertas" class="hidden">
+                <div class="slide-down">
+                  <div class="mx-5 mb-3 rounded-lg border border-border-subtle overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-surface border-b border-border-subtle">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-error">warning</span>
+                        <span class="text-[12px] font-medium text-on-surface">Alerta umbral crítico (85%)</span>
+                      </div>
+                      <span class="text-[11px] text-on-surface-variant">Email + app</span>
+                    </div>
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-surface border-b border-border-subtle">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]" style="color:#7d4e00;">warning</span>
+                        <span class="text-[12px] font-medium text-on-surface">Alerta umbral alerta (90%)</span>
+                      </div>
+                      <span class="text-[11px] text-on-surface-variant">Solo app</span>
+                    </div>
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-surface">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-on-surface-variant">info</span>
+                        <span class="text-[12px] font-medium text-on-surface">Reporte semanal de desviación</span>
+                      </div>
+                      <span class="text-[11px] text-on-surface-variant">Email</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Bloque alternativa archivar -->
+        <div class="bg-primary-container/5 border border-primary-container/15 rounded-xl p-5 flex items-start gap-4">
+          <div class="w-9 h-9 rounded-lg bg-primary-container/10 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">archive</span>
+          </div>
+          <div class="flex-1">
+            <p class="text-[13px] font-semibold text-primary-container">¿Consideras archivar en lugar de eliminar?</p>
+            <p class="text-[12px] text-on-surface-variant mt-1 leading-relaxed">
+              Al archivar, el KPI desaparece de los dashboards activos pero conserva todo el historial de datos y puede restaurarse en cualquier momento.
+            </p>
+          </div>
+          <button onclick="archivar()" class="btn-archive flex-shrink-0 flex items-center gap-2 px-4 py-2 border border-primary-container/30 rounded text-[12px] font-semibold text-primary-container bg-white transition-colors">
+            <span class="material-symbols-outlined text-[16px]">archive</span>
+            Archivar KPI
+          </button>
+        </div>
+
+        <!-- Confirmación con checkbox -->
+        <div class="bg-white rounded-xl border border-border-subtle shadow-sm p-5 flex flex-col gap-4" id="confirm-box">
+          <label class="flex items-start gap-3 cursor-pointer group">
+            <input type="checkbox" id="confirm-check" onchange="toggleDelete()" class="mt-0.5 w-4 h-4 rounded border-outline-variant cursor-pointer" style="accent-color:#ba1a1a;" />
+            <p class="text-[13px] text-on-surface leading-relaxed">
+              Entiendo que eliminar este KPI es <span class="font-semibold text-error">permanente e irreversible</span>, que los 6 elementos afectados perderán esta métrica y que las 3 alertas serán eliminadas definitivamente.
+            </p>
+          </label>
+        </div>
+
+        <!-- Barra de acciones fija -->
+        <div class="bg-white rounded-xl border border-border-subtle shadow-sm p-4 flex items-center justify-between sticky bottom-0">
+          <a href="#" class="btn-cancel flex items-center gap-2 px-4 py-2 border border-outline-variant rounded text-[13px] font-medium text-on-surface-variant transition-colors">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            Volver a métricas
+          </a>
+          <button id="btn-delete" onclick="confirmarEliminar()" disabled
+            class="btn-delete flex items-center gap-2 px-5 py-2 rounded text-[13px] font-semibold text-white transition-all opacity-40 cursor-not-allowed"
+            style="background:#ba1a1a;">
+            <span class="material-symbols-outlined text-[18px]">delete_forever</span>
+            Eliminar KPI definitivamente
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== MODAL PROGRESO ELIMINACIÓN ===================== -->
+  <div id="delete-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-xl border border-border-subtle shadow-2xl w-[380px] overflow-hidden fade-in">
+      <div class="bg-error px-6 py-5 flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
+          <span class="material-symbols-outlined text-white text-[22px]" id="modal-icon">delete_forever</span>
+        </div>
+        <div>
+          <p class="font-headline text-[16px] font-semibold text-white" id="modal-title">Eliminando KPI…</p>
+          <p class="text-[11px] text-white/70" id="modal-subtitle">Procesando dependencias</p>
+        </div>
+      </div>
+      <div class="p-6 flex flex-col gap-4">
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-[11px] text-on-surface-variant" id="progress-label">Iniciando…</span>
+            <span class="text-[12px] font-semibold text-error" id="progress-pct">0%</span>
+          </div>
+          <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+            <div id="progress-bar" class="bg-error h-2 rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+        </div>
+        <ul class="flex flex-col gap-2.5" id="steps-list">
+          <li class="flex items-center gap-3" id="step-alertas">
+            <span class="material-symbols-outlined text-outline-variant text-[18px]" id="icon-step-alertas">radio_button_unchecked</span>
+            <span class="text-[13px] text-on-surface-variant" id="text-step-alertas">Eliminando alertas vinculadas</span>
+          </li>
+          <li class="flex items-center gap-3" id="step-reportes">
+            <span class="material-symbols-outlined text-outline-variant text-[18px]" id="icon-step-reportes">radio_button_unchecked</span>
+            <span class="text-[13px] text-on-surface-variant" id="text-step-reportes">Desvinculando reportes programados</span>
+          </li>
+          <li class="flex items-center gap-3" id="step-dashboards">
+            <span class="material-symbols-outlined text-outline-variant text-[18px]" id="icon-step-dashboards">radio_button_unchecked</span>
+            <span class="text-[13px] text-on-surface-variant" id="text-step-dashboards">Actualizando dashboards</span>
+          </li>
+          <li class="flex items-center gap-3" id="step-kpi">
+            <span class="material-symbols-outlined text-outline-variant text-[18px]" id="icon-step-kpi">radio_button_unchecked</span>
+            <span class="text-[13px] text-on-surface-variant" id="text-step-kpi">Eliminando KPI del sistema</span>
+          </li>
+        </ul>
+      </div>
+      <div class="px-6 pb-6 hidden" id="modal-footer">
+        <a href="#" class="w-full flex items-center justify-center gap-2 bg-primary-container text-white py-2.5 rounded text-[13px] font-semibold hover:opacity-90 transition-opacity">
+          <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+          Volver al listado de métricas
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST ARCHIVAR -->
+  <div id="toast-archive" class="fixed bottom-6 right-6 z-[200] hidden">
+    <div class="fade-in bg-primary-container text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3">
+      <span class="material-symbols-outlined text-[20px]">archive</span>
+      <span class="text-[13px] font-medium">KPI archivado correctamente</span>
+    </div>
+  </div>
+
+  <script>
+    function toggleSection(id) {
+      const section = document.getElementById('section-' + id);
+      const icon = document.getElementById('icon-' + id);
+      const isHidden = section.classList.contains('hidden');
+      section.classList.toggle('hidden');
+      icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    function toggleDelete() {
+      const checked = document.getElementById('confirm-check').checked;
+      const btn = document.getElementById('btn-delete');
+      if (checked) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-40', 'cursor-not-allowed');
+        btn.classList.add('cursor-pointer');
+      } else {
+        btn.disabled = true;
+        btn.classList.add('opacity-40', 'cursor-not-allowed');
+        btn.classList.remove('cursor-pointer');
+      }
+    }
+
+    const deleteSteps = [
+      { id: 'alertas',    label: 'Eliminando alertas vinculadas',      pct: 25 },
+      { id: 'reportes',   label: 'Desvinculando reportes programados', pct: 55 },
+      { id: 'dashboards', label: 'Actualizando dashboards',            pct: 80 },
+      { id: 'kpi',        label: 'Eliminando KPI del sistema',         pct: 100 },
+    ];
+
+    function confirmarEliminar() {
+      document.getElementById('delete-modal').classList.remove('hidden');
+      runDeleteStep(0);
+    }
+
+    function runDeleteStep(i) {
+      if (i >= deleteSteps.length) {
+        document.getElementById('modal-title').textContent = 'KPI eliminado';
+        document.getElementById('modal-subtitle').textContent = 'Todos los elementos han sido actualizados';
+        document.getElementById('modal-icon').textContent = 'check_circle';
+        document.getElementById('progress-label').textContent = 'Proceso completado';
+        document.getElementById('modal-footer').classList.remove('hidden');
+        return;
+      }
+      const s = deleteSteps[i];
+      if (i > 0) {
+        const prev = deleteSteps[i - 1];
+        document.getElementById('icon-step-' + prev.id).textContent = 'check_circle';
+        document.getElementById('icon-step-' + prev.id).style.color = '#006e2b';
+        document.getElementById('text-step-' + prev.id).classList.remove('text-on-surface-variant');
+        document.getElementById('text-step-' + prev.id).classList.add('text-on-surface');
+      }
+      document.getElementById('icon-step-' + s.id).textContent = 'pending';
+      document.getElementById('icon-step-' + s.id).style.color = '#ba1a1a';
+      document.getElementById('text-step-' + s.id).classList.remove('text-on-surface-variant');
+      document.getElementById('text-step-' + s.id).classList.add('text-error', 'font-medium');
+      document.getElementById('progress-bar').style.width = s.pct + '%';
+      document.getElementById('progress-pct').textContent = s.pct + '%';
+      document.getElementById('progress-label').textContent = s.label + '…';
+      setTimeout(() => runDeleteStep(i + 1), 950);
+    }
+
+    function archivar() {
+      const toast = document.getElementById('toast-archive');
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3200);
+    }
+  </script>
+
+</body>
+</html>

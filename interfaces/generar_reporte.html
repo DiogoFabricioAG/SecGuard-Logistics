@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>SecGuard Logistics</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#001d22",
+            "on-primary": "#ffffff",
+            "primary-container": "#00333c",
+            "on-primary-container": "#659eab",
+            "secondary": "#006e2b",
+            "surface": "#faf9fb",
+            "surface-container": "#eeedf0",
+            "surface-variant": "#e2e2e3",
+            "on-surface": "#1a1c1d",
+            "on-surface-variant": "#41484a",
+            "outline": "#70787b",
+            "outline-variant": "#bfc8ca",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#96d0de",
+            "primary-fixed": "#b2ecfa",
+            "border-subtle": "#EEEEEF",
+            "surface-lowest": "#ffffff",
+            "inverse-surface": "#2f3032",
+            "inverse-on-surface": "#f1f0f2",
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "xs": "4px",
+            "lg": "24px",
+            "sm": "8px",
+            "md": "16px",
+            "sidebar-width": "220px",
+            "xl": "32px",
+          },
+          fontFamily: {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+          },
+          fontSize: {
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "label-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }],
+            "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+            "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    /* Checkbox custom style */
+    .report-checkbox:checked {
+      accent-color: #00333c;
+    }
+    /* Step indicator connector */
+    .step-connector {
+      flex: 1;
+      height: 2px;
+      background: #e2e2e3;
+      margin: 0 8px;
+      margin-top: -20px;
+    }
+    .step-connector.done {
+      background: #00333c;
+    }
+    /* Toast animation */
+    @keyframes slideUp {
+      from { transform: translateY(16px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .toast-enter { animation: slideUp 0.35s ease forwards; }
+    /* Progress bar animation */
+    @keyframes fillBar {
+      from { width: 0%; }
+      to   { width: var(--target-width); }
+    }
+    .progress-fill { animation: fillBar 1.2s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
+
+    <!-- Logo -->
+    <div class="px-md mb-xl">
+      <div class="flex items-center gap-sm mb-1">
+        <span class="material-symbols-outlined text-[24px]" style="color: #00333c;">local_shipping</span>
+        <div class="flex flex-col">
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">SecGuard</span>
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">Logistics</span>
+        </div>
+      </div>
+      <p class="text-[10px] font-normal text-outline pl-[32px]">Centro Logístico Global</p>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="flex-1 px-sm space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+        <span class="text-[13px] font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <span class="material-symbols-outlined text-[20px]">local_shipping</span>
+        <span class="text-[13px] font-medium">Flota</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">route</span>
+        <span class="text-[13px] font-medium">Rutas</span>
+      </a>
+      <!-- ACTIVE: Analítica -->
+      <a class="flex items-center gap-md px-md py-[10px] transition-colors rounded-[6px] bg-primary-container text-white" href="#">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+        <span class="text-[13px] font-medium">Analítica</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="px-sm mt-auto space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        <span class="text-[13px] font-medium">Soporte</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        <span class="text-[13px] font-medium">Cerrar Sesión</span>
+      </a>
+    </div>
+
+  </aside>
+  <!-- ===================== FIN SIDEBAR ===================== -->
+
+  <!-- ===================== ÁREA PRINCIPAL ===================== -->
+  <main class="ml-[220px] flex flex-col h-screen">
+
+    <!-- Header -->
+    <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+      <h1 class="font-headline text-[20px] font-semibold text-on-surface">
+        Generación de Reporte
+      </h1>
+      <div class="flex items-center gap-md">
+        <!-- Botones extra del header original -->
+        <button class="flex items-center gap-2 px-3 py-1 border border-outline-variant text-on-surface-variant bg-surface hover:bg-surface-container font-medium rounded text-xs transition-all duration-150">
+          <span class="material-symbols-outlined text-[16px]">bookmark</span>
+          Plantillas
+        </button>
+        <button class="flex items-center gap-2 px-3 py-1 border border-outline-variant text-on-surface-variant bg-surface hover:bg-surface-container font-medium rounded text-xs transition-all duration-150">
+          <span class="material-symbols-outlined text-[16px]">history</span>
+          Historial
+        </button>
+        <!-- Notificaciones -->
+        <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute top-1 right-1 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+        </button>
+        <!-- Configuración -->
+        <button class="w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+        <!-- Avatar usuario -->
+        <div class="relative w-9 h-9 rounded-full flex items-center justify-center cursor-pointer overflow-hidden" style="background-color: #00333c;">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <rect width="40" height="40" fill="#00333c"></rect>
+            <path d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z" fill="white"></path>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+    <section class="flex-1 overflow-y-auto overflow-x-hidden bg-surface">
+      <div class="p-lg flex flex-col gap-lg max-w-full">
+
+        <!-- ── STEP INDICATOR ── -->
+        <div class="flex items-start gap-0 shrink-0">
+          <!-- Step 1 -->
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[12px] font-semibold shadow-sm">1</div>
+            <span class="text-[11px] font-medium text-primary-container text-center">Tipo y Período</span>
+          </div>
+          <div class="step-connector done mt-4"></div>
+          <!-- Step 2 -->
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[12px] font-semibold shadow-sm">2</div>
+            <span class="text-[11px] font-medium text-primary-container text-center">Secciones</span>
+          </div>
+          <div class="step-connector done mt-4"></div>
+          <!-- Step 3 -->
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[12px] font-semibold shadow-sm">3</div>
+            <span class="text-[11px] font-medium text-primary-container text-center">Formato y Entrega</span>
+          </div>
+          <div class="step-connector mt-4"></div>
+          <!-- Step 4 -->
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-8 h-8 rounded-full bg-surface-container border-2 border-outline-variant text-on-surface-variant flex items-center justify-center text-[12px] font-semibold">4</div>
+            <span class="text-[11px] font-medium text-on-surface-variant text-center">Confirmar</span>
+          </div>
+        </div>
+
+        <!-- ── MAIN GRID: Form LEFT + Preview RIGHT ── -->
+        <div class="grid grid-cols-3 gap-md">
+
+          <!-- ════════════════════
+               LEFT COLUMN (Form) — 2/3
+          ═════════════════════ -->
+          <div class="col-span-2 flex flex-col gap-md">
+
+            <!-- CARD 1: Tipo de Reporte + Período -->
+            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+              <div class="px-5 py-4 border-b border-border-subtle flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-primary-container/10 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary-container text-[16px]">description</span>
+                </div>
+                <h2 class="font-headline text-[16px] font-semibold text-on-surface">Tipo de Reporte y Período</h2>
+              </div>
+              <div class="p-5 flex flex-col gap-4">
+
+                <!-- Report Type Grid -->
+                <div>
+                  <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Seleccionar Tipo</p>
+                  <div class="grid grid-cols-3 gap-3">
+
+                    <!-- Rendimiento Operativo (selected) -->
+                    <label class="relative cursor-pointer group">
+                      <input type="radio" name="report_type" value="operativo" class="sr-only peer" checked />
+                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
+                        <span class="material-symbols-outlined text-primary-container text-[28px]">speed</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Rendimiento Operativo</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">KPIs y OTIF por ruta</span>
+                      </div>
+                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+                      </div>
+                    </label>
+
+                    <!-- Consumo de Combustible -->
+                    <label class="relative cursor-pointer group">
+                      <input type="radio" name="report_type" value="combustible" class="sr-only peer" />
+                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
+                        <span class="material-symbols-outlined text-primary-container text-[28px]">local_gas_station</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Consumo de Combustible</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Rendimiento por vehículo</span>
+                      </div>
+                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+                      </div>
+                    </label>
+
+                    <!-- Estado de Flota -->
+                    <label class="relative cursor-pointer group">
+                      <input type="radio" name="report_type" value="flota" class="sr-only peer" />
+                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
+                        <span class="material-symbols-outlined text-primary-container text-[28px]">local_shipping</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Estado de Flota</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Disponibilidad</span>
+                      </div>
+                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+                      </div>
+                    </label>
+
+                    <!-- Viajes y Rutas -->
+                    <label class="relative cursor-pointer group">
+                      <input type="radio" name="report_type" value="viajes" class="sr-only peer" />
+                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
+                        <span class="material-symbols-outlined text-primary-container text-[28px]">route</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Viajes y Rutas</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Historial y trazabilidad</span>
+                      </div>
+                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+                      </div>
+                    </label>
+
+                    <!-- Incidencias -->
+                    <label class="relative cursor-pointer group">
+                      <input type="radio" name="report_type" value="incidencias" class="sr-only peer" />
+                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
+                        <span class="material-symbols-outlined text-[#F39200] text-[28px]">warning</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Incidencias</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Retrasos y eventos críticos</span>
+                      </div>
+                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+                      </div>
+                    </label>
+
+                    <!-- Conductores -->
+                    <label class="relative cursor-pointer group">
+                      <input type="radio" name="report_type" value="conductores" class="sr-only peer" />
+                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
+                        <span class="material-symbols-outlined text-primary-container text-[28px]">badge</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Conductores</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Desempeño por operador</span>
+                      </div>
+                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+                      </div>
+                    </label>
+
+                  </div>
+                </div>
+
+                <!-- Period + Scope -->
+                <div class="grid grid-cols-2 gap-4 pt-2 border-t border-border-subtle">
+                  <div class="flex flex-col gap-1">
+                    <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fecha Inicio</label>
+                    <input type="date" value="2025-04-01" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fecha Fin</label>
+                    <input type="date" value="2025-04-30" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Ruta / Zona</label>
+                    <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
+                      <option value="">Todas las Rutas</option>
+                      <option>Callao</option>
+                      <option>Huachipa</option>
+                      <option>San Juan de Lurigancho</option>
+                      <option>Ate Vitarte</option>
+                      <option>Villa El Salvador</option>
+                    </select>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tipo de Vehículo</label>
+                    <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
+                      <option value="">Todos</option>
+                      <option>Camión Pesado</option>
+                      <option>Furgón</option>
+                      <option>Semirremolque</option>
+                      <option>Camioneta</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- CARD 2: Secciones a incluir -->
+            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+              <div class="px-5 py-4 border-b border-border-subtle flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-7 h-7 rounded-lg bg-primary-container/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary-container text-[16px]">checklist</span>
+                  </div>
+                  <h2 class="font-headline text-[16px] font-semibold text-on-surface">Secciones a Incluir</h2>
+                </div>
+                <button class="text-[12px] font-semibold text-primary-container hover:underline">Seleccionar todo</button>
+              </div>
+              <div class="p-5">
+                <div class="grid grid-cols-2 gap-3">
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Resumen Ejecutivo</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Indicadores clave del período</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">KPIs y Métricas OTIF</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Niveles de servicio y metas</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Desempeño por Ruta</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Tabla detallada por zona</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Análisis de Retrasos</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Causas y distribución</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Utilización de Flota</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Disponibilidad y rotación</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Consumo de Combustible</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Rendimiento Km/Gal</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Registro de Incidencias</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Eventos y resoluciones</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Desempeño de Conductores</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Ranking por operador</div>
+                    </div>
+                  </label>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 3: Formato y Entrega -->
+            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+              <div class="px-5 py-4 border-b border-border-subtle flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-primary-container/10 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary-container text-[16px]">send</span>
+                </div>
+                <h2 class="font-headline text-[16px] font-semibold text-on-surface">Formato y Entrega</h2>
+              </div>
+              <div class="p-5 grid grid-cols-2 gap-5">
+
+                <!-- Output Format -->
+                <div>
+                  <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Formato de Salida</p>
+                  <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                      <input type="radio" name="format" value="pdf" class="w-4 h-4" style="accent-color:#00333c" checked />
+                      <span class="material-symbols-outlined text-error text-[20px]">picture_as_pdf</span>
+                      <div>
+                        <div class="text-[12px] font-semibold text-on-surface">PDF</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Documento con gráficos</div>
+                      </div>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                      <input type="radio" name="format" value="excel" class="w-4 h-4" style="accent-color:#00333c" />
+                      <span class="material-symbols-outlined text-[#009A3F] text-[20px]">table_chart</span>
+                      <div>
+                        <div class="text-[12px] font-semibold text-on-surface">Excel (.xlsx)</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Datos editables y tablas</div>
+                      </div>
+                    </label>
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                      <input type="radio" name="format" value="csv" class="w-4 h-4" style="accent-color:#00333c" />
+                      <span class="material-symbols-outlined text-on-surface-variant text-[20px]">csv</span>
+                      <div>
+                        <div class="text-[12px] font-semibold text-on-surface">CSV</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Datos en texto plano</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Delivery Options -->
+                <div>
+                  <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Método de Entrega</p>
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-center gap-3 cursor-pointer">
+                      <input type="checkbox" class="report-checkbox w-4 h-4 rounded border-outline-variant" checked />
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
+                        <span class="text-[14px] text-on-surface">Descargar directamente</span>
+                      </div>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                      <input type="checkbox" class="report-checkbox w-4 h-4 rounded border-outline-variant" />
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary-container text-[18px]">email</span>
+                        <span class="text-[14px] text-on-surface">Enviar por correo</span>
+                      </div>
+                    </label>
+                    <!-- Email input -->
+                    <div class="ml-7">
+                      <input type="email" placeholder="correo@ransa.com.pe" class="w-full bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none placeholder:text-outline" />
+                    </div>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                      <input type="checkbox" class="report-checkbox w-4 h-4 rounded border-outline-variant" />
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary-container text-[18px]">schedule_send</span>
+                        <span class="text-[14px] text-on-surface">Programar envío recurrente</span>
+                      </div>
+                    </label>
+                    <!-- Recurrence select -->
+                    <div class="ml-7">
+                      <select class="w-full bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 outline-none text-outline">
+                        <option value="" disabled selected>Seleccionar frecuencia…</option>
+                        <option>Diariamente</option>
+                        <option>Semanalmente (lunes)</option>
+                        <option>Mensualmente (día 1)</option>
+                        <option>Personalizado</option>
+                      </select>
+                    </div>
+                    <div class="pt-2 border-t border-border-subtle">
+                      <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Nombre del reporte</p>
+                      <input type="text" value="Reporte_Operativo_Abril_2025" class="w-full bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex justify-between items-center pb-2">
+              <button class="text-outline hover:text-on-surface-variant text-[12px] font-semibold px-4 py-2 transition-colors flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                Cancelar
+              </button>
+              <div class="flex gap-3">
+                <button class="bg-white border border-outline-variant text-primary-container px-5 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:bg-surface-container transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">visibility</span>
+                  Vista Previa
+                </button>
+                <button onclick="triggerGenerate()" class="bg-primary-container text-on-primary px-6 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">summarize</span>
+                  Generar Reporte
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════════
+               RIGHT COLUMN (Preview + History) — 1/3
+          ═════════════════════ -->
+          <div class="col-span-1 flex flex-col gap-md">
+
+            <!-- Preview Card -->
+            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+              <div class="px-4 py-4 border-b border-border-subtle flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-primary-container/10 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary-container text-[16px]">preview</span>
+                </div>
+                <h2 class="font-headline text-[16px] font-semibold text-on-surface">Vista Previa</h2>
+              </div>
+              <div class="p-4 flex flex-col gap-3">
+
+                <!-- Mock PDF Preview -->
+                <div class="bg-surface-container rounded-lg border border-surface-variant overflow-hidden">
+                  <!-- PDF Header mock -->
+                  <div class="bg-primary-container p-4 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-on-primary text-[24px]">local_shipping</span>
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-primary">RANSA LOGISTICS</div>
+                      <div class="text-[11px] font-medium text-on-primary/70">Comando de Flota</div>
+                    </div>
+                  </div>
+                  <!-- Content mock lines -->
+                  <div class="p-4 flex flex-col gap-2.5">
+                    <div class="h-3 bg-outline-variant/50 rounded-full w-3/4"></div>
+                    <div class="h-2 bg-outline-variant/30 rounded-full w-full"></div>
+                    <div class="h-2 bg-outline-variant/30 rounded-full w-5/6"></div>
+                    <div class="grid grid-cols-2 gap-2 my-1">
+                      <div class="h-12 bg-primary-fixed/20 rounded border border-primary-fixed/30 flex items-center justify-center">
+                        <span class="text-[12px] font-semibold text-primary-container">94.2%</span>
+                      </div>
+                      <div class="h-12 bg-primary-fixed/20 rounded border border-primary-fixed/30 flex items-center justify-center">
+                        <span class="text-[12px] font-semibold text-primary-container">87.5%</span>
+                      </div>
+                    </div>
+                    <div class="h-2 bg-outline-variant/30 rounded-full w-full"></div>
+                    <div class="h-2 bg-outline-variant/30 rounded-full w-4/5"></div>
+                    <div class="h-16 bg-surface-variant/50 rounded border border-surface-variant mt-1 flex items-center justify-center gap-1">
+                      <div class="flex items-end gap-1 h-10">
+                        <div class="w-4 bg-primary-container rounded-sm" style="height:60%"></div>
+                        <div class="w-4 bg-primary-container rounded-sm" style="height:85%"></div>
+                        <div class="w-4 bg-primary-container rounded-sm" style="height:45%"></div>
+                        <div class="w-4 bg-[#F39200] rounded-sm" style="height:70%"></div>
+                        <div class="w-4 bg-primary-container rounded-sm" style="height:90%"></div>
+                        <div class="w-4 bg-error rounded-sm" style="height:30%"></div>
+                      </div>
+                    </div>
+                    <div class="h-2 bg-outline-variant/30 rounded-full w-full"></div>
+                    <div class="h-2 bg-outline-variant/30 rounded-full w-3/4"></div>
+                  </div>
+                  <div class="px-4 pb-3 flex items-center justify-between">
+                    <div class="text-[11px] font-medium text-on-surface-variant">Página 1 de 6</div>
+                    <div class="text-[11px] font-medium text-on-surface-variant">Abril 2025</div>
+                  </div>
+                </div>
+
+                <!-- Report summary info -->
+                <div class="bg-primary-fixed/10 border border-primary-fixed/30 rounded-lg p-3 flex flex-col gap-2">
+                  <p class="text-[12px] font-semibold text-primary-container">Resumen del Reporte</p>
+                  <div class="flex justify-between">
+                    <span class="text-[11px] font-medium text-on-surface-variant">Tipo</span>
+                    <span class="text-[11px] font-medium text-on-surface">Rendimiento Operativo</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-[11px] font-medium text-on-surface-variant">Período</span>
+                    <span class="text-[11px] font-medium text-on-surface">01 - 30 Abr 2025</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-[11px] font-medium text-on-surface-variant">Secciones</span>
+                    <span class="text-[11px] font-medium text-on-surface">4 seleccionadas</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-[11px] font-medium text-on-surface-variant">Formato</span>
+                    <span class="text-[11px] font-medium text-on-surface">PDF</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-[11px] font-medium text-on-surface-variant">Peso estimado</span>
+                    <span class="text-[11px] font-medium text-on-surface">~2.4 MB</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Recent Reports History -->
+            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+              <div class="px-4 py-4 border-b border-border-subtle flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-7 h-7 rounded-lg bg-primary-container/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary-container text-[16px]">history</span>
+                  </div>
+                  <h2 class="font-headline text-[16px] font-semibold text-on-surface">Reportes Recientes</h2>
+                </div>
+              </div>
+              <div class="divide-y divide-surface-variant">
+
+                <!-- Report item 1 -->
+                <div class="p-4 hover:bg-surface-container transition-colors cursor-pointer group">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-error text-[20px]">picture_as_pdf</span>
+                      <div>
+                        <div class="text-[12px] font-semibold text-on-surface">Rend. Operativo - Mar 2025</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Hace 32 días · 2.1 MB</div>
+                      </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-surface-variant">
+                      <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Report item 2 -->
+                <div class="p-4 hover:bg-surface-container transition-colors cursor-pointer group">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-[#009A3F] text-[20px]">table_chart</span>
+                      <div>
+                        <div class="text-[12px] font-semibold text-on-surface">Combustible - Q1 2025</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Hace 61 días · 890 KB</div>
+                      </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-surface-variant">
+                      <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Report item 3 -->
+                <div class="p-4 hover:bg-surface-container transition-colors cursor-pointer group">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="material-symbols-outlined text-error text-[20px]">picture_as_pdf</span>
+                      <div>
+                        <div class="text-[12px] font-semibold text-on-surface">Incidencias - Feb 2025</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Hace 89 días · 1.3 MB</div>
+                      </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-surface-variant">
+                      <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="p-3 text-center border-t border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                <span class="text-[12px] font-semibold text-primary-container">Ver historial completo →</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ===================== FIN CONTENIDO ===================== -->
+
+  </main>
+  <!-- ===================== FIN ÁREA PRINCIPAL ===================== -->
+
+  <!-- ═══════════════════════════════════════
+       GENERATE MODAL
+  ════════════════════════════════════════ -->
+  <div id="generateModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-xl border border-border-subtle shadow-xl w-[420px] overflow-hidden">
+      <!-- Modal Header -->
+      <div class="bg-primary-container px-6 py-5 flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-on-primary/10 flex items-center justify-center">
+          <span class="material-symbols-outlined text-on-primary text-[22px]" id="modalIcon">summarize</span>
+        </div>
+        <div>
+          <div class="font-headline text-[18px] font-semibold text-on-primary" id="modalTitle">Generando Reporte…</div>
+          <div class="text-[11px] font-medium text-on-primary/70" id="modalSubtitle">Procesando datos del período seleccionado</div>
+        </div>
+      </div>
+      <!-- Modal Body -->
+      <div class="p-6 flex flex-col gap-5" id="modalBody">
+        <!-- Progress -->
+        <div>
+          <div class="flex justify-between mb-2">
+            <span class="text-[11px] font-medium text-on-surface-variant" id="progressLabel">Consolidando métricas…</span>
+            <span class="text-[12px] font-semibold text-primary-container" id="progressPct">0%</span>
+          </div>
+          <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+            <div id="progressBar" class="bg-primary-container h-2 rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+        </div>
+        <!-- Steps list -->
+        <ul class="flex flex-col gap-3" id="stepsList">
+          <li class="flex items-center gap-3" id="step-data">
+            <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-data">radio_button_unchecked</span>
+            <span class="text-[14px] text-on-surface-variant" id="text-data">Recopilando datos operativos</span>
+          </li>
+          <li class="flex items-center gap-3" id="step-kpis">
+            <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-kpis">radio_button_unchecked</span>
+            <span class="text-[14px] text-on-surface-variant" id="text-kpis">Calculando KPIs y métricas</span>
+          </li>
+          <li class="flex items-center gap-3" id="step-charts">
+            <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-charts">radio_button_unchecked</span>
+            <span class="text-[14px] text-on-surface-variant" id="text-charts">Generando gráficos del reporte</span>
+          </li>
+          <li class="flex items-center gap-3" id="step-export">
+            <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-export">radio_button_unchecked</span>
+            <span class="text-[14px] text-on-surface-variant" id="text-export">Compilando documento PDF</span>
+          </li>
+        </ul>
+      </div>
+      <!-- Modal Footer (hidden until done) -->
+      <div class="px-6 pb-6 flex gap-3 hidden" id="modalFooter">
+        <button onclick="closeModal()" class="flex-1 bg-white border border-outline-variant text-primary-container py-2 rounded text-[12px] font-semibold hover:bg-surface-container transition-colors">
+          Cerrar
+        </button>
+        <button class="flex-1 bg-primary-container text-on-primary py-2 rounded text-[12px] font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">download</span>
+          Descargar PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[200] hidden">
+    <div class="toast-enter bg-inverse-surface text-inverse-on-surface px-5 py-3 rounded-xl shadow-xl flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#63df7a] text-[20px]">check_circle</span>
+      <span class="text-[12px] font-semibold">Reporte generado correctamente</span>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      { id: 'data',   label: 'Recopilando datos operativos',    pct: 25 },
+      { id: 'kpis',   label: 'Calculando KPIs y métricas',       pct: 55 },
+      { id: 'charts', label: 'Generando gráficos del reporte',   pct: 80 },
+      { id: 'export', label: 'Compilando documento PDF',          pct: 100 },
+    ];
+
+    function triggerGenerate() {
+      document.getElementById('generateModal').classList.remove('hidden');
+      runSteps(0);
+    }
+
+    function runSteps(i) {
+      if (i >= steps.length) {
+        document.getElementById('progressLabel').textContent = '¡Reporte listo para descargar!';
+        document.getElementById('modalTitle').textContent    = 'Reporte Generado';
+        document.getElementById('modalSubtitle').textContent = 'Reporte_Operativo_Abril_2025.pdf';
+        document.getElementById('modalIcon').textContent     = 'check_circle';
+        document.getElementById('modalFooter').classList.remove('hidden');
+        return;
+      }
+      const s = steps[i];
+      if (i > 0) {
+        const prev = steps[i - 1];
+        const icon = document.getElementById('icon-' + prev.id);
+        const text = document.getElementById('text-' + prev.id);
+        icon.textContent = 'check_circle';
+        icon.style.color = '#009A3F';
+        text.classList.remove('text-on-surface-variant');
+        text.classList.add('text-on-surface');
+      }
+      const icon = document.getElementById('icon-' + s.id);
+      const text = document.getElementById('text-' + s.id);
+      icon.textContent = 'pending';
+      icon.style.color = '#00333c';
+      text.classList.remove('text-on-surface-variant');
+      text.classList.add('text-primary-container', 'font-medium');
+
+      document.getElementById('progressBar').style.width = s.pct + '%';
+      document.getElementById('progressPct').textContent = s.pct + '%';
+      document.getElementById('progressLabel').textContent = s.label + '…';
+
+      setTimeout(() => runSteps(i + 1), 900);
+    }
+
+    function closeModal() {
+      document.getElementById('generateModal').classList.add('hidden');
+      const toast = document.getElementById('toast');
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3500);
+      setTimeout(() => {
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('progressPct').textContent = '0%';
+        document.getElementById('progressLabel').textContent = 'Consolidando métricas…';
+        document.getElementById('modalTitle').textContent = 'Generando Reporte…';
+        document.getElementById('modalSubtitle').textContent = 'Procesando datos del período seleccionado';
+        document.getElementById('modalIcon').textContent = 'summarize';
+        document.getElementById('modalFooter').classList.add('hidden');
+        steps.forEach(s => {
+          document.getElementById('icon-' + s.id).textContent = 'radio_button_unchecked';
+          document.getElementById('icon-' + s.id).style.color = '';
+          document.getElementById('text-' + s.id).className = 'text-[14px] text-on-surface-variant';
+        });
+      }, 500);
+    }
+  </script>
+
+</body>
+</html>
