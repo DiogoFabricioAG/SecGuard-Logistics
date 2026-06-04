@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SecGuard Logistics - Detección y Captura de Placa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#00333c",
+                        "on-surface": "#0b1c30",
+                        "on-surface-variant": "#40484a",
+                        "outline-variant": "#bfc8ca",
+                        "surface": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#004b57",
+                        "secondary": "#006d33",
+                        "secondary-container": "#75f999",
+                        "on-secondary-container": "#007236",
+                        "error": "#ba1a1a"
+                    },
+                    "spacing": {
+                        "sidebar-width": "220px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Hanken Grotesk', sans-serif; 
+            overflow: hidden;
+            background-color: #f8f9ff;
+            height: 100vh;
+        }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        @keyframes scan { 0%, 100% { top: 10%; } 50% { top: 90%; } }
+        .scan-line {
+            position: absolute; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, #4ade80, transparent);
+            box-shadow: 0 0 10px #4ade80;
+            animation: scan 3s ease-in-out infinite;
+            z-index: 10;
+        }
+        .live-dot { animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .user-avatar-custom {
+            width: 40px; height: 40px;
+            background-color: #001e24;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; cursor: pointer;
+        }
+
+        .data-card {
+            background-color: #eff4ff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.6rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .status-badge {
+            background-color: #e6f4ea;
+            color: #006d33;
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid #c4e4ce;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+
+<aside class="fixed left-0 top-0 h-full w-[sidebar-width] border-r border-outline-variant bg-white flex flex-col z-50">
+    <div class="p-5">
+        <div class="flex items-start gap-3 mb-1">
+            <span class="material-symbols-outlined text-primary" style="font-size:28px">local_shipping</span>
+            <div>
+                <h1 class="font-bold text-primary leading-tight text-base">SecGuard<br>Logistics</h1>
+                <p class="text-[10px] text-slate-400 font-medium">Centro Logístico Global</p>
+            </div>
+        </div>
+    </div>
+    
+    <nav class="flex-1 px-3 space-y-0.5">
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
+            <span class="material-symbols-outlined mr-3 text-[20px]">grid_view</span> 
+            <span class="font-semibold text-xs">Dashboard</span>
+        </a>
+        <a class="flex items-center px-4 py-2.5 bg-primary text-white rounded-lg shadow-md" href="#">
+            <span class="material-symbols-outlined mr-3 text-[20px]">local_shipping</span> 
+            <span class="font-semibold text-xs">Flota</span>
+        </a>
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
+            <span class="material-symbols-outlined mr-3 text-[20px]">alt_route</span> 
+            <span class="font-semibold text-xs">Rutas</span>
+        </a>
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
+            <span class="material-symbols-outlined mr-3 text-[20px]">analytics</span> 
+            <span class="font-semibold text-xs">Analítica</span>
+        </a>
+    </nav>
+
+    <div class="p-4 border-t border-outline-variant space-y-0.5 mt-auto">
+        <a class="flex items-center px-4 py-2 text-on-surface-variant hover:bg-slate-50 rounded-lg" href="#">
+            <span class="material-symbols-outlined mr-3 text-[20px]">help</span> 
+            <span class="font-semibold text-xs">Soporte</span>
+        </a>
+        <a class="flex items-center px-4 py-2 text-error hover:bg-red-50 rounded-lg transition-colors" href="#">
+            <span class="material-symbols-outlined mr-3 text-[20px]">logout</span> 
+            <span class="font-semibold text-xs">Cerrar Sesión</span>
+        </a>
+    </div>
+</aside>
+
+<header class="fixed top-0 right-0 w-[calc(100%-220px)] h-14 bg-white border-b border-outline-variant flex justify-between items-center px-6 z-40">
+    <div class="relative w-80">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base">search</span>
+        <input class="w-full bg-slate-100 border-none rounded-lg pl-9 py-1.5 text-xs focus:ring-1 focus:ring-primary/20" placeholder="Buscar activos..." type="text">
+    </div>
+    
+    <div class="flex items-center gap-5">
+        <div class="relative cursor-pointer">
+            <span class="material-symbols-outlined text-slate-600 text-[22px]">notifications</span>
+            <div class="absolute -top-1 -right-1 bg-red-600 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center border border-white">3</div>
+        </div>
+        <span class="material-symbols-outlined text-slate-600 text-[22px] cursor-pointer">settings</span>
+        
+        <div class="user-avatar-custom">
+            <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1">person</span>
+        </div>
+    </div>
+</header>
+
+<main class="ml-[220px] pt-14 h-screen flex flex-col">
+    <div class="p-6 flex-1 flex flex-col min-h-0">
+        
+        <div class="flex justify-between items-center mb-4">
+            <div>
+                <h2 class="text-2xl font-extrabold text-primary tracking-tight">Detección y Captura de Placa</h2>
+                <p class="text-xs text-slate-500 font-medium">Punto de Control Norte - Real-time</p>
+            </div>
+            <div class="status-badge">
+                <div class="w-2.5 h-2.5 bg-secondary rounded-full"></div>
+                SISTEMA ACTIVO
+            </div>
+        </div>
+
+        <div class="bg-white border border-outline-variant rounded-xl overflow-hidden flex flex-col flex-1 shadow-sm min-h-0">
+            <div class="px-5 py-2.5 border-b border-outline-variant bg-slate-50/50 flex justify-between items-center">
+                <div class="flex items-center gap-2 font-bold text-xs text-primary">
+                    <span class="material-symbols-outlined text-primary text-lg">videocam</span> Captura en Vivo — Cámara 04
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="live-dot w-2 h-2 rounded-full bg-error"></div>
+                    <span class="text-[10px] font-bold text-error uppercase tracking-wider">En Vivo</span>
+                </div>
+            </div>
+
+            <div class="p-4 flex gap-4 flex-1 min-h-0 overflow-hidden">
+                <div class="flex-[1.2] relative bg-black rounded-lg overflow-hidden border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover opacity-70">
+                    <div class="scan-line"></div>
+                    
+                    <div class="absolute bottom-[10%] left-1/2 -translate-x-1/2 border border-green-400 bg-black/80 px-8 py-1.5 rounded-md backdrop-blur-sm">
+                        <span class="text-white font-black tracking-[0.2em] 
+                        text-xl">ABC-123</span>
+                    </div>
+
+                    <div class="absolute top-4 left-4 bg-black/60 px-2.5 py-1 rounded-md flex items-center gap-2 backdrop-blur-md">
+                        <div class="w-1.5 h-1.5 bg-red-600 rounded-full live-dot"></div>
+                        <span class="text-[9px] text-white font-bold uppercase tracking-widest">Live Feed 04</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex flex-col gap-2 min-w-[350px]">
+                    <div class="data-card">
+                        <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Placa Detectada</p>
+                        <p class="text-3xl font-black text-primary leading-none py-1">ABC-123</p>
+                    </div>
+
+                    <div class="data-card">
+                        <div class="flex justify-between text-[9px] font-bold mb-1">
+                            <span class="text-slate-400 uppercase">Confianza OpenALPR</span>
+                            <span class="text-secondary">94%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                            <div class="bg-secondary h-full rounded-full" style="width: 94%"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Vehículo</p>
+                            <p class="font-bold text-[11px] text-primary">Volvo FH16</p>
+                            <p class="text-[10px] text-slate-500">ID: VH-284</p>
+                        </div>
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Modelo</p>
+                            <p class="font-bold text-[11px] text-primary truncate">Scania R500 Highline</p>
+                            <p class="text-[10px] text-slate-500">Series 2026</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Tipo / Cap</p>
+                            <p class="font-bold text-[11px]">Carga Pesada / 40T</p>
+                        </div>
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Estado</p>
+                            <span class="bg-secondary-container text-on-secondary-container font-black text-[9px] px-2 py-0.5 rounded-full inline-block">COMPLETADO</span>
+                        </div>
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Fecha / Hora</p>
+                            <p class="font-bold text-[10.5px]">29/05/2026 · 10:07 a.m.</p>
+                        </div>
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Latencia</p>
+                            <p class="font-bold text-[11px]">14ms</p>
+                        </div>
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Iluminación</p>
+                            <p class="font-bold text-[11px]">Normal</p>
+                        </div>
+                        <div class="data-card">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Obstrucción</p>
+                            <p class="font-bold text-[11px] text-secondary">Ninguna</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 border-t border-outline-variant px-5 py-2.5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-3.5 h-3.5 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                    <p class="text-[11px] font-bold text-primary/80">Cargando los datos de la placa capturada del vehículo...</p>
+                </div>
+                <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Motor IA: OpenALPR</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
