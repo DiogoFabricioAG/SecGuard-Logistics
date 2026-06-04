@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SecGuard Logistics - Control de Acceso</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00333c",
+                        "secondary": "#007236",
+                        "on-surface": "#0b1c30",
+                        "outline-variant": "#bfc8ca",
+                        "surface": "#f8f9ff",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Hanken Grotesk', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
+        
+        .custom-table th {
+            text-transform: uppercase;
+            font-size: 10px;
+            color: #64748b;
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #edf2f7;
+            letter-spacing: 0.05em;
+        }
+        .custom-table td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        
+        /* COLOR DE SOMBRA CORREGIDO SEGÚN CAPTURA 3 */
+        .row-selected { background-color: #f1f9f4; border-left: 4px solid #007236; }
+        
+        .truck-icon-container {
+            width: 32px; height: 32px;
+            background-color: #f0f4ff;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            color: #00333c;
+        }
+
+        .action-eye { color: #8e9aaf; cursor: pointer; transition: color 0.2s; font-size: 20px !important; }
+        .action-eye:hover { color: #00333c; }
+
+        aside::-webkit-scrollbar { width: 3px; }
+        aside::-webkit-scrollbar-thumb { background: #e2e8f0; }
+    </style>
+</head>
+<body class="text-on-surface flex h-screen overflow-hidden">
+
+    <aside class="w-[240px] bg-white border-r border-slate-100 flex flex-col shrink-0">
+        <div class="p-6">
+            <div class="flex items-start gap-3 mb-10">
+                <span class="material-symbols-outlined text-primary text-3xl">local_shipping</span>
+                <div>
+                    <h1 class="font-extrabold text-primary leading-none text-lg">SecGuard<br>Logistics</h1>
+                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-tighter mt-1">Centro Logístico Global</p>
+                </div>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="#" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                    <span class="material-symbols-outlined mr-3">grid_view</span>
+                    <span class="font-bold text-sm">Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-3 bg-primary text-white rounded-xl shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined mr-3">local_shipping</span>
+                    <span class="font-bold text-sm">Flota</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                    <span class="material-symbols-outlined mr-3">alt_route</span>
+                    <span class="font-bold text-sm">Rutas</span>
+                </a>
+                <a href="#" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                    <span class="material-symbols-outlined mr-3">analytics</span>
+                    <span class="font-bold text-sm">Analítica</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="mt-auto p-6 space-y-2">
+            <a href="#" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                <span class="material-symbols-outlined mr-3">help_outline</span>
+                <span class="font-bold text-sm">Soporte</span>
+            </a>
+            <a href="#" class="flex items-center px-3 py-2 text-red-600 hover:bg-red-50 rounded-xl transition-all">
+                <span class="material-symbols-outlined mr-3">logout</span>
+                <span class="font-bold text-sm">Cerrar Sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+        
+        <header class="h-14 bg-white border-b border-slate-100 flex justify-between items-center px-8 shrink-0">
+            <div class="relative w-72">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+                <input class="w-full bg-slate-100 border-none rounded-xl pl-10 py-2 text-xs" placeholder="Buscar registros..." type="text">
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-slate-400 cursor-pointer">notifications</span>
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white cursor-pointer">
+                    <span class="material-symbols-outlined text-lg">person</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-1 overflow-hidden">
+            <main class="flex-1 p-6 overflow-y-auto">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-primary">Aceptar Acceso Vehicular</h2>
+                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Gestión de Puntos de Control / Registro de Entradas</p>
+                    </div>
+                    <div class="flex items-center gap-2 text-secondary font-bold text-[9px] bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+                        <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+                        SISTEMA ACTIVO
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex bg-white border border-slate-100 rounded-lg p-1">
+                        <button class="px-4 py-1.5 text-[10px] font-bold text-slate-400">Todos</button>
+                        <button class="px-5 py-1.5 text-[10px] font-bold bg-primary text-white rounded-md">Entrada</button>
+                        <button class="px-4 py-1.5 text-[10px] font-bold text-slate-400">Salida</button>
+                    </div>
+                    <button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-[10px] font-bold">
+                        <span class="material-symbols-outlined text-sm">filter_list</span> Filtrar
+                    </button>
+                </div>
+
+                <div class="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-sm">
+                    <table class="w-full custom-table">
+                        <thead class="bg-white">
+                            <tr>
+                                <th>VEHÍCULO / ID</th>
+                                <th>MODELO</th>
+                                <th>PLACA</th>
+                                <th>TIPO / CAP</th>
+                                <th>DIRECCIÓN</th>
+                                <th>ESTADO REGISTRADO</th>
+                                <th>FECHA / HORA DE REGISTRO</th>
+                                <th class="text-center">ACCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row-selected">
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="truck-icon-container"><span class="material-symbols-outlined text-lg">local_shipping</span></div>
+                                        <div>
+                                            <div class="font-bold text-secondary text-[12px]">Volvo FH16</div>
+                                            <div class="text-[9px] text-slate-400 font-bold">VH-284</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="font-bold text-slate-600 text-[11px]">Volvo FH16</td>
+                                <td class="font-black text-primary text-[12px]">ABC-123</td>
+                                <td class="text-slate-400 font-bold text-[11px]">Carga Pesada / 40T</td>
+                                <td class="text-slate-500 font-bold text-[11px]">Entrada</td>
+                                <td><span class="bg-[#75f999] text-secondary font-black text-[8px] px-3 py-1 rounded-full">AUTORIZADO</span></td>
+                                <td class="text-slate-400 font-bold text-[10px]">29/05/2026<br><span class="font-medium">10:15 AM</span></td>
+                                <td class="text-center"><span class="material-symbols-outlined action-eye">visibility</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="truck-icon-container"><span class="material-symbols-outlined text-lg">local_shipping</span></div>
+                                        <div>
+                                            <div class="font-bold text-primary text-[12px]">Scania R500</div>
+                                            <div class="text-[9px] text-slate-400 font-bold">VH-102</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="font-bold text-slate-600 text-[11px]">Scania R500</td>
+                                <td class="font-black text-primary text-[12px]">XYZ-789</td>
+                                <td class="text-slate-400 font-bold text-[11px]">Carga Pesada / 35T</td>
+                                <td class="text-slate-500 font-bold text-[11px]">Entrada</td>
+                                <td><span class="bg-[#75f999] text-secondary font-black text-[8px] px-3 py-1 rounded-full">AUTORIZADO</span></td>
+                                <td class="text-slate-400 font-bold text-[10px]">29/05/2026<br><span class="font-medium">09:45 AM</span></td>
+                                <td class="text-center"><span class="material-symbols-outlined action-eye">visibility</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="truck-icon-container"><span class="material-symbols-outlined text-lg">local_shipping</span></div>
+                                        <div>
+                                            <div class="font-bold text-primary text-[12px]">Mercedes Actros</div>
+                                            <div class="text-[9px] text-slate-400 font-bold">VH-556</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="font-bold text-slate-600 text-[11px]">Mercedes Actros</td>
+                                <td class="font-black text-primary text-[12px]">EFG-456</td>
+                                <td class="text-slate-400 font-bold text-[11px]">Carga Pesada / 42T</td>
+                                <td class="text-slate-500 font-bold text-[11px]">Entrada</td>
+                                <td><span class="bg-[#75f999] text-secondary font-black text-[8px] px-3 py-1 rounded-full">AUTORIZADO</span></td>
+                                <td class="text-slate-400 font-bold text-[10px]">29/05/2026<br><span class="font-medium">09:20 AM</span></td>
+                                <td class="text-center"><span class="material-symbols-outlined action-eye">visibility</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="p-4 border-t border-slate-50 flex justify-between items-center bg-white">
+                        <div class="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase">
+                            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full"></span> SISTEMA EN LÍNEA - PROCESANDO...
+                        </div>
+                        <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest">Mostrando 3 de 128 registros</p>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="w-[320px] bg-white border-l border-slate-100 p-5 flex flex-col gap-5 overflow-y-auto shrink-0">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-extrabold text-primary text-sm">Detalle de Ingreso</h3>
+                    <span class="material-symbols-outlined text-slate-300 cursor-pointer">close</span>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden aspect-video shadow-sm border border-slate-100">
+                    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=600" alt="Truck" class="w-full h-full object-cover">
+                    <div class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm text-white text-[8px] px-2 py-1 rounded font-bold">
+                        Volvo FH16 · 2023
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <p class="text-[7px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Placa</p>
+                        <p class="text-sm font-black text-primary">ABC-123</p>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <p class="text-[7px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Modelo</p>
+                        <p class="text-[11px] font-black text-primary">Volvo FH16</p>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-6">Flujo de Acción</p>
+                    <div class="space-y-8 relative ml-2">
+                        <div class="absolute left-[9px] top-2 bottom-2 w-[1.5px] bg-slate-100"></div>
+                        
+                        <div class="flex gap-5 relative">
+                            <div class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center z-10 shadow-sm">
+                                <span class="material-symbols-outlined text-white text-[12px] font-bold">check</span>
+                            </div>
+                            <div>
+                                <p class="text-[13px] font-bold text-primary leading-tight">Control de Seguridad</p>
+                                <p class="text-[11px] text-secondary font-semibold">Validado por Biométrica</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-5 relative">
+                            <div class="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center z-10 shadow-sm">
+                                <span class="material-symbols-outlined text-amber-600 text-[12px] font-bold">bolt</span>
+                            </div>
+                            <div>
+                                <p class="text-[13px] font-bold text-primary leading-tight">Acción Ejecutada</p>
+                                <p class="text-[11px] text-slate-400 font-semibold">Apertura de barrera · Exitosa</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-auto space-y-2">
+                    <button class="w-full bg-primary text-white py-3 rounded-xl font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined text-sm">print</span> Imprimir Ticket
+                    </button>
+                    <button class="w-full border border-slate-100 text-slate-400 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-slate-50">
+                        Ver Registro Completo
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+</body>
+</html>
