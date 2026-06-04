@@ -1,0 +1,387 @@
+<!DOCTYPE html><html class="light" lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Modificar Registro de Acceso | SecGuard Logistics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-red": "#BA1A1A",
+                        "surface-container-low": "#f2f4f4",
+                        "surface-tint": "#2a6673",
+                        "background": "#f8f9fa",
+                        "primary-fixed-dim": "#96d0de",
+                        "primary-fixed": "#b2ecfa",
+                        "on-surface": "#1A1C1D",
+                        "secondary-fixed": "#9af7a3",
+                        "on-tertiary-fixed": "#2c1600",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#603c12",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#40484a",
+                        "on-primary-container": "#81bac8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e1e3e3",
+                        "secondary-fixed-dim": "#7eda8a",
+                        "surface-bright": "#f8f9fa",
+                        "outline-variant": "#bfc8ca",
+                        "primary": "#00333c",
+                        "on-primary-fixed": "#001f25",
+                        "tertiary-fixed": "#ffdcbe",
+                        "outline": "#70787B",
+                        "on-error-container": "#93000a",
+                        "text-main": "#58595B",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e7e8e9",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "surface": "#FAF9FB",
+                        "on-tertiary-fixed-variant": "#643e15",
+                        "surface-dim": "#d9dadb",
+                        "secondary-container": "#97f5a1",
+                        "primary-container": "#004b57",
+                        "on-secondary-fixed": "#002108",
+                        "error": "#ba1a1a",
+                        "on-background": "#191c1d",
+                        "surface-container": "#EEEDF0",
+                        "on-primary-fixed-variant": "#064e5a",
+                        "secondary": "#006e2b",
+                        "on-secondary-fixed-variant": "#00531e",
+                        "tertiary-fixed-dim": "#f3bc88",
+                        "on-secondary-container": "#0a722f",
+                        "inverse-primary": "#96d0de",
+                        "on-tertiary-container": "#dba774",
+                        "warning-orange": "#F39200",
+                        "tertiary": "#462600",
+                        "inverse-on-surface": "#eff1f2",
+                        "border-subtle": "#EEEEEF",
+                        "surface-container-highest": "#e1e3e3",
+                        "success-green": "#009A3F"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "md": "16px",
+                        "sidebar-width": "260px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "grid-gutter": "16px",
+                        "grid-margin": "24px",
+                        "base": "4px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Manrope"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body class="font-body-md text-text-main antialiased">
+<!-- Navigation Drawer -->
+<aside class="fixed left-0 top-0 h-screen w-[260px] flex flex-col z-50 bg-white border-r border-[#EEEEEF]">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#004B57] text-3xl">local_shipping</span>
+<div class="flex flex-col font-headline-md">
+<span class="text-xl font-bold text-[#004B57] leading-none">SecGuard</span>
+<span class="text-xl font-bold text-[#004B57] leading-none">Logistics</span>
+<span class="text-[10px] font-medium text-slate-500 uppercase tracking-wider mt-1 font-body-md">Centro Logístico Global</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="grid_view">grid_view</span>
+<span class="font-headline-sm font-semibold text-[14px]">Dashboard</span>
+</a>
+<a class="relative flex items-center gap-4 px-6 py-3 text-[#004B57] bg-[#f0f7f8] border-l-4 border-[#004B57] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="local_shipping">local_shipping</span>
+<span class="font-headline-sm font-semibold text-[14px]">Flota</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="route">route</span>
+<span class="font-headline-sm font-semibold text-[14px]">Rutas</span>
+</a>
+
+<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="analytics">analytics</span>
+<span class="font-headline-sm font-semibold text-[14px]">Analítica</span>
+</a>
+</nav>
+<div class="p-4 mt-auto border-t border-[#EEEEEF] space-y-1">
+<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="help">help</span>
+<span class="font-headline-sm font-semibold text-[14px]">Soporte</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 hover:bg-slate-50 transition-colors text-error" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="logout">logout</span>
+<span class="font-headline-sm font-semibold text-[14px]">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[260px] min-h-screen flex flex-col pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 flex items-center justify-between px-lg z-40 bg-white border-b border-[#EEEEEF]">
+<div class="flex items-center gap-lg">
+<button class="cursor-pointer transition-opacity active:opacity-70 flex items-center justify-center">
+<span class="material-symbols-outlined text-[#004B57]" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<div class="flex items-center gap-xs text-[10px] uppercase tracking-wider text-slate-400 font-label-sm">
+<span class="">Gestión de Accesos</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-[#004B57] font-bold">Modificar</span>
+</div>
+<h2 class="font-headline-sm text-lg text-[#004B57] leading-tight">Modificar Registro de Acceso</h2>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<span class="text-sm font-label-md text-slate-500">Última Sincronización: 14:02:11</span>
+<div class="w-8 h-8 rounded-xl bg-slate-200 overflow-hidden">
+<img alt="Perfil de Usuario" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5gHFYp_NPvmFEFI_pKXwWQ2Fnn0CCY-Plh3fW_9MstwCeG4rDKDVb0rS0Y-rFgFDwuKz_w-NQqfNvXpZBhs5w3b7XYtLbNL7jevDHbskxcbKIQg7WJp14XFOkeOIPllmdlKud8992Y5VbUSDjI7xQukt2xX93gjcxEDMqu_zPyTPq8hylmaS6_8sQ5lI50jY-4LI6eE8pkdX57h3ucJ0cFVHOWtIQNb9DA9aqaK3_rjD3fuqHl191oTpugBtPGZzSJNIrVhyGGOCu">
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-lg max-w-[1400px] mx-auto w-full space-y-lg">
+<div class="grid grid-cols-12 gap-lg">
+<!-- Section 1: Original Record -->
+<section class="col-span-12 lg:col-span-4">
+<div class="bg-white border border-border-subtle rounded-lg overflow-hidden h-full">
+<div class="p-md border-b border-border-subtle bg-slate-50/50">
+<h3 class="font-headline-sm text-sm font-semibold text-[#004B57] flex items-center gap-sm">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+                            Registro Original
+                        </h3>
+</div>
+<div class="p-lg space-y-md"><div class="grid grid-cols-2 gap-md opacity-80">
+<div class="col-span-2">
+<p class="font-label-md text-slate-500 mb-xs">Placa</p>
+<p class="font-headline-lg text-[#004B57] uppercase tracking-tight">ABC-123</p>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Movimiento</p>
+<span class="inline-flex items-center px-sm py-1 rounded bg-slate-100 text-slate-700 text-[10px] font-bold uppercase">Entrada</span>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Estado</p>
+<span class="inline-flex items-center px-sm py-1 rounded bg-success-green/10 text-success-green text-[10px] font-bold uppercase tracking-wider">Autorizado</span>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Puerta</p>
+<p class="font-body-md font-medium text-slate-900">P-04</p>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Cámara</p>
+<p class="font-body-md font-medium text-slate-900">ALPR-01</p>
+</div>
+<div class="col-span-2">
+<p class="font-label-md text-slate-500 mb-xs">Punto de Control</p>
+<p class="font-body-md font-medium text-slate-900">Garita Principal</p>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Tipo Registro</p>
+<span class="inline-flex items-center px-sm py-1 rounded bg-blue-100 text-blue-700 text-[10px] font-bold uppercase">ALPR</span>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Confianza OCR</p>
+<p class="font-body-md font-medium text-slate-900">98%</p>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Error Lectura</p>
+<p class="font-body-md font-medium text-slate-900">Ninguno</p>
+</div>
+<div class="col-span-2 pt-sm">
+<p class="font-label-md text-slate-500 mb-xs">Empresa</p>
+<p class="font-body-md font-medium text-slate-900">Ransa Logistics</p>
+</div>
+<div class="col-span-2">
+<p class="font-label-md text-slate-500 mb-xs">Tipo Unidad</p>
+<p class="font-body-md font-medium text-slate-900">Camin Volvo FH16</p>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Capacidad</p>
+<p class="font-body-md font-medium text-slate-900">40 toneladas</p>
+</div>
+<div>
+<p class="font-label-md text-slate-500 mb-xs">Conductor</p>
+<p class="font-body-md font-medium text-slate-900">Carlos Medina</p>
+</div>
+</div>
+<div class="pt-lg border-t border-border-subtle">
+<p class="text-[11px] text-slate-400 italic">Capturado automticamente por el sensor de entrada Carril 04.</p>
+</div></div>
+</div>
+</section>
+<!-- Section 2: Correction Form -->
+<section class="col-span-12 lg:col-span-8">
+<div class="bg-white border border-border-subtle rounded-lg shadow-sm">
+<div class="p-md border-b border-border-subtle flex justify-between items-center">
+<h3 class="font-headline-sm text-sm font-semibold text-[#004B57] flex items-center gap-sm">
+<span class="material-symbols-outlined text-sm" data-icon="edit_note">edit_note</span>
+                            Formulario de Corrección
+                        </h3>
+<span class="font-label-sm text-warning-orange bg-warning-orange/10 px-sm py-xs rounded">Nueva Corrección</span>
+</div>
+<div class="p-lg space-y-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg"><div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Número de placa</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none uppercase" placeholder="Ej. ABC-123" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Movimiento</label>
+<select class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none appearance-none">
+<option value="">Seleccionar...</option>
+<option>Entrada</option>
+<option>Salida</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Estado</label>
+<select class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none">
+<option value="">Seleccionar...</option>
+<option>Autorizado</option>
+<option>Pendiente</option>
+<option>Rechazado</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Puerta</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. P-04" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Cmara</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. ALPR-01" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Punto de Control</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. Garita Principal" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Confianza OCR (%)</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. 98" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Error Lectura</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. Ninguno" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Empresa</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. Ransa Logistics" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Tipo Unidad</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. Cami�n Volvo FH16" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Capacidad</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. 40 toneladas" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Conductor</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. Carlos Medina" type="text">
+</div><div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Administrador</label>
+<input class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none" placeholder="Ej. Administrador de Turno" type="text">
+</div></div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-slate-700 font-body-md">Motivo de la corrección</label>
+<textarea class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none resize-none" placeholder="Explique por qué es necesaria esta corrección..." rows="3"></textarea>
+<p class="text-[11px] text-slate-400 mt-xs italic font-body-md">Nota: Esta acción creará un nuevo registro vinculado al original para fines de auditoría.</p>
+</div>
+</div>
+<!-- Audit Information & Actions -->
+<div class="px-lg py-md bg-slate-50 border-t border-border-subtle flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-slate-400" data-icon="info">info</span>
+<div class="flex flex-col">
+<p class="font-label-md text-slate-600">ID Registro Original: <span class="text-[#004B57] font-bold">#ACC-10128</span></p>
+<p class="text-[11px] text-slate-400">El registro original no se modificará para preservar la integridad del historial.</p>
+</div>
+</div>
+<div class="flex items-center gap-md font-headline-sm">
+<button class="px-lg py-3 text-[#004B57] font-semibold text-[14px] hover:bg-slate-200 rounded transition-colors">
+                                Cancelar
+                            </button>
+<button class="bg-[#004B57] text-white px-lg py-3 rounded font-semibold text-[14px] shadow-sm hover:opacity-90 active:scale-[0.98] transition-all flex items-center gap-2"><span class="material-symbols-outlined text-[20px]" data-icon="save">save</span>
+                                Registrar Modificación</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Informational Banner -->
+<div class="mt-lg grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="bg-white p-md border border-border-subtle rounded-lg flex items-center gap-md">
+<div class="w-10 h-10 rounded bg-blue-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<p class="font-headline-sm text-xs font-bold text-[#004B57]">Cumplimiento de Auditoría</p>
+<p class="text-[10px] text-slate-500 font-body-md">Modificación trazable ISO 27001</p>
+</div>
+</div>
+<div class="bg-white p-md border border-border-subtle rounded-lg flex items-center gap-md">
+<div class="w-10 h-10 rounded bg-green-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600" data-icon="history">history</span>
+</div>
+<div>
+<p class="font-headline-sm text-xs font-bold text-[#004B57]">Control de Versiones</p>
+<p class="text-[10px] text-slate-500 font-body-md">Historial de cambios preservado</p>
+</div>
+</div>
+<div class="bg-white p-md border border-border-subtle rounded-lg flex items-center gap-md">
+<div class="w-10 h-10 rounded bg-orange-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-600" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<div>
+<p class="font-headline-sm text-xs font-bold text-[#004B57]">Nivel de Autoridad</p>
+<p class="text-[10px] text-slate-500 font-body-md">Permisos de Administrador Activos</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<button class="fixed bottom-lg right-lg w-14 h-14 bg-[#004B57] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+</button>
+
+
+</body></html>

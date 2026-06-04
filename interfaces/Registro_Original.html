@@ -1,0 +1,212 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SecGuard Logistics - Registro de Auditoría</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#001d22",
+            "on-primary": "#ffffff",
+            "primary-container": "#00333c",
+            "on-primary-container": "#659eab",
+            "secondary": "#006e2b",
+            "surface": "#faf9fb",
+            "surface-container": "#eeedf0",
+            "surface-variant": "#e2e2e3",
+            "on-surface": "#1a1c1d",
+            "on-surface-variant": "#41484a",
+            "outline": "#70787b",
+            "outline-variant": "#bfc8ca",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#96d0de",
+            "border-subtle": "#EEEEEF",
+            "warning-orange": "#F39200"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "xs": "4px",
+            "lg": "24px",
+            "sm": "8px",
+            "md": "16px",
+            "sidebar-width": "220px"
+          },
+          fontFamily: {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+<!-- ===================== SIDEBAR ===================== -->
+<aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
+<!-- Logo -->
+<div class="px-md mb-xl">
+<div class="flex items-center gap-sm mb-1">
+<span class="material-symbols-outlined text-[24px]" style="color: #00333c;">local_shipping</span>
+<div class="flex flex-col">
+<span class="font-headline text-[13px] font-bold text-primary-container leading-none">SecGuard</span>
+<span class="font-headline text-[13px] font-bold text-primary-container leading-none">Logistics</span>
+</div>
+</div>
+<p class="text-[10px] font-normal text-outline pl-[32px]">Centro Logístico Global</p>
+</div>
+<!-- Nav Links -->
+<nav class="flex-1 px-sm space-y-1">
+<a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-[13px] font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-[10px] transition-colors rounded-[6px] bg-primary-container text-white" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="text-[13px] font-medium">Flota</span>
+</a>
+<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+<span class="material-symbols-outlined text-[20px]">route</span>
+<span class="text-[13px] font-medium">Rutas</span>
+</a>
+
+<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="text-[13px] font-medium">Analítica</span>
+</a>
+</nav>
+<!-- Sidebar Footer -->
+<div class="px-sm mt-auto space-y-1">
+<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+<span class="text-[13px] font-medium">Soporte</span>
+</a>
+<a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="text-[13px] font-medium">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- ===================== FIN SIDEBAR ===================== -->
+<!-- ===================== ÁREA PRINCIPAL ===================== -->
+<main class="ml-[220px] flex flex-col h-screen">
+<!-- Header -->
+<header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline text-[20px] font-semibold text-on-surface">
+          Registro Original
+        </h1>
+</div>
+<div class="flex items-center gap-md">
+<!-- Notificaciones -->
+<button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+</button>
+<!-- Configuración -->
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<!-- Avatar usuario -->
+<div class="relative w-9 h-9 rounded-full flex items-center justify-center cursor-pointer overflow-hidden" style="background-color: #00333c;">
+<svg class="w-full h-full" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#00333c" height="40" width="40"></rect>
+<path d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z" fill="white"></path>
+</svg>
+</div>
+</div>
+</header>
+<!-- ===================== CONTENIDO ===================== -->
+<section class="flex-1 p-lg overflow-y-auto bg-surface">
+<div class="max-w-4xl mx-auto space-y-lg">
+<!-- Header del Registro -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md bg-white p-lg rounded-xl border border-border-subtle shadow-sm">
+<div>
+<p class="text-on-surface-variant text-[13px] font-medium mb-1">Expediente ID</p>
+<h2 class="text-[24px] font-headline font-bold text-primary">ACC-10430</h2>
+</div>
+<div class="flex items-center gap-md">
+<span class="bg-warning-orange/10 text-warning-orange px-md py-1.5 rounded-full text-[12px] font-bold border border-warning-orange/20">Corrección</span>
+<button class="bg-primary text-white px-lg py-2 rounded-lg text-[14px] font-medium hover:bg-primary-container transition-colors">
+              Cerrar
+            </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+<!-- Lado Izquierdo: Detalles y Observaciones -->
+<div class="space-y-lg">
+<!-- Detalles de Auditoría -->
+<div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+<div class="px-lg py-md border-b border-border-subtle bg-surface-container/30">
+<h3 class="font-headline text-[14px] font-bold text-primary uppercase tracking-wider">Detalles de Auditoría</h3>
+</div>
+<div class="p-lg space-y-md">
+<div class="flex justify-between items-center py-sm border-b border-border-subtle last:border-0">
+<span class="text-on-surface-variant text-[14px]">Fecha Corrección:</span>
+<span class="text-on-surface font-semibold text-[14px]">24/10/2023 15:02</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-border-subtle last:border-0">
+<span class="text-on-surface-variant text-[14px]">Estado Anterior:</span>
+<span class="text-on-surface font-semibold text-[14px]">Pendiente</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-border-subtle last:border-0">
+<span class="text-on-surface-variant text-[14px]">Estado Actual:</span>
+<span class="text-on-surface font-semibold text-[14px]">Validado</span>
+</div>
+</div>
+</div>
+<!-- Observaciones -->
+<div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
+<div class="px-lg py-md border-b border-border-subtle bg-surface-container/30">
+<h3 class="font-headline text-[14px] font-bold text-primary uppercase tracking-wider">Observaciones</h3>
+</div>
+<div class="p-lg">
+<p class="text-[14px] text-on-surface leading-relaxed italic">
+                  "Se procedió con la corrección del registro debido a que la placa detectada inicialmente era incorrecta; se rectificó el identificador de la unidad."
+                </p>
+</div>
+</div>
+</div>
+<!-- Lado Derecho: Visualización -->
+
+</div>
+<!-- Audit Signature / Footer -->
+<div class="bg-white p-lg rounded-xl border border-border-subtle shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-[16px] shadow-inner">L</div>
+<div class="flex flex-col">
+<span class="text-on-surface font-bold text-[14px]">Luis</span>
+<span class="text-on-surface-variant text-[11px] uppercase tracking-wide font-semibold">Administrador Auditor</span>
+</div>
+</div>
+<div class="text-on-surface-variant text-[12px] flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+            Firma Digital Verificada
+          </div>
+</div>
+</div>
+</section>
+<!-- ===================== FIN CONTENIDO ===================== -->
+</main>
+<!-- ===================== FIN ÁREA PRINCIPAL ===================== -->
+
+
+</body></html>
