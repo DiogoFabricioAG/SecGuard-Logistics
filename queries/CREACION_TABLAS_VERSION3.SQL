@@ -69,8 +69,6 @@ CREATE TABLE administrador (
     correo_electronico   VARCHAR(150) NOT NULL UNIQUE,
     nombre_usuario       VARCHAR(50)  NOT NULL UNIQUE,
     contrasenia_hash     VARCHAR(255) NOT NULL,
-    area_operativa       VARCHAR(100) NOT NULL,
-    rol_usuario          VARCHAR(50)  NOT NULL,
     estado_cuenta        VARCHAR(20)  NOT NULL DEFAULT 'ACTIVO',
     creado_en            TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

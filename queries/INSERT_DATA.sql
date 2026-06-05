@@ -10,12 +10,12 @@
 -- MÓDULO 1: ADMINISTRADORES (requerido como FK base)
 -- ===========================================================================
 
-INSERT INTO administrador (nombres, apellidos, correo_electronico, nombre_usuario, contrasenia_hash, area_operativa, rol_usuario, estado_cuenta) VALUES
-('Carlos Ernesto',   'Villalobos Quispe',   'c.villalobos@ransa.pe',   'cvillalobos',   '$2b$12$KLMxyz123abc', 'Operaciones',      'SUPERVISOR',     'ACTIVO'),
-('María Fernanda',   'Salas Huanca',        'm.salas@ransa.pe',        'msalas',        '$2b$12$ABCdef456ghi', 'Seguridad',        'ADMINISTRADOR',  'ACTIVO'),
-('Jorge Luis',       'Paredes Cárdenas',    'j.paredes@ransa.pe',      'jparedes',      '$2b$12$DEFghi789jkl', 'TI',               'SOPORTE',        'ACTIVO'),
-('Lucía Beatriz',    'Ramírez Flores',      'l.ramirez@ransa.pe',      'lramirez',      '$2b$12$GHIjkl012mno', 'Operaciones',      'SUPERVISOR',     'ACTIVO'),
-('Andrés Felipe',    'Chávez Mendoza',      'a.chavez@ransa.pe',       'achavez',       '$2b$12$JKLmno345pqr', 'Logística',        'ADMINISTRADOR',  'INACTIVO');
+INSERT INTO administrador (nombres, apellidos, correo_electronico, nombre_usuario, contrasenia_hash, estado_cuenta) VALUES
+('Carlos Ernesto',   'Villalobos Quispe',   'c.villalobos@ransa.pe',   'cvillalobos',   '$2b$12$KLMxyz123abc', 'ACTIVO'),
+('María Fernanda',   'Salas Huanca',        'm.salas@ransa.pe',        'msalas',        '$2b$12$ABCdef456ghi', 'ACTIVO'),
+('Jorge Luis',       'Paredes Cárdenas',    'j.paredes@ransa.pe',      'jparedes',      '$2b$12$DEFghi789jkl', 'ACTIVO'),
+('Lucía Beatriz',    'Ramírez Flores',      'l.ramirez@ransa.pe',      'lramirez',      '$2b$12$GHIjkl012mno', 'ACTIVO'),
+('Andrés Felipe',    'Chávez Mendoza',      'a.chavez@ransa.pe',       'achavez',       '$2b$12$JKLmno345pqr', 'INACTIVO');
 
 
 -- ===========================================================================
