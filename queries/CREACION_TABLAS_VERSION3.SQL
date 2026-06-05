@@ -255,7 +255,7 @@ CREATE TABLE registro_acceso (
     decision_acceso     VARCHAR(30)  NOT NULL, -- AUTORIZADO_SALIDA, AUTORIZADO_RETORNO, DENEGADO
     prioridad_envio     VARCHAR(50),
     tipo_registro       VARCHAR(20)  NOT NULL DEFAULT 'ALPR',
-    revisado_por_admin  INT         NULL,
+    revisado_por_admin  INT,
     CONSTRAINT fk_acceso_viaje     FOREIGN KEY (id_viaje)
         REFERENCES viaje_programado(id_viaje),
     CONSTRAINT fk_acceso_camion    FOREIGN KEY (id_camion)
