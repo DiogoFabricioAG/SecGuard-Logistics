@@ -415,7 +415,7 @@ INSERT INTO registro_acceso (
 (4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'BAJO'),
 
 -- [ID_ACCESO 6] Retorno Exitoso a Patio - Fin de Ruta (VW Constellation)
-(5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'ABIERTO', 'AUTORIZADO', 1, 'BAJO'),
+(5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'ABIERTO', 'DENEGADO', 1, 'BAJO'),
 
 -- [ID_ACCESO 7] CASO DENEGADO: Placa con lodo denso. El ALPR confunde el '4' por una 'A'. Requiere verificación manual
 (8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', NULL, 'ALTO'),
@@ -436,7 +436,7 @@ INSERT INTO registro_acceso (
 (9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO'),
 
 -- [ID_ACCESO 13] Salida de Carga Pesada Autorizada (Volvo FMX 500)
-(6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 3, 'ABIERTO', 'AUTORIZADO', 1, 'ALTO'),
+(6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 3, 'ABIERTO', 'DENEGADO', 1, 'ALTO'),
 
 -- [ID_ACCESO 14] Despacho Corporativo Exitoso (Volvo FH16)
 (1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'ALTO'),
