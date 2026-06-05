@@ -323,31 +323,48 @@ INSERT INTO viaje_programado (id_pedido, codigo_reserva_patio, tipo_operacion, f
 (20, 'RSV-2025-0045', 'DESPACHO',  '2025-05-14 07:00:00', 'GRR-2025-00345', 'PENDIENTE',    2, '2025-05-14 11:00:00', '06:30', '07:30');
 
 
--- ===========================================================================
--- MÓDULO 3: VIAJE CAMION ASIGNADO (múltiples camiones por viaje)
--- ===========================================================================
-
--- Viaje 1: pedido 12,500 kg → 1 camión pesado (28 tons) suficiente
+-- Viaje 1 (Pedido 1 - Alicorp: 12,500 kg) -> Requiere 1 Camión Pesado
 INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
-(1, 1, 1);  -- F3I-845 / Volvo FH16 / Roberto Quispe
+(1, 1, 1);  -- F3I-845 (Volvo FH16) / Roberto Quispe Mamani
 
--- Viaje 2: pedido 15,600 kg → 2 camiones medianos (14 + 12 tons = 26 tons)
+-- Viaje 2 (Pedido 5 - Supermercados Peruanos: 15,600 kg) -> Dividido en 2 Camiones Medianos
 INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
-(2, 5,  2),  -- H5T-423 / Ford Cargo / Juan Torres
-(2, 12, 6);  -- N3X-608 / Mercedes Atego / César Flores
+(2, 5, 2),  -- H5T-423 (Ford Cargo 2429) / Juan Pablo Torres Ccahuana
+(2, 12, 6); -- N3X-608 (Mercedes Atego 1725) / César Flores Aliaga
 
--- Viaje 3: pedido 11,000 kg → 1 camión pesado (25 tons) suficiente
+-- Viaje 3 (Pedido 8 - Nestlé: 11,000 kg) -> Requiere 1 Camión Pesado
 INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
-(3, 2, 7);  -- D7K-312 / Mercedes Actros / Wilson Rojas
+(3, 2, 7);  -- D7K-312 (Mercedes Actros 2545) / Wilson Rojas Tapia
 
--- Viaje 4: pedido 19,500 kg → 2 camiones pesados (28 + 22 tons)
+-- Viaje 4 (Pedido 14 - Aceros: 19,500 kg) -> Dividido en 2 Camiones Pesados
 INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
-(4, 1,  1),   -- F3I-845 / Volvo FH16 / Roberto Quispe
-(4, 10, 10);  -- J2Q-867 / Volvo FM 370 / Héctor Medina
+(4, 1, 1),   -- F3I-845 (Volvo FH16) / Roberto Quispe Mamani (Retorna e ingresa a nueva ruta)
+(4, 10, 10); -- J2Q-867 (Volvo FM 370) / Héctor Medina Paucar
 
--- Viaje 5: pedido 13,400 kg → 1 camión pesado (30 tons) suficiente
+-- Viaje 5 (Pedido 2 - Gloria: 8,400 kg) -> Cubierto por 1 Camión Pesado/Medio
 INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
-(5, 3, 3);  -- C9P-671 / Scania R450 / Luis Huanca
+(5, 3, 3);  -- C9P-671 (Scania R450) / Luis Enrique Huanca Apaza
+
+-- Viaje 6 (Pedido 3 - Backus: 18,200 kg) -> Envío masivo de bebidas, requiere 1 Pesado de gran capacidad
+INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
+(6, 15, 8); -- R5U-723 (Volvo FMX 500 - 32 Tn) / Edgard Villanueva Cruz
+
+-- Viaje 7 (Pedido 4 - Saga Falabella: 5,300 kg) -> Carga retail, se asigna Furgón Ligero
+INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
+(7, 7, 5);  -- E1W-789 (Isuzu NPR 400) / Marco Antonio Sánchez Rivas
+
+-- Viaje 8 (Pedido 6 - Lindley: 9,800 kg) -> Despacho de bebidas, camión rígido mediano
+INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
+(8, 4, 11); -- A2M-190 (Volkswagen Constellation) / Franklin Asto Huallpa
+
+-- Viaje 9 (Pedido 7 - Pepsico: 4,200 kg) -> Cadena de frío (Helados/Jugos), requiere Furgón con furgoneta operativa
+INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
+(9, 9, 12); -- K6L-512 (Mitsubishi Canter) / Néstor Gutiérrez Huamán
+
+-- Viaje 10 (Pedido 10 - Tottus: 17,300 kg) -> Distribución masiva de supermercados, requiere un Convoy de 2 unidades
+INSERT INTO viaje_camion_asignado (id_viaje, id_camion, id_conductor) VALUES
+(10, 10, 10), -- J2Q-867 (Volvo FM 370) / Héctor Medina Paucar
+(10, 14, 14); -- Q1S-490 (Ford F-4000) / Dante Luján Portilla
 
 
 -- ===========================================================================
@@ -405,22 +422,22 @@ INSERT INTO registro_acceso (
 (10, 14, 11, 1, 'SALIDA', 'Q1S-490', 97.40, '/img/capturas/alpr_q1s490_out.jpg', '2026-06-05 16:20:00', 'COMPLETADO', 115, 'NORMAL', 'NINGUNA', 1, 'C2', 'ABIERTO', 'AUTORIZADO', 4),
 
 -- [ID_ACCESO 10] CASO DENEGADO: Intento de salida de camión bloqueado en el sistema por estado "INOPERATIVO"
-(11, 11, 12, 1, 'SALIDA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'INSUFICIENTE', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
+(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'INSUFICIENTE', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
 
 -- [ID_ACCESO 11] Siguiente día (06 de Junio): Despacho matutino Exitoso (Mercedes Atego)
-(12, 12, 1, 1, 'SALIDA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 'D1', 'ABIERTO', 'AUTORIZADO', 4),
+(3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 'D1', 'ABIERTO', 'AUTORIZADO', 4),
 
 -- [ID_ACCESO 12] Despacho Exitoso (Isuzu ELF 150)
-(13, 13, 2, 1, 'SALIDA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 'D2', 'ABIERTO', 'AUTORIZADO', 1),
+(9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 'D2', 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 13] Salida de Carga Pesada Autorizada (Volvo FMX 500)
-(14, 15, 6, 1, 'SALIDA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 'A1', 'ABIERTO', 'AUTORIZADO', 1),
+(6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 'A1', 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 14] Despacho Corporativo Exitoso (Volvo FH16)
-(15, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 'A2', 'ABIERTO', 'AUTORIZADO', 4),
+(1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 'A2', 'ABIERTO', 'AUTORIZADO', 4),
 
 -- [ID_ACCESO 15] Último despacho del turno de mañana (Mercedes Actros)
-(16, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 'B1', 'ABIERTO', 'AUTORIZADO', 1);
+(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 'B1', 'ABIERTO', 'AUTORIZADO', 1);
 
 
 -- ===========================================================================
