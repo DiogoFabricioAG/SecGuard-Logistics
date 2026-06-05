@@ -234,74 +234,74 @@ INSERT INTO pedido_cliente (
  'Av. Nicolas Ayllon 4200, Ate Vitarte',
  -12.0289300, -76.9598700);
 
-INSERT INTO detalle_pedido_mercancia (id_pedido, descripcion_mercancia, tipo_carga, cantidad_bultos, peso_subtotal_kg, requiere_camion_especial) VALUES
+INSERT INTO detalle_pedido_mercancia (id_pedido, descripcion_mercancia, tipo_carga, cantidad_bultos, peso_subtotal_kg, requiere_camion_especial, tipo_mercancia) VALUES
 -- Pedido 1 (OC-ALC-2025-0341) — cadena de frío
-(1, 'Productos lácteos refrigerados (yogur, queso, mantequilla)', 'REFRIGERADA', 192, 7750.00, 'REFRIGERADO'),
-(1, 'Embutidos y carnes procesadas envasadas al vacío',           'REFRIGERADA', 128, 4750.00, 'REFRIGERADO'),
+(1, 'Productos lácteos refrigerados (yogur, queso, mantequilla)', 'REFRIGERADA', 192, 7750.00, 'REFRIGERADO', 'PRODUCTO'),
+(1, 'Embutidos y carnes procesadas envasadas al vacío',           'REFRIGERADA', 128, 4750.00, 'REFRIGERADO', 'PRODUCTO'),
 -- Pedido 2 (OC-GLO-2025-0892)
-(2, 'Artículos de limpieza doméstica (detergentes, lejías)',      'GENERAL',     116, 4368.00, NULL),
-(2, 'Productos de higiene personal (champús, jabones)',           'GENERAL',      94, 4032.00, NULL),
+(2, 'Artículos de limpieza doméstica (detergentes, lejías)',      'GENERAL',     116, 4368.00, NULL,          'PRODUCTO'),
+(2, 'Productos de higiene personal (champús, jabones)',           'GENERAL',      94, 4032.00, NULL,          'PRODUCTO'),
 -- Pedido 3 (OC-BAC-2025-1123)
-(3, 'Bebidas alcohólicas (cervezas, licores)',                    'GENERAL',     202, 7280.00, NULL),
-(3, 'Golosinas y confitería surtida',                            'SECA',        135, 5096.00, NULL),
-(3, 'Conservas y enlatados de alimentos',                        'SECA',        113, 5824.00, NULL),
+(3, 'Bebidas alcohólicas (cervezas, licores)',                    'GENERAL',     202, 7280.00, NULL,          'PRODUCTO'),
+(3, 'Golosinas y confitería surtida',                             'SECA',        135, 5096.00, NULL,          'PRODUCTO'),
+(3, 'Conservas y enlatados de alimentos',                        'SECA',        113, 5824.00, NULL,          'PRODUCTO'),
 -- Pedido 4 (OC-SAG-2025-0567)
-(4, 'Cereales y harinas envasadas para consumo masivo',          'SECA',        108, 3074.00, NULL),
-(4, 'Azúcar refinada en sacos de 50 kg',                        'SECA',         72, 2226.00, NULL),
+(4, 'Cereales y harinas envasadas para consumo masivo',          'SECA',        108, 3074.00, NULL,          'PRODUCTO'),
+(4, 'Azúcar refinada en sacos de 50 kg',                        'SECA',         72, 2226.00, NULL,          'INSUMOS'),
 -- Pedido 5 (OC-SPP-2025-0234)
-(5, 'Snacks y alimentos empacados de consumo inmediato',         'SECA',        156, 5460.00, NULL),
-(5, 'Aceites vegetales comestibles en bidones',                  'GENERAL',     136, 5928.00, NULL),
-(5, 'Condimentos y aderezos embotellados',                      'GENERAL',      98, 4212.00, NULL),
+(5, 'Snacks y alimentos empacados de consumo inmediato',         'SECA',        156, 5460.00, NULL,          'PRODUCTO'),
+(5, 'Aceites vegetales comestibles en bidones',                  'GENERAL',     136, 5928.00, NULL,          'PRODUCTO'),
+(5, 'Condimentos y aderezos embotellados',                      'GENERAL',      98, 4212.00, NULL,          'PRODUCTO'),
 -- Pedido 6 (OC-LIN-2025-0781)
-(6, 'Productos de limpieza industrial a granel',                 'GENERAL',     130, 4900.00, NULL),
-(6, 'Insumos de oficina y papelería',                           'SECA',        130, 4900.00, NULL),
+(6, 'Productos de limpieza industrial a granel',                 'GENERAL',     130, 4900.00, NULL,          'MATERIALES'),
+(6, 'Insumos de oficina y papelería',                           'SECA',        130, 4900.00, NULL,          'INSUMOS'),
 -- Pedido 7 (OC-PYG-2025-0412) — cadena de frío
-(7, 'Helados y postres congelados (paletas, tortas heladas)',    'REFRIGERADA',  91, 2520.00, 'REFRIGERADO'),
-(7, 'Jugos y bebidas pasteurizadas refrigeradas',               'REFRIGERADA',  49, 1680.00, 'REFRIGERADO'),
+(7, 'Helados y postres congelados (paletas, tortas heladas)',    'REFRIGERADA',  91, 2520.00, 'REFRIGERADO', 'PRODUCTO'),
+(7, 'Jugos y bebidas pasteurizadas refrigeradas',               'REFRIGERADA',  49, 1680.00, 'REFRIGERADO', 'PRODUCTO'),
 -- Pedido 8 (OC-NES-2025-0658)
-(8, 'Café molido y en grano envasado al vacío',                 'SECA',        120, 4180.00, NULL),
-(8, 'Chocolates y productos cacaoteros',                        'SECA',        105, 3630.00, NULL),
-(8, 'Leche evaporada y condensada en cajas',                   'GENERAL',      75, 3190.00, NULL),
+(8, 'Café molido y en grano envasado al vacío',                 'SECA',        120, 4180.00, NULL,          'PRODUCTO'),
+(8, 'Chocolates y productos cacaoteros',                        'SECA',        105, 3630.00, NULL,          'PRODUCTO'),
+(8, 'Leche evaporada y condensada en cajas',                   'GENERAL',      75, 3190.00, NULL,          'PRODUCTO'),
 -- Pedido 9 (OC-LAI-2025-0293)
-(9, 'Productos cosméticos y cuidado personal (cremas, lociones)','GENERAL',     94, 3172.00, NULL),
-(9, 'Artículos de higiene bucal (pastas, cepillos)',            'GENERAL',      76, 2928.00, NULL),
+(9, 'Productos cosméticos y cuidado personal (cremas, lociones)','GENERAL',      94, 3172.00, NULL,          'PRODUCTO'),
+(9, 'Artículos de higiene bucal (pastas, cepillos)',            'GENERAL',      76, 2928.00, NULL,          'PRODUCTO'),
 -- Pedido 10 (OC-TOT-2025-1045)
-(10, 'Ropa y prendas de vestir empacadas',                      'SECA',        147, 4844.00, NULL),
-(10, 'Calzado deportivo y casual encajonado',                   'SECA',        147, 5536.00, NULL),
-(10, 'Accesorios textiles y complementos de moda',             'SECA',        126, 6920.00, NULL),
+(10, 'Ropa y prendas de vestir empacadas',                      'SECA',        147, 4844.00, NULL,          'PRODUCTO'),
+(10, 'Calzado deportivo y casual encajonado',                    'SECA',        147, 5536.00, NULL,          'PRODUCTO'),
+(10, 'Accesorios textiles y complementos de moda',             'SECA',        126, 6920.00, NULL,          'PRODUCTO'),
 -- Pedido 11 (OC-ISM-2025-0374)
-(11, 'Suplementos alimenticios y vitaminas envasadas',          'SECA',         98, 3456.00, NULL),
-(11, 'Medicamentos OTC y productos de farmacia',                'SECA',         97, 3744.00, NULL),
+(11, 'Suplementos alimenticios y vitamins envasadas',          'SECA',         98, 3456.00, NULL,          'PRODUCTO'),
+(11, 'Medicamentos OTC y productos de farmacia',                'SECA',         97, 3744.00, NULL,          'PRODUCTO'),
 -- Pedido 12 (OC-UNI-2025-0829) — líquidos, no apilar
-(12, 'Bebidas carbonatadas en botellas plásticas',              'GENERAL',     127, 5162.00, NULL),
-(12, 'Agua mineral y de mesa embotellada',                      'GENERAL',     103, 3738.00, NULL),
+(12, 'Bebidas carbonatadas en botellas plásticas',              'GENERAL',     127, 5162.00, NULL,          'PRODUCTO'),
+(12, 'Agua mineral y de mesa embotellada',                      'GENERAL',     103, 3738.00, NULL,          'PRODUCTO'),
 -- Pedido 13 (OC-TOT-2025-1102) — CANCELADO
-(13, 'Electrodomésticos pequeños (licuadoras, tostadoras)',     'GENERAL',     155, 6050.00, NULL),
-(13, 'Accesorios y repuestos para electrodomésticos',          'SECA',        155, 6050.00, NULL),
+(13, 'Electrodomésticos pequeños (licuadoras, tostadoras)',     'GENERAL',     155, 6050.00, NULL,          'PRODUCTO'),
+(13, 'Accesorios y repuestos para electrodomésticos',          'SECA',        155, 6050.00, NULL,          'INSUMOS'),
 -- Pedido 14 (OC-ARC-2025-0516) — MATPEL
-(14, 'Materiales de construcción (pinturas, selladores)',       'MATPEL',      192, 8190.00, 'MATPEL'),
-(14, 'Adhesivos y solventes industriales',                      'MATPEL',      144, 6240.00, 'MATPEL'),
-(14, 'Herramientas manuales y eléctricas empacadas',           'GENERAL',     144, 5070.00, NULL),
+(14, 'Materiales de construcción (pinturas, selladores)',       'MATPEL',      192, 8190.00, 'MATPEL',      'MATERIALES'),
+(14, 'Adhesivos y solventes industriales',                      'MATPEL',      144, 6240.00, 'MATPEL',      'INSUMOS'),
+(14, 'Herramientas manuales y eléctricas empacadas',           'GENERAL',     144, 5070.00, NULL,          'PRODUCTO'),
 -- Pedido 15 (OC-BIM-2025-0187)
-(15, 'Juguetes infantiles plásticos y didácticos',              'GENERAL',      90, 2640.00, NULL),
-(15, 'Artículos deportivos y recreativos',                      'GENERAL',      60, 2160.00, NULL),
+(15, 'Juguetes infantiles plásticos y didácticos',              'GENERAL',      90, 2640.00, NULL,          'PRODUCTO'),
+(15, 'Artículos deportivos y recreativos',                      'GENERAL',      60, 2160.00, NULL,          'PRODUCTO'),
 -- Pedido 16 (OC-ALC-2025-0388) — 2da entrega cadena de frío
-(16, 'Productos lácteos refrigerados (quesos maduros, crema)', 'REFRIGERADA',  198, 8236.00, 'REFRIGERADO'),
-(16, 'Fiambres y carnes frías envasadas',                      'REFRIGERADA',   90, 3408.00, 'REFRIGERADO'),
-(16, 'Mantequillas y margarinas refrigeradas',                 'REFRIGERADA',   72, 2556.00, 'REFRIGERADO'),
+(16, 'Productos lácteos refrigerados (quesos maduros, crema)', 'REFRIGERADA',  198, 8236.00, 'REFRIGERADO', 'PRODUCTO'),
+(16, 'Fiambres y carnes frías envasadas',                      'REFRIGERADA',   90, 3408.00, 'REFRIGERADO', 'PRODUCTO'),
+(16, 'Mantequillas y margarinas refrigeradas',                 'REFRIGERADA',   72, 2556.00, 'REFRIGERADO', 'PRODUCTO'),
 -- Pedido 17 (OC-GLO-2025-0941) — verificar temperatura
-(17, 'Jugos naturales pasteurizados refrigerados',             'REFRIGERADA',  100, 4056.00, 'REFRIGERADO'),
-(17, 'Lácteos y bebidas a base de soya refrigeradas',         'REFRIGERADA',  100, 3744.00, 'REFRIGERADO'),
+(17, 'Jugos naturales pasteurizados refrigerados',             'REFRIGERADA',  100, 4056.00, 'REFRIGERADO', 'PRODUCTO'),
+(17, 'Lácteos y bebidas a base de soya refrigeradas',         'REFRIGERADA',  100, 3744.00, 'REFRIGERADO', 'PRODUCTO'),
 -- Pedido 18 (OC-SAG-2025-0601)
-(18, 'Arroz y granos secos envasados en sacos',                'SECA',        151, 5562.00, NULL),
-(18, 'Leguminosas secas (lentejas, frijoles, garbanzos)',      'SECA',        124, 4738.00, NULL),
+(18, 'Arroz y granos secos envasados en sacos',                'SECA',        151, 5562.00, NULL,          'PRODUCTO'),
+(18, 'Leguminosas secas (lentejas, frijoles, garbanzos)',      'SECA',        124, 4738.00, NULL,          'PRODUCTO'),
 -- Pedido 19 (OC-LIN-2025-0834) — carbonatadas
-(19, 'Bebidas carbonatadas en latas de aluminio',              'GENERAL',     114, 4118.00, NULL),
-(19, 'Agua tónica y energizantes embotellados',                'GENERAL',      76, 2982.00, NULL),
+(19, 'Bebidas carbonatadas en latas de aluminio',              'GENERAL',     114, 4118.00, NULL,          'PRODUCTO'),
+(19, 'Agua tónica y energizantes embotellados',                'GENERAL',      76, 2982.00, NULL,          'PRODUCTO'),
 -- Pedido 20 (OC-NES-2025-0712) — Ate Vitarte
-(20, 'Café instantáneo y bebidas en polvo envasadas',          'SECA',        153, 5628.00, NULL),
-(20, 'Galletas, barras y snacks empacados',                    'SECA',        119, 4422.00, NULL),
-(20, 'Sopas instantáneas y fideos en sobre',                   'SECA',         68, 3350.00, NULL);
+(20, 'Café instantáneo y bebidas en polvo envasadas',          'SECA',        153, 5628.00, NULL,          'PRODUCTO'),
+(20, 'Galletas, barras y snacks empacados',                    'SECA',        119, 4422.00, NULL,          'PRODUCTO'),
+(20, 'Sopas instantáneas y fideos en sobre',                   'SECA',         68, 3350.00, NULL,          'PRODUCTO');
 
 -- ===========================================================================
 -- MÓDULO 2: CÁMARA DISPOSITIVO (requerido como FK en registro_acceso)
@@ -397,53 +397,52 @@ INSERT INTO registro_acceso (
     id_viaje, id_camion, id_conductor, id_camara, tipo_evento, 
     placa_detectada_alpr, confianza_alpr, url_foto_captura, timestamp_evento, 
     estado_deteccion, latencia_ms, nivel_iluminacion, nivel_obstruccion, 
-    puerta_asignada, muelle_dock, estado_barrera, decision_acceso, revisado_por_admin
+    puerta_asignada, muelle_dock, estado_barrera, decision_acceso, revisado_por_admin, prioridad_envio
 ) VALUES
 -- [ID_ACCESO 1] Despacho Exitoso de la mañana (Scania R450)
-(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 1),
+(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 1, 'ALTO'),
 
 -- [ID_ACCESO 2] Despacho Exitoso (VW Constellation)
-(5, 4, 5, 1, 'SALIDA', 'A2M-190', 22.30, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'ERROR EN LECTURA', 95, 'INSUFICIENTE', 'DETECTADA', 1, 1, 'ABIERTO', 'AUTORIZADO', NULL),
+(5, 4, 5, 1, 'SALIDA', 'A2M-190', 22.30, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'ERROR EN LECTURA', 95, 'INSUFICIENTE', 'DETECTADA', 1, 1, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO'),
 
 -- [ID_ACCESO 3] Despacho Exitoso (Isuzu NPR 400)
-(6, 7, 8, 1, 'SALIDA', 'E1W-789', 97.80, '/img/capturas/alpr_e1w789_out.jpg', '2026-06-05 08:10:00', 'COMPLETADO', 140, 'NORMAL', 'NINGUNA', 2, 3, 'ABIERTO', 'AUTORIZADO', 4),
+(6, 7, 8, 1, 'SALIDA', 'E1W-789', 97.80, '/img/capturas/alpr_e1w789_out.jpg', '2026-06-05 08:10:00', 'COMPLETADO', 140, 'NORMAL', 'NINGUNA', 2, 3, 'ABIERTO', 'AUTORIZADO', 4, 'MEDIO'),
 
 -- [ID_ACCESO 4] CASO DENEGADO: Conductor Pedro Callo no aprobó Charla de Inducción de Seguridad Obligatoria
-(7, 6, 4, 1, 'SALIDA', 'B8R-056', 96.40, '/img/capturas/alpr_b8r056_rej.jpg', '2026-06-05 08:55:00', 'EN REVISION', 110, 'NORMAL', 'DETECTADA', 1, NULL, 'CERRADO', 'DENEGADO', 2),
+(7, 6, 4, 1, 'SALIDA', 'B8R-056', 96.40, '/img/capturas/alpr_b8r056_rej.jpg', '2026-06-05 08:55:00', 'EN REVISION', 110, 'NORMAL', 'DETECTADA', 1, NULL, 'CERRADO', 'DENEGADO', 2, 'ALTO'),
 
 -- [ID_ACCESO 5] Retorno Exitoso a Patio - Fin de Ruta del primer camión (Scania R450)
-(4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 4, 'ABIERTO', 'AUTORIZADO', NULL),
+(4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'BAJO'),
 
 -- [ID_ACCESO 6] Retorno Exitoso a Patio - Fin de Ruta (VW Constellation)
-(5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'ABIERTO', 'AUTORIZADO', 1),
+(5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'ABIERTO', 'AUTORIZADO', 1, 'BAJO'),
 
 -- [ID_ACCESO 7] CASO DENEGADO: Placa con lodo denso. El ALPR confunde el '4' por una 'A'. Requiere verificación manual
-(8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', NULL),
+(8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', NULL, 'ALTO'),
 
 -- [ID_ACCESO 8] Operación de la tarde: Salida Autorizada (Volvo FM 370)
-(9, 10, 10, 1, 'SALIDA', 'J2Q-867', 98.90, '/img/capturas/alpr_j2q867_out.jpg', '2026-06-05 15:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', 1),
+(9, 10, 10, 1, 'SALIDA', 'J2Q-867', 98.90, '/img/capturas/alpr_j2q867_out.jpg', '2026-06-05 15:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', 1, 'MEDIO'),
 
 -- [ID_ACCESO 9] Salida Autorizada al finalizar la tarde (Ford F-4000)
-(10, 14, 11, 1, 'SALIDA', 'Q1S-490', 97.40, '/img/capturas/alpr_q1s490_out.jpg', '2026-06-05 16:20:00', 'COMPLETADO', 115, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', 4),
+(10, 14, 11, 1, 'SALIDA', 'Q1S-490', 97.40, '/img/capturas/alpr_q1s490_out.jpg', '2026-06-05 16:20:00', 'COMPLETADO', 115, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', 4, 'BAJO'),
 
 -- [ID_ACCESO 10] CASO DENEGADO: Intento de salida de camión bloqueado en el sistema por estado "INOPERATIVO"
-(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'NORMAL', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
+(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'NORMAL', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2, 'ALTO'),
 
 -- [ID_ACCESO 11] Siguiente día (06 de Junio): Despacho matutino Exitoso (Mercedes Atego)
-(3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', NULL),
+(3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'ALTO'),
 
 -- [ID_ACCESO 12] Despacho Exitoso (Isuzu ELF 150)
-(9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 5, 'ABIERTO', 'AUTORIZADO', NULL),
+(9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO'),
 
 -- [ID_ACCESO 13] Salida de Carga Pesada Autorizada (Volvo FMX 500)
-(6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 3, 'ABIERTO', 'AUTORIZADO', 1),
+(6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 3, 'ABIERTO', 'AUTORIZADO', 1, 'ALTO'),
 
 -- [ID_ACCESO 14] Despacho Corporativo Exitoso (Volvo FH16)
-(1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', NULL),
+(1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'ALTO'),
 
 -- [ID_ACCESO 15] Último despacho del turno de mañana (Mercedes Actros)
-(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', NULL);
-
+(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO');
 
 -- ===========================================================================
 -- MÓDULO 4: ANOMALÍAS DE ACCESO 
