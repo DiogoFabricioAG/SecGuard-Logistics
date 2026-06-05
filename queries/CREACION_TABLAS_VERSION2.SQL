@@ -107,7 +107,7 @@ CREATE TABLE conductor_ransa (
     nro_brevete               VARCHAR(15)  NOT NULL UNIQUE,
     vigencia_sctr             DATE         NOT NULL,
     charla_induccion_aprobada BOOLEAN      NOT NULL DEFAULT FALSE,
-    empresa_transportista     VARCHAR(150)
+    empresa_transportista     VARCHAR(150),
     estado_empleado           VARCHAR(20)  NOT NULL DEFAULT 'ACTIVO'
     -- estado_empleado: ACTIVO, EN_RUTA, DESCANSO, INACTIVO
     -- La disponibilidad se infiere desde este campo, sin columna extra
@@ -121,7 +121,7 @@ CREATE TABLE camion_ransa (
     tipo_unidad                 VARCHAR(30)   NOT NULL,   -- TRACTO_CAMION, CAMION_RIGIDO, FURGON
     vigencia_soat               DATE          NOT NULL,
     vigencia_tarjeta_propiedad  DATE          NOT NULL,
-    observaciones      TEXT
+    observaciones      TEXT,
     estado_operativo            VARCHAR(24)   NOT NULL DEFAULT 'DISPONIBLE',
     -- MODIFICACIÓN v2.0: columnas agregadas para pantalla Gestión de Flota
     url_foto_vehiculo           VARCHAR(255),
@@ -164,7 +164,7 @@ CREATE TABLE pedido_cliente (
     contacto_correo    VARCHAR(150),
     direccion_entrega  VARCHAR(255),   -- texto legible: "Av. Los Alamos 234, Ate Vitarte"
     latitud            DECIMAL(10, 7), -- ej: -12.0431800
-    longitud           DECIMAL(10, 7); -- ej: -77.0282400
+    longitud           DECIMAL(10, 7), -- ej: -77.0282400
     -- MODIFICACIÓN v2.0: restricciones libres del cliente sobre el pedido
     descripcion_restricciones TEXT,
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (id_cliente)
@@ -178,7 +178,7 @@ CREATE TABLE detalle_pedido_mercancia (
     tipo_carga              VARCHAR(50)  NOT NULL, -- REFRIGERADA, SECA, MATPEL, GENERAL
     cantidad_bultos         INT          NOT NULL,
     peso_subtotal_kg        DECIMAL(10,2) NOT NULL,
-    tipo_mercancia     VARCHAR(20)
+    tipo_mercancia     VARCHAR(20),
     requiere_camion_especial VARCHAR(50),
     CONSTRAINT fk_detalle_pedido FOREIGN KEY (id_pedido)
         REFERENCES pedido_cliente(id_pedido) ON DELETE CASCADE
