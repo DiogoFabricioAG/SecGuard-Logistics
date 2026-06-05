@@ -12,6 +12,10 @@
 -- SECCIÓN 1: LIMPIEZA — DROP TABLES (orden inverso por dependencias FK)
 -- ===========================================================================
 
+DROP TABLE IF EXISTS motivo_acceso                   CASCADE;
+DROP TABLE IF EXISTS intento_acceso_no_registrado    CASCADE;
+DROP TABLE IF EXISTS snapshot_kpi_diario             CASCADE;
+DROP TABLE IF EXISTS metrica_operacional_sistema     CASCADE;
 DROP TABLE IF EXISTS mantenimiento_camion              CASCADE;
 DROP TABLE IF EXISTS viaje_camion_asignado             CASCADE;
 DROP TABLE IF EXISTS auditoria_modificacion_acceso     CASCADE;
@@ -35,6 +39,10 @@ DROP TABLE IF EXISTS administrador                     CASCADE;
 -- SECCIÓN 2: RESET DE SECUENCIAS
 -- ===========================================================================
 
+DROP SEQUENCE IF EXISTS motivo_acceso_id_motivo_seq                       CASCADE;
+DROP SEQUENCE IF EXISTS intento_acceso_no_registrado_id_intento_seq       CASCADE;
+DROP SEQUENCE IF EXISTS snapshot_kpi_diario_id_snapshot_seq               CASCADE;
+DROP SEQUENCE IF EXISTS metrica_operacional_sistema_id_metrica_seq        CASCADE;
 DROP SEQUENCE IF EXISTS administrador_id_admin_seq                CASCADE;
 DROP SEQUENCE IF EXISTS sesion_admin_id_sesion_seq                CASCADE;
 DROP SEQUENCE IF EXISTS cliente_empresa_id_cliente_seq            CASCADE;
@@ -234,6 +242,18 @@ CREATE TABLE camara_dispositivo (
     estado_hardware  VARCHAR(24)  NOT NULL DEFAULT 'OPERATIVO'
 );
 
+CREATE TABLE intento_acceso_no_registrado (
+    id_intento        SERIAL PRIMARY KEY,
+    placa_detectada   VARCHAR(15)  NOT NULL,
+    id_camara         INT          NOT NULL,
+    timestamp_intento TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    url_foto_captura  VARCHAR(255),
+    confianza_alpr    DECIMAL(5,2),
+    decision          VARCHAR(20)  NOT NULL DEFAULT 'DENEGADO',
+    CONSTRAINT fk_intento_camara FOREIGN KEY (id_camara)
+        REFERENCES camara_dispositivo(id_camara)
+);
+
 CREATE TABLE registro_acceso (
     id_acceso           SERIAL PRIMARY KEY,
     id_viaje            INT          NOT NULL,
@@ -266,6 +286,22 @@ CREATE TABLE registro_acceso (
         REFERENCES camara_dispositivo(id_camara),
     CONSTRAINT fk_acceso_admin     FOREIGN KEY (revisado_por_admin)
         REFERENCES administrador(id_admin)
+);
+
+CREATE TABLE motivo_acceso (
+    id_motivo   SERIAL PRIMARY KEY,
+    id_acceso   INT         NOT NULL,
+    tipo_motivo VARCHAR(30) NOT NULL,
+    CONSTRAINT chk_tipo_motivo CHECK (
+        tipo_motivo IN (
+            'INTRUSION_SOSPECHOSA',
+            'GUIA_CON_FALTANTES',
+            'FALLA_CAMARA'
+        )
+    ),
+    CONSTRAINT uq_acceso_motivo UNIQUE (id_acceso, tipo_motivo),
+    CONSTRAINT fk_motivo_acceso FOREIGN KEY (id_acceso)
+        REFERENCES registro_acceso(id_acceso) ON DELETE CASCADE
 );
 
 CREATE TABLE anomalia_acceso (
@@ -350,5 +386,6 @@ CREATE TABLE metrica_operacional_sistema (
     camaras_activas INT          NOT NULL DEFAULT 0,
     camaras_total   INT          NOT NULL DEFAULT 0
 );
+
 
 
