@@ -8,10 +8,7 @@ ALTER TABLE registro_acceso
     ADD COLUMN latencia_ms           INT,          
     ADD COLUMN nivel_iluminacion     VARCHAR(20), 
     ADD COLUMN nivel_obstruccion     VARCHAR(20); 
-
-ALTER TABLE registro_acceso 
-    ALTER COLUMN revisado_por_admin TYPE BOOLEAN 
-    USING (revisado_por_admin::BOOLEAN);
+    ADD COLUMN prioridad_envio       VARCHAR(50);
 
 -- MODIFICACIÓN EN 'conductor_ransa'
 ALTER TABLE conductor_ransa 
@@ -24,3 +21,5 @@ ALTER TABLE camion_ransa
 -- MODIFICACIÓN EN 'detalle_pedido_mercancia'
 ALTER TABLE detalle_pedido_mercancia
   ADD COLUMN tipo_mercancia     VARCHAR(20)
+
+
