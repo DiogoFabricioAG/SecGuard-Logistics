@@ -400,7 +400,7 @@ INSERT INTO registro_acceso (
     puerta_asignada, muelle_dock, estado_barrera, decision_acceso, revisado_por_admin
 ) VALUES
 -- [ID_ACCESO 1] Despacho Exitoso de la mañana (Scania R450)
-(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'INSUFICIENTE', 'NINGUNA', 1, NULL, 'ABIERTO', 'AUTORIZADO', 1),
+(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'INSUFICIENTE', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 2] Despacho Exitoso (VW Constellation)
 (5, 4, 5, 1, 'SALIDA', 'A2M-190', 99.10, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'COMPLETADO', 95, 'NORMAL', 'NINGUNA', 1, 1, 'ABIERTO', 'AUTORIZADO', 1),
@@ -412,7 +412,7 @@ INSERT INTO registro_acceso (
 (7, 6, 4, 1, 'SALIDA', 'B8R-056', 96.40, '/img/capturas/alpr_b8r056_rej.jpg', '2026-06-05 08:55:00', 'EN REVISION', 110, 'NORMAL', 'DETECTADA', 1, NULL, 'CERRADO', 'DENEGADO', 2),
 
 -- [ID_ACCESO 5] Retorno Exitoso a Patio - Fin de Ruta del primer camión (Scania R450)
-(4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 4, 'ABIERTO', 'AUTORIZADO', 1),
+(4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 4, 'ABIERTO', 'AUTORIZADO', NULL),
 
 -- [ID_ACCESO 6] Retorno Exitoso a Patio - Fin de Ruta (VW Constellation)
 (5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'ABIERTO', 'AUTORIZADO', 1),
@@ -430,19 +430,19 @@ INSERT INTO registro_acceso (
 (7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'INSUFICIENTE', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
 
 -- [ID_ACCESO 11] Siguiente día (06 de Junio): Despacho matutino Exitoso (Mercedes Atego)
-(3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, NULL, 'ABIERTO', 'AUTORIZADO', 4),
+(3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', NULL),
 
 -- [ID_ACCESO 12] Despacho Exitoso (Isuzu ELF 150)
-(9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, NULL, 'ABIERTO', 'AUTORIZADO', 1),
+(9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 5, 'ABIERTO', 'AUTORIZADO', NULL),
 
 -- [ID_ACCESO 13] Salida de Carga Pesada Autorizada (Volvo FMX 500)
 (6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 3, 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 14] Despacho Corporativo Exitoso (Volvo FH16)
-(1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, NULL, 'ABIERTO', 'AUTORIZADO', 4),
+(1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', NULL),
 
 -- [ID_ACCESO 15] Último despacho del turno de mañana (Mercedes Actros)
-(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, NULL, 'ABIERTO', 'AUTORIZADO', 1);
+(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', NULL);
 
 
 -- ===========================================================================
