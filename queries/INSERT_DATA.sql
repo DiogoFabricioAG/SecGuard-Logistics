@@ -400,10 +400,10 @@ INSERT INTO registro_acceso (
     puerta_asignada, muelle_dock, estado_barrera, decision_acceso, revisado_por_admin
 ) VALUES
 -- [ID_ACCESO 1] Despacho Exitoso de la mañana (Scania R450)
-(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'INSUFICIENTE', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 1),
+(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 2] Despacho Exitoso (VW Constellation)
-(5, 4, 5, 1, 'SALIDA', 'A2M-190', 99.10, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'COMPLETADO', 95, 'NORMAL', 'NINGUNA', 1, 1, 'ABIERTO', 'AUTORIZADO', 1),
+(5, 4, 5, 1, 'SALIDA', 'A2M-190', 22.30, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'ERROR EN LECTURA', 95, 'INSUFICIENTE', 'DETECTADA', 1, 1, 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 3] Despacho Exitoso (Isuzu NPR 400)
 (6, 7, 8, 1, 'SALIDA', 'E1W-789', 97.80, '/img/capturas/alpr_e1w789_out.jpg', '2026-06-05 08:10:00', 'COMPLETADO', 140, 'NORMAL', 'NINGUNA', 2, 3, 'ABIERTO', 'AUTORIZADO', 4),
@@ -418,7 +418,7 @@ INSERT INTO registro_acceso (
 (5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 7] CASO DENEGADO: Placa con lodo denso. El ALPR confunde el '4' por una 'A'. Requiere verificación manual
-(8, 8, 9, 1, 'SALIDA', 'G4N-23A', 62.10, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'NORMAL', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
+(8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
 
 -- [ID_ACCESO 8] Operación de la tarde: Salida Autorizada (Volvo FM 370)
 (9, 10, 10, 1, 'SALIDA', 'J2Q-867', 98.90, '/img/capturas/alpr_j2q867_out.jpg', '2026-06-05 15:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', 1),
@@ -453,8 +453,11 @@ INSERT INTO anomalia_acceso (id_acceso, tipo_anomalia, descripcion_detallada, au
 -- Asociado al id_acceso = 4 (Falta de capacitación del conductor lanzada en control perimetral)
 (4, 'INDUCCION_SEGURIDAD_AUSENTE', 'El conductor Pedro Callo Condori figura en base de datos con la charla de inducción desaprobada/no realizada. Acceso denegado por políticas de SSO Ransa.', FALSE),
 
+-- Asociado al id_acceso = 2 (Lectura incorrecta por obstrucción física de suciedad)
+(2, 'LECTURA_FALLIDA_ALPR', 'La cámara ALPR procesó la cadena "A2M-19B" debido a acumulación crítica de barro sobre el último dígito. Unidad retenida en bahía secundaria para limpieza de placa.', FALSE),
+
 -- Asociado al id_acceso = 7 (Lectura incorrecta por obstrucción física de suciedad)
-(7, 'LECTURA_FALLIDA_ALPR', 'La cámara ALPR procesó la cadena "G4N-23A" debido a acumulación crítica de barro sobre el último dígito (físico: G4N-234). Unidad retenida en bahía secundaria para limpieza de placa.', FALSE),
+(7, 'LECTURA_FALLIDA_ALPR', 'La cámara ALPR procesó la cadena "G4N-23A" debido a acumulación crítica de barro sobre el último dígito. Unidad retenida en bahía secundaria para limpieza de placa.', FALSE),
 
 -- Asociado al id_acceso = 10 (Validación vehicular fallida por alertas lógicas de estado)
 (10, 'VEHICULO_INOPERATIVO', 'El sistema detectó que el tracto Scania G410 (M9V-341) está marcado como INOPERATIVO en el módulo logístico. Bloqueo automático de barrera para evitar siniestros en ruta.', FALSE),
