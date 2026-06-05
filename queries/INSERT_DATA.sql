@@ -44,44 +44,44 @@ INSERT INTO cliente_empresa (ruc, razon_social, sector_industrial, estado_cuenta
 -- MÓDULO 2: CONDUCTORES RANSA (15 conductores)
 -- ===========================================================================
 
-INSERT INTO conductor_ransa (dni, nombres, apellidos, nro_brevete, vigencia_sctr, charla_induccion_aprobada, estado_empleado) VALUES
-('43218765', 'Roberto',   'Quispe Mamani',      'Q43218765-A3', '2026-03-15', TRUE,  'ACTIVO'),
-('52341098', 'Juan Pablo', 'Torres Ccahuana',   'T52341098-A3', '2025-12-01', TRUE,  'ACTIVO'),
-('38901234', 'Luis Enrique','Huanca Apaza',      'H38901234-A2', '2026-06-20', TRUE,  'ACTIVO'),
-('71234567', 'Pedro',      'Callo Condori',     'C71234567-A3', '2025-09-10', FALSE, 'ACTIVO'),
-('62345678', 'Marco Antonio','Sánchez Rivas',   'S62345678-A3', '2026-01-28', TRUE,  'ACTIVO'),
-('48901267', 'César',      'Flores Aliaga',     'F48901267-A2', '2026-04-05', TRUE,  'ACTIVO'),
-('55671234', 'Wilson',     'Rojas Tapia',       'R55671234-A3', '2025-11-14', TRUE,  'EN_RUTA'),
-('67890123', 'Edgard',     'Villanueva Cruz',   'V67890123-A3', '2026-07-22', TRUE,  'ACTIVO'),
-('34512678', 'Ángel',      'Paredes Bendezú',   'P34512678-A2', '2026-02-18', FALSE, 'ACTIVO'),
-('79012356', 'Héctor',     'Medina Paucar',     'M79012356-A3', '2025-10-30', TRUE,  'ACTIVO'),
-('41239087', 'Franklin',   'Asto Huallpa',      'A41239087-A3', '2026-05-11', TRUE,  'EN_RUTA'),
-('58904321', 'Néstor',     'Gutiérrez Huamán',  'G58904321-A2', '2026-08-09', TRUE,  'ACTIVO'),
-('66123490', 'Raúl',       'Cárdenas Zevallos', 'C66123490-A3', '2025-08-25', TRUE,  'DESCANSO'),
-('72098345', 'Dante',      'Luján Portilla',    'L72098345-A3', '2026-03-03', TRUE,  'ACTIVO'),
-('39087612', 'Wilmer',     'Sucari Condori',    'S39087612-A2', '2025-07-17', FALSE, 'INACTIVO');
+INSERT INTO conductor_ransa (dni, nombres, apellidos, nro_brevete, vigencia_sctr, charla_induccion_aprobada, empresa_transportista, estado_empleado) VALUES
+('45890123', 'Carlos Eduardo', 'Mendoza Salvatierra', 'M45890123-A3C', '2026-12-31', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('70123456', 'Julio César', 'Guerrero Palomino', 'G70123456-A3B', '2026-10-15', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('10456789', 'Segundo Manuel', 'Benites Aranda', 'B10456789-A3B', '2026-11-20', TRUE, 'Transportes Integrados SAC', 'ACTIVO'),
+('42156734', 'Jorge Luis', 'Altamirano Vega', 'A42156734-A2B', '2026-09-05', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('09876543', 'Christian David', 'Aparicio Castro', 'A09876543-A3C', '2027-01-10', TRUE, 'Logística Avanzada Perú', 'ACTIVO'),
+('75432109', 'Walter Hugo', 'Chura Ticona', 'C75432109-A3B', '2026-08-18', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('44321098', 'Oscar Aurelio', 'Vargas Machuca', 'V44321098-A3C', '2026-07-25', TRUE, 'Transportes del Sur EIRL', 'ACTIVO'),
+('25789123', 'Enrique Alfonso', 'Cáceres Pardo', 'C25789123-A2B', '2026-10-30', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('41908234', 'Alan Pierre', 'Gallardo Segura', 'G41908234-A3B', '2026-11-01', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('73019284', 'Gino Paolo', 'Ribeiro Falconí', 'R73019284-A3C', '2026-12-12', TRUE, 'Servicios Logísticos S.A.', 'ACTIVO'),
+('47123894', 'Ronald Iván', 'Morales Gutiérrez', 'M47123894-A3B', '2026-09-24', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('32984123', 'Félix Alejandro', 'Zegarra Quiroz', 'Z32984123-A2B', '2026-08-11', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('40392817', 'Victor Raul', 'Haya de la Torre', 'H40392817-A3B', '2026-10-02', TRUE, 'Transportes Mercurio', 'ACTIVO'),
+('71928374', 'Yuri Alexander', 'Poma Condori', 'P71928374-A3C', '2026-07-19', TRUE, 'Ransa Comercial S.A.', 'ACTIVO'),
+('46571239', 'Jaime Francisco', 'Ugarte Elías', 'U46571239-A3B', '2026-11-15', TRUE, 'Ransa Comercial S.A.', 'ACTIVO');
 
 
 -- ===========================================================================
 -- MÓDULO 2: CAMIONES RANSA (15 camiones con nuevas columnas)
 -- ===========================================================================
 
-INSERT INTO camion_ransa (placa_matricula, modelo, capacidad_toneladas, tipo_unidad, vigencia_soat, vigencia_tarjeta_propiedad, estado_operativo, url_foto_vehiculo, clasificacion_peso, fecha_proximo_mantenimiento) VALUES
-('F3I-845',  'Volvo FH16',          28.00, 'TRACTO_CAMION',    '2026-01-10', '2027-05-01', 'DISPONIBLE',    '/img/flota/F3I845.jpg',  'CARGA_PESADA',      '2025-08-15'),
-('D7K-312',  'Mercedes Actros 2545',25.00, 'TRACTO_CAMION',    '2025-12-20', '2026-11-30', 'EN_RUTA',       '/img/flota/D7K312.jpg',  'CARGA_PESADA',      '2025-09-01'),
-('C9P-671',  'Scania R450',         30.00, 'TRACTO_CAMION',    '2026-03-05', '2027-02-14', 'DISPONIBLE',    '/img/flota/C9P671.jpg',  'CARGA_PESADA',      '2025-10-20'),
-('A2M-190',  'Volkswagen Constellation 24.280', 18.00, 'CAMION_RIGIDO', '2026-02-28', '2026-09-15', 'DISPONIBLE', '/img/flota/A2M190.jpg', 'CARGA_MEDIA', '2025-07-30'),
-('H5T-423',  'Ford Cargo 2429',     14.00, 'CAMION_RIGIDO',    '2025-11-15', '2026-07-20', 'DISPONIBLE',    '/img/flota/H5T423.jpg',  'CARGA_MEDIA',       '2025-08-05'),
-('B8R-056',  'Hino 500 Series',     12.00, 'CAMION_RIGIDO',    '2026-04-18', '2027-01-10', 'EN_MANTENIMIENTO','/img/flota/B8R056.jpg','CARGA_MEDIA',       '2025-06-28'),
-('E1W-789',  'Isuzu NPR 400',        5.50, 'FURGON',           '2026-01-22', '2026-10-05', 'DISPONIBLE',    '/img/flota/E1W789.jpg',  'COMERCIAL_LIGERO',  '2025-09-12'),
-('G4N-234',  'Toyota Dyna 300',      4.00, 'FURGON',           '2025-10-30', '2026-08-17', 'DISPONIBLE',    '/img/flota/G4N234.jpg',  'COMERCIAL_LIGERO',  '2025-07-25'),
-('K6L-512',  'Mitsubishi Canter',    3.50, 'FURGON',           '2026-05-14', '2027-03-22', 'DISPONIBLE',    '/img/flota/K6L512.jpg',  'COMERCIAL_LIGERO',  '2025-10-01'),
-('J2Q-867',  'Volvo FM 370',        22.00, 'TRACTO_CAMION',    '2026-02-09', '2026-12-28', 'DISPONIBLE',    '/img/flota/J2Q867.jpg',  'CARGA_PESADA',      '2025-11-05'),
-('M9V-341',  'Scania G410',         26.00, 'TRACTO_CAMION',    '2025-09-25', '2027-04-10', 'INOPERATIVO',   '/img/flota/M9V341.jpg',  'CARGA_PESADA',      '2025-06-15'),
-('N3X-608',  'Mercedes Atego 1725', 10.00, 'CAMION_RIGIDO',    '2026-06-01', '2026-11-08', 'DISPONIBLE',    '/img/flota/N3X608.jpg',  'CARGA_MEDIA',       '2025-08-22'),
-('P7Z-175',  'Isuzu ELF 150',        2.50, 'FURGON',           '2026-03-17', '2027-06-30', 'DISPONIBLE',    '/img/flota/P7Z175.jpg',  'COMERCIAL_LIGERO',  '2025-09-18'),
-('Q1S-490',  'Ford F-4000',          8.00, 'CAMION_RIGIDO',    '2025-08-12', '2026-06-25', 'EN_RUTA',       '/img/flota/Q1S490.jpg',  'CARGA_MEDIA',       '2025-10-10'),
-('R5U-723',  'Volvo FMX 500',       32.00, 'TRACTO_CAMION',    '2026-04-28', '2027-07-15', 'DISPONIBLE',    '/img/flota/R5U723.jpg',  'CARGA_PESADA',      '2025-12-01');
+INSERT INTO camion_ransa (placa_matricula, modelo, capacidad_toneladas, tipo_unidad, vigencia_soat, vigencia_tarjeta_propiedad, observaciones, estado_operativo, url_foto_vehiculo, clasificacion_peso, fecha_proximo_mantenimiento) VALUES
+('B7Y-912', 'Volvo FMX 460', 32.00, 'TRACTO_CAMION', '2027-01-15', '2028-06-30', 'Unidad con GPS dual activo', 'DISPONIBLE', '/img/flota/B7Y912.jpg', 'CARGA_PESADA', '2026-08-10'),
+('A4K-205', 'Scania G450 Streamline', 28.00, 'TRACTO_CAMION', '2026-12-01', '2027-11-15', 'Frenos ABS revisados', 'DISPONIBLE', '/img/flota/A4K205.jpg', 'CARGA_PESADA', '2026-07-22'),
+('C5O-784', 'Mercedes-Benz Axor 2644', 26.00, 'TRACTO_CAMION', '2026-10-20', '2027-09-05', 'Filtro de partículas nuevo', 'DISPONIBLE', '/img/flota/C5O784.jpg', 'CARGA_PESADA', '2026-08-01'),
+('F8U-112', 'International WorkStar', 18.00, 'CAMION_RIGIDO', '2026-11-18', '2027-04-12', 'Tolva abierta con barandas', 'DISPONIBLE', '/img/flota/F8U112.jpg', 'CARGA_MEDIA', '2026-09-14'),
+('D9X-334', 'Hino FM1A 700', 16.00, 'CAMION_RIGIDO', '2027-02-05', '2028-01-20', 'Caja cerrada furgonada', 'DISPONIBLE', '/img/flota/D9X334.jpg', 'CARGA_MEDIA', '2026-07-15'),
+('W3O-891', 'Isuzu Forward FRR', 10.00, 'CAMION_RIGIDO', '2026-09-12', '2027-08-11', 'Distribución urbana retail', 'DISPONIBLE', '/img/flota/W3O891.jpg', 'CARGA_MEDIA', '2026-06-30'),
+('E2P-445', 'Fuso FJ 2528', 15.00, 'CAMION_RIGIDO', '2026-12-28', '2027-10-14', 'Ideal para reparto masivo', 'DISPONIBLE', '/img/flota/E2P445.jpg', 'CARGA_MEDIA', '2026-08-05'),
+('V5T-702', 'Hyundai HD120', 8.50, 'FURGON', '2027-03-01', '2028-02-18', 'Equipo frigorífico Thermo King', 'DISPONIBLE', '/img/flota/V5T702.jpg', 'COMERCIAL_LIGERO', '2026-07-10'),
+('X1M-556', 'Jac HFC 1061', 5.00, 'FURGON', '2026-08-22', '2027-07-19', 'Furgón de fibra de vidrio', 'DISPONIBLE', '/img/flota/X1M556.jpg', 'COMERCIAL_LIGERO', '2026-06-25'),
+('Z4E-809', 'Kia Frontier K2500', 2.50, 'FURGON', '2026-11-05', '2027-05-20', 'Reparto capilar Lima Metropolitana', 'DISPONIBLE', '/img/flota/Z4E809.jpg', 'COMERCIAL_LIGERO', '2026-08-20'),
+('Y6N-221', 'Volvo FM 420', 24.00, 'TRACTO_CAMION', '2026-07-14', '2027-06-01', 'Requiere cambio de neumáticos traseros', 'DISPONIBLE', '/img/flota/Y6N221.jpg', 'CARGA_PESADA', '2026-06-18'),
+('P2W-104', 'Scania R500 V8', 30.00, 'TRACTO_CAMION', '2027-04-01', '2028-03-12', 'Flota Premium operaciones especiales', 'DISPONIBLE', '/img/flota/P2W104.jpg', 'CARGA_PESADA', '2026-09-02'),
+('M8I-673', 'Kenworth T660', 28.00, 'TRACTO_CAMION', '2026-09-30', '2027-08-25', 'Unidad asignada a ruta norte piura', 'DISPONIBLE', '/img/flota/M8I673.jpg', 'CARGA_PESADA', '2026-07-05'),
+('Q3B-519', 'Freightliner M2 112', 20.00, 'CAMION_RIGIDO', '2026-10-11', '2027-09-14', 'Revisión técnica vencimiento cercano', 'DISPONIBLE', '/img/flota/Q3B519.jpg', 'CARGA_MEDIA', '2026-07-11'),
+('O7R-402', 'Chevrolet NQR', 6.00, 'FURGON', '2027-01-22', '2028-01-10', 'Furgón Seco Operaciones Lima', 'DISPONIBLE', '/img/flota/O7R402.jpg', 'COMERCIAL_LIGERO', '2026-08-15');
 
 
 -- ===========================================================================
@@ -365,3 +365,89 @@ INSERT INTO mantenimiento_camion (id_camion, tipo_mantenimiento, fecha_mantenimi
 (7,  'PREVENTIVO',  '2025-01-12', 'Cambio de aceite, revisión de suspensión y frenos.'),
 (10, 'PREVENTIVO',  '2025-04-02', 'Revisión de 50,000 km. Cambio de correa de distribución.'),
 (14, 'CORRECTIVO',  '2025-05-08', 'Falla en caja de cambios. Unidad fuera de servicio 3 días.');
+
+
+-- ===========================================================================
+-- MÓDULO 4: CONTROL DE ACCESOS PERIMETRALES 
+-- ===========================================================================
+
+INSERT INTO registro_acceso (
+    id_viaje, id_camion, id_conductor, id_camara, tipo_evento, 
+    placa_detectada_alpr, confianza_alpr, url_foto_captura, timestamp_evento, 
+    estado_deteccion, latencia_ms, nivel_iluminacion, nivel_obstruccion, 
+    puerta_asignada, muelle_dock, estado_barrera, decision_acceso, revisado_por_admin
+) VALUES
+-- [ID_ACCESO 1] Despacho Exitoso de la mañana (Scania R450)
+(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'INSUFICIENTE', 'NINGUNA', 1, 'A1', 'ABIERTO', 'AUTORIZADO', 1),
+
+-- [ID_ACCESO 2] Despacho Exitoso (VW Constellation)
+(5, 4, 5, 1, 'SALIDA', 'A2M-190', 99.10, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'COMPLETADO', 95, 'NORMAL', 'NINGUNA', 1, 'A2', 'ABIERTO', 'AUTORIZADO', 1),
+
+-- [ID_ACCESO 3] Despacho Exitoso (Isuzu NPR 400)
+(6, 7, 8, 1, 'SALIDA', 'E1W-789', 97.80, '/img/capturas/alpr_e1w789_out.jpg', '2026-06-05 08:10:00', 'COMPLETADO', 140, 'NORMAL', 'NINGUNA', 2, 'B1', 'ABIERTO', 'AUTORIZADO', 4),
+
+-- [ID_ACCESO 4] CASO DENEGADO: Conductor Pedro Callo no aprobó Charla de Inducción de Seguridad Obligatoria
+(7, 6, 4, 1, 'SALIDA', 'B8R-056', 96.40, '/img/capturas/alpr_b8r056_rej.jpg', '2026-06-05 08:55:00', 'EN REVISION', 110, 'NORMAL', 'DETECTADA', 1, NULL, 'CERRADO', 'DENEGADO', 2),
+
+-- [ID_ACCESO 5] Retorno Exitoso a Patio - Fin de Ruta del primer camión (Scania R450)
+(4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 'M1', 'ABIERTO', 'AUTORIZADO', 1),
+
+-- [ID_ACCESO 6] Retorno Exitoso a Patio - Fin de Ruta (VW Constellation)
+(5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 'M2', 'ABIERTO', 'AUTORIZADO', 1),
+
+-- [ID_ACCESO 7] CASO DENEGADO: Placa con lodo denso. El ALPR confunde el '4' por una 'A'. Requiere verificación manual
+(8, 8, 9, 1, 'SALIDA', 'G4N-23A', 62.10, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'NORMAL', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
+
+-- [ID_ACCESO 8] Operación de la tarde: Salida Autorizada (Volvo FM 370)
+(9, 10, 10, 1, 'SALIDA', 'J2Q-867', 98.90, '/img/capturas/alpr_j2q867_out.jpg', '2026-06-05 15:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 'C1', 'ABIERTO', 'AUTORIZADO', 1),
+
+-- [ID_ACCESO 9] Salida Autorizada al finalizar la tarde (Ford F-4000)
+(10, 14, 11, 1, 'SALIDA', 'Q1S-490', 97.40, '/img/capturas/alpr_q1s490_out.jpg', '2026-06-05 16:20:00', 'COMPLETADO', 115, 'NORMAL', 'NINGUNA', 1, 'C2', 'ABIERTO', 'AUTORIZADO', 4),
+
+-- [ID_ACCESO 10] CASO DENEGADO: Intento de salida de camión bloqueado en el sistema por estado "INOPERATIVO"
+(11, 11, 12, 1, 'SALIDA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'INSUFICIENTE', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
+
+-- [ID_ACCESO 11] Siguiente día (06 de Junio): Despacho matutino Exitoso (Mercedes Atego)
+(12, 12, 1, 1, 'SALIDA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 'D1', 'ABIERTO', 'AUTORIZADO', 4),
+
+-- [ID_ACCESO 12] Despacho Exitoso (Isuzu ELF 150)
+(13, 13, 2, 1, 'SALIDA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 'D2', 'ABIERTO', 'AUTORIZADO', 1),
+
+-- [ID_ACCESO 13] Salida de Carga Pesada Autorizada (Volvo FMX 500)
+(14, 15, 6, 1, 'SALIDA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 'A1', 'ABIERTO', 'AUTORIZADO', 1),
+
+-- [ID_ACCESO 14] Despacho Corporativo Exitoso (Volvo FH16)
+(15, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 'A2', 'ABIERTO', 'AUTORIZADO', 4),
+
+-- [ID_ACCESO 15] Último despacho del turno de mañana (Mercedes Actros)
+(16, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 'B1', 'ABIERTO', 'AUTORIZADO', 1);
+
+
+-- ===========================================================================
+-- MÓDULO 4: ANOMALÍAS DE ACCESO 
+-- ===========================================================================
+
+INSERT INTO anomalia_acceso (id_acceso, tipo_anomalia, descripcion_detallada, autorizado_preventivo) VALUES
+-- Asociado al id_acceso = 4 (Falta de capacitación del conductor lanzada en control perimetral)
+(4, 'INDUCCION_SEGURIDAD_AUSENTE', 'El conductor Pedro Callo Condori figura en base de datos con la charla de inducción desaprobada/no realizada. Acceso denegado por políticas de SSO Ransa.', FALSE),
+
+-- Asociado al id_acceso = 7 (Lectura incorrecta por obstrucción física de suciedad)
+(7, 'LECTURA_FALLIDA_ALPR', 'La cámara ALPR procesó la cadena "G4N-23A" debido a acumulación crítica de barro sobre el último dígito (físico: G4N-234). Unidad retenida en bahía secundaria para limpieza de placa.', FALSE),
+
+-- Asociado al id_acceso = 10 (Validación vehicular fallida por alertas lógicas de estado)
+(10, 'VEHICULO_INOPERATIVO', 'El sistema detectó que el tracto Scania G410 (M9V-341) está marcado como INOPERATIVO en el módulo logístico. Bloqueo automático de barrera para evitar siniestros en ruta.', FALSE),
+
+-- Alertas preventivas menores (Donde la barrera sí abrió por aprobación del Supervisor)
+(1, 'CAMION_SUCIO', 'Placa legible con éxito, pero la estructura trasera del chasis registra salpicaduras severas de lodo andino.', TRUE),
+
+(3, 'RESTRICCION_HORARIA_PROXIMA', 'La unidad E1W-789 inició salida con un desfase de 40 minutos sobre el rango estimado debido a demoras en el muelle de carga B1.', TRUE),
+
+(8, 'FALLA_ILUMINACION_EXTERNA', 'Se observa intermitencia en el faro neblinero izquierdo del tracto camión durante la captura fotográfica del ALPR. Notificado a taller.', TRUE),
+
+-- Nuevas anomalías reales registradas en Ransa
+(11, 'MATRICULA_DESGASTADA', 'Placa delantera N3X-608 presenta pérdida notable de pintura reflectante en el borde inferior. El sistema logró identificarla, pero se sugiere cambio.', TRUE),
+
+(12, 'DOCUMENTACION_SCTR_PROXIMO_VENCER', 'El conductor Juan Pablo Torres ingresa a ruta teniendo el SCTR activo solo por 48 horas más. Notificación de renovación prioritaria enviada a RRHH.', TRUE),
+
+(13, 'SOAT_POR_VENCER', 'Alerta amarilla automatizada: El camión R5U-723 posee SOAT vigente solo hasta fin de mes. Alerta guardada en el planificador analítico.', TRUE);
+
