@@ -403,7 +403,7 @@ INSERT INTO registro_acceso (
 (4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 2] Despacho Exitoso (VW Constellation)
-(5, 4, 5, 1, 'SALIDA', 'A2M-190', 22.30, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'ERROR EN LECTURA', 95, 'INSUFICIENTE', 'DETECTADA', 1, 1, 'ABIERTO', 'AUTORIZADO', 1),
+(5, 4, 5, 1, 'SALIDA', 'A2M-190', 22.30, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'ERROR EN LECTURA', 95, 'INSUFICIENTE', 'DETECTADA', 1, 1, 'ABIERTO', 'AUTORIZADO', NULL),
 
 -- [ID_ACCESO 3] Despacho Exitoso (Isuzu NPR 400)
 (6, 7, 8, 1, 'SALIDA', 'E1W-789', 97.80, '/img/capturas/alpr_e1w789_out.jpg', '2026-06-05 08:10:00', 'COMPLETADO', 140, 'NORMAL', 'NINGUNA', 2, 3, 'ABIERTO', 'AUTORIZADO', 4),
@@ -418,7 +418,7 @@ INSERT INTO registro_acceso (
 (5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'ABIERTO', 'AUTORIZADO', 1),
 
 -- [ID_ACCESO 7] CASO DENEGADO: Placa con lodo denso. El ALPR confunde el '4' por una 'A'. Requiere verificación manual
-(8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
+(8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', NULL),
 
 -- [ID_ACCESO 8] Operación de la tarde: Salida Autorizada (Volvo FM 370)
 (9, 10, 10, 1, 'SALIDA', 'J2Q-867', 98.90, '/img/capturas/alpr_j2q867_out.jpg', '2026-06-05 15:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', 1),
@@ -427,7 +427,7 @@ INSERT INTO registro_acceso (
 (10, 14, 11, 1, 'SALIDA', 'Q1S-490', 97.40, '/img/capturas/alpr_q1s490_out.jpg', '2026-06-05 16:20:00', 'COMPLETADO', 115, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', 4),
 
 -- [ID_ACCESO 10] CASO DENEGADO: Intento de salida de camión bloqueado en el sistema por estado "INOPERATIVO"
-(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'INSUFICIENTE', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
+(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'NORMAL', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2),
 
 -- [ID_ACCESO 11] Siguiente día (06 de Junio): Despacho matutino Exitoso (Mercedes Atego)
 (3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', NULL),
