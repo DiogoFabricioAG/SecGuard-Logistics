@@ -255,7 +255,7 @@ CREATE TABLE registro_acceso (
     muelle_dock         VARCHAR(10),
     estado_barrera      VARCHAR(30)  NOT NULL, -- OPEN, CLOSED
     decision_acceso     VARCHAR(30)  NOT NULL, -- AUTORIZADO_SALIDA, AUTORIZADO_RETORNO, DENEGADO
-    revisado_por_admin  BOOLEAN         NOT NULL,
+    revisado_por_admin  INT         NULL,
     CONSTRAINT fk_acceso_viaje     FOREIGN KEY (id_viaje)
         REFERENCES viaje_programado(id_viaje),
     CONSTRAINT fk_acceso_camion    FOREIGN KEY (id_camion)
