@@ -256,6 +256,7 @@ CREATE TABLE registro_acceso (
     estado_barrera      VARCHAR(30)  NOT NULL, -- OPEN, CLOSED
     decision_acceso     VARCHAR(30)  NOT NULL, -- AUTORIZADO_SALIDA, AUTORIZADO_RETORNO, DENEGADO
     prioridad_envio     VARCHAR(50),
+    tipo_registro       VARCHAR(20)  NOT NULL DEFAULT 'ALPR',
     revisado_por_admin  INT         NULL,
     CONSTRAINT fk_acceso_viaje     FOREIGN KEY (id_viaje)
         REFERENCES viaje_programado(id_viaje),
@@ -297,15 +298,18 @@ CREATE TABLE infraccion_transito (
 
 CREATE TABLE auditoria_modificacion_acceso (
     id_auditoria            SERIAL PRIMARY KEY,
-    id_acceso               INT         NOT NULL,
+    id_acceso_original      INT         NOT NULL, 
+    id_acceso_corregido     INT         NOT NULL,
     id_admin_modificador    INT         NOT NULL,
     campo_modificado        VARCHAR(50) NOT NULL,
     valor_original_inmutable TEXT        NOT NULL,
     valor_corregido_nuevo   TEXT        NOT NULL,
     motivo_justificacion    TEXT        NOT NULL,
     modificado_en           TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_audit_acceso FOREIGN KEY (id_acceso)
-        REFERENCES registro_acceso(id_acceso),
+    CONSTRAINT fk_audit_original FOREIGN KEY (id_acceso_original) 
+        REFERENCES registro_acceso(id_acceso), 
+    CONSTRAINT fk_audit_corregido FOREIGN KEY (id_acceso_corregido)
+        REFERENCES registro_acceso(id_acceso)
     CONSTRAINT fk_audit_admin  FOREIGN KEY (id_admin_modificador)
         REFERENCES administrador(id_admin)
 );
