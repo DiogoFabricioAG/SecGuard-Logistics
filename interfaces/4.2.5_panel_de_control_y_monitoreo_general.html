@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>SecGuard Logistics - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#001d22",
+            "on-primary": "#ffffff",
+            "primary-container": "#00333c",
+            "on-primary-container": "#659eab",
+            "secondary": "#006e2b",
+            "surface": "#faf9fb",
+            "surface-container": "#eeedf0",
+            "surface-variant": "#e2e2e3",
+            "on-surface": "#1a1c1d",
+            "on-surface-variant": "#41484a",
+            "outline": "#70787b",
+            "outline-variant": "#bfc8ca",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#96d0de",
+            "border-subtle": "#EEEEEF",
+            "success-text": "#009a3f",
+            "warning-text": "#f39200",
+            "error-main": "#ba1a1a",
+            "inverse-primary": "#96d0de",
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "xs": "4px",
+            "lg": "24px",
+            "sm": "8px",
+            "md": "16px",
+            "xl": "32px",
+            "sidebar-width": "220px"
+          },
+          fontFamily: {
+            "headline": ["Manrope", "sans-serif"],
+            "body": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    .card-shadow { border: 1px solid #EEEEEF; background: #FFFFFF; }
+    .sidebar-active {
+      background-color: #00333c;
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
+    <div class="px-md mb-xl">
+      <div class="flex items-center gap-sm mb-1">
+        <span class="material-symbols-outlined text-[24px]" style="color: #00333c;">local_shipping</span>
+        <div class="flex flex-col">
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">SecGuard</span>
+          <span class="font-headline text-[13px] font-bold text-primary-container leading-none">Logistics</span>
+        </div>
+      </div>
+      <p class="text-[10px] font-normal text-outline pl-[32px]">Centro Logístico Global</p>
+    </div>
+
+    <nav class="flex-1 px-sm space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] transition-colors sidebar-active" href="#">
+        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+        <span class="text-[13px] font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <span class="material-symbols-outlined text-[20px]">local_shipping</span>
+        <span class="text-[13px] font-medium">Flota</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">route</span>
+        <span class="text-[13px] font-medium">Rutas</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">analytics</span>
+        <span class="text-[13px] font-medium">Analítica</span>
+      </a>
+    </nav>
+
+    <div class="px-sm mt-auto space-y-1">
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        <span class="text-[13px] font-medium">Soporte</span>
+      </a>
+      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        <span class="text-[13px] font-medium">Cerrar Sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ÁREA PRINCIPAL -->
+  <main class="ml-[220px] flex flex-col h-screen">
+
+    <!-- Header -->
+    <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+      <div class="flex items-center gap-lg">
+        <h1 class="font-headline text-[20px] font-semibold text-on-surface">Dashboard Inicial</h1>
+        <div class="flex items-center gap-xs text-on-surface-variant border border-border-subtle rounded-lg px-md py-[5px] bg-surface">
+          <span class="material-symbols-outlined text-[16px]">schedule</span>
+          <span id="realtime-clock" class="text-[13px] font-medium font-body tabular-nums"></span>
+        </div>
+      </div>
+      <div class="flex items-center gap-md">
+        <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute top-1 right-1 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+        </button>
+        <button class="w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+        <div class="relative w-9 h-9 rounded-full flex items-center justify-center cursor-pointer overflow-hidden" style="background-color: #00333c;">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <rect width="40" height="40" fill="#00333c"></rect>
+            <path d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z" fill="white"></path>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENIDO -->
+    <section class="flex-1 p-lg overflow-y-auto flex flex-col gap-lg bg-surface">
+
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+        <div class="bg-white p-lg rounded-xl card-shadow">
+          <div class="flex justify-between items-start mb-sm">
+            <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Vehículos Hoy</span>
+            <span class="bg-success-text/10 text-success-text text-[10px] px-sm py-[2px] rounded-full font-bold">+12%</span>
+          </div>
+          <div class="font-headline text-[32px] font-bold text-primary-container">148</div>
+          <div class="mt-md h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+            <div class="bg-success-text h-full w-[85%]"></div>
+          </div>
+        </div>
+        <div class="bg-white p-lg rounded-xl card-shadow">
+          <div class="flex justify-between items-start mb-sm">
+            <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Accesos Autorizados</span>
+            <span class="bg-success-text/10 text-success-text text-[10px] px-sm py-[2px] rounded-full font-bold">+5.4%</span>
+          </div>
+          <div class="font-headline text-[32px] font-bold text-primary-container">134</div>
+          <div class="mt-md h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+            <div class="bg-success-text h-full w-[90%]"></div>
+          </div>
+        </div>
+        <div class="bg-white p-lg rounded-xl card-shadow">
+          <div class="flex justify-between items-start mb-sm">
+            <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Accesos Denegados</span>
+            <span class="bg-error/10 text-error text-[10px] px-sm py-[2px] rounded-full font-bold">-2.1%</span>
+          </div>
+          <div class="font-headline text-[32px] font-bold text-error">14</div>
+          <div class="mt-md h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+            <div class="bg-error h-full w-[15%]"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+        <div class="lg:col-span-8 bg-white p-lg rounded-xl card-shadow">
+          <div class="flex justify-between items-center mb-xl">
+            <h3 class="font-headline text-[20px] font-semibold">Actividad de Accesos — Últimos 7 días</h3>
+            <div class="flex items-center gap-md">
+              <div class="flex items-center gap-xs">
+                <div class="w-3 h-3 rounded-full bg-primary-container"></div>
+                <span class="text-[11px]">Autorizados</span>
+              </div>
+              <div class="flex items-center gap-xs">
+                <div class="w-3 h-3 rounded-full bg-error"></div>
+                <span class="text-[11px]">Denegados</span>
+              </div>
+            </div>
+          </div>
+          <div class="h-[280px] w-full relative">
+            <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 700 280">
+              <line stroke="#F1F5F9" x1="0" x2="700" y1="40" y2="40"></line>
+              <line stroke="#F1F5F9" x1="0" x2="700" y1="100" y2="100"></line>
+              <line stroke="#F1F5F9" x1="0" x2="700" y1="160" y2="160"></line>
+              <line stroke="#F1F5F9" x1="0" x2="700" y1="220" y2="220"></line>
+              <g transform="translate(40,0)">
+                <rect fill="#00333c" height="180" rx="2" width="18" x="20" y="80"></rect>
+                <rect fill="#ba1a1a" height="20" rx="2" width="18" x="42" y="240"></rect>
+                <rect fill="#00333c" height="200" rx="2" width="18" x="110" y="60"></rect>
+                <rect fill="#ba1a1a" height="15" rx="2" width="18" x="132" y="245"></rect>
+                <rect fill="#00333c" height="170" rx="2" width="18" x="200" y="90"></rect>
+                <rect fill="#ba1a1a" height="30" rx="2" width="18" x="222" y="230"></rect>
+                <rect fill="#00333c" height="190" rx="2" width="18" x="290" y="70"></rect>
+                <rect fill="#ba1a1a" height="10" rx="2" width="18" x="312" y="250"></rect>
+                <rect fill="#00333c" height="210" rx="2" width="18" x="380" y="50"></rect>
+                <rect fill="#ba1a1a" height="20" rx="2" width="18" x="402" y="240"></rect>
+                <rect fill="#00333c" height="120" rx="2" width="18" x="470" y="140"></rect>
+                <rect fill="#ba1a1a" height="5" rx="2" width="18" x="492" y="255"></rect>
+                <rect fill="#00333c" height="100" rx="2" width="18" x="560" y="160"></rect>
+                <rect fill="#ba1a1a" height="10" rx="2" width="18" x="582" y="250"></rect>
+              </g>
+            </svg>
+            <div class="flex justify-between px-[50px] mt-sm text-[11px] text-on-surface-variant">
+              <span>LUN</span><span>MAR</span><span>MIE</span><span>JUE</span><span>VIE</span><span>SAB</span><span>DOM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donut Chart — Motivos de Denegación ACTUALIZADOS -->
+        <div class="lg:col-span-4 bg-white p-lg rounded-xl card-shadow flex flex-col">
+          <h3 class="font-headline text-[20px] font-semibold mb-xl">Motivos de Denegación</h3>
+          <div class="flex-1 flex flex-col items-center justify-center">
+            <div class="relative w-48 h-48">
+              <!--
+                Circunferencia radio 40: 2 * π * 40 ≈ 251.33
+                Segmentos (3 motivos):
+                  1. Intrusión vehicular sospechosa  → 19% → 47.8
+                  2. Guía con faltantes              → 49% → 123.1
+                  3. Cámara con fallas técnicas      → 33% → 83.0 (aprox. ~82.9 para que sume 251.3 — ajuste fino → 47.8+123.1+80.4=251.3)
+              -->
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <!-- Intrusión vehicular sospechosa: 19% — rojo -->
+                <circle cx="50" cy="50" fill="none" r="40"
+                  stroke="#ba1a1a"
+                  stroke-dasharray="47.8 251.3"
+                  stroke-dashoffset="0"
+                  stroke-width="12">
+                </circle>
+                <!-- Guía con faltantes: 49% — naranja -->
+                <circle cx="50" cy="50" fill="none" r="40"
+                  stroke="#fd9a12"
+                  stroke-dasharray="123.1 251.3"
+                  stroke-dashoffset="-47.8"
+                  stroke-width="12">
+                </circle>
+                <!-- Cámara con fallas técnicas: 33% — azul claro -->
+                <circle cx="50" cy="50" fill="none" r="40"
+                  stroke="#96d0de"
+                  stroke-dasharray="82.9 251.3"
+                  stroke-dashoffset="-170.9"
+                  stroke-width="12">
+                </circle>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span class="font-headline text-[24px] font-semibold">100%</span>
+                <span class="text-[11px] text-on-surface-variant">Motivos</span>
+              </div>
+            </div>
+            <div class="mt-lg w-full space-y-md">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-sm">
+                  <div class="w-2.5 h-2.5 rounded-full bg-error flex-shrink-0"></div>
+                  <span class="text-[13px]">Intrusión vehicular sospechosa</span>
+                </div>
+                <span class="text-[12px] font-semibold ml-2">19%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-sm">
+                  <div class="w-2.5 h-2.5 rounded-full bg-warning-text flex-shrink-0"></div>
+                  <span class="text-[13px]">Guía con faltantes</span>
+                </div>
+                <span class="text-[12px] font-semibold ml-2">49%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-sm">
+                  <div class="w-2.5 h-2.5 rounded-full bg-primary-fixed-dim flex-shrink-0"></div>
+                  <span class="text-[13px]">Cámara con fallas técnicas</span>
+                </div>
+                <span class="text-[12px] font-semibold ml-2">33%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table — columna "Empresa" → "Empresa/Cliente" y nombres actualizados -->
+      <div class="bg-white rounded-xl card-shadow overflow-hidden">
+        <div class="px-lg py-md border-b border-border-subtle flex items-center justify-between">
+          <h3 class="font-headline text-[20px] font-semibold">Últimos Eventos de Acceso</h3>
+          <button class="text-primary-container text-[12px] font-semibold flex items-center gap-xs">
+            Ver todo
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-[#F8F9FA]">
+              <tr>
+                <th class="px-lg py-sm text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Punto de Control</th>
+                <th class="px-lg py-sm text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Placa</th>
+                <th class="px-lg py-sm text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Empresa/Cliente</th>
+                <th class="px-lg py-sm text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fecha/Hora</th>
+                <th class="px-lg py-sm text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Resultado</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border-subtle">
+              <tr class="hover:bg-surface-container transition-colors">
+                <td class="px-lg py-md text-[14px]">Acceso Norte - Puerta 1</td>
+                <td class="px-lg py-md font-headline font-bold text-primary-container">ABC-123</td>
+                <td class="px-lg py-md text-[14px]">Alicorp</td>
+                <td class="px-lg py-md text-[14px] text-on-surface-variant">24 Oct 2023, 14:30</td>
+                <td class="px-lg py-md">
+                  <span class="bg-success-text/10 text-success-text text-[12px] font-semibold px-md py-1 rounded-full border border-success-text/20">Autorizado</span>
+                </td>
+              </tr>
+              <tr class="hover:bg-surface-container transition-colors">
+                <td class="px-lg py-md text-[14px]">Terminal Carga - B</td>
+                <td class="px-lg py-md font-headline font-bold text-primary-container">XYZ-7890</td>
+                <td class="px-lg py-md text-[14px]">Delosi</td>
+                <td class="px-lg py-md text-[14px] text-on-surface-variant">24 Oct 2023, 14:32</td>
+                <td class="px-lg py-md">
+                  <span class="bg-error/10 text-error text-[12px] font-semibold px-md py-1 rounded-full border border-error/20">Denegado</span>
+                </td>
+              </tr>
+              <tr class="hover:bg-surface-container transition-colors">
+                <td class="px-lg py-md text-[14px]">Hangar 4 - Entrada</td>
+                <td class="px-lg py-md font-headline font-bold text-primary-container">DFT-5521</td>
+                <td class="px-lg py-md text-[14px]">Falabella</td>
+                <td class="px-lg py-md text-[14px] text-on-surface-variant">24 Oct 2023, 14:15</td>
+                <td class="px-lg py-md">
+                  <span class="bg-primary-fixed-dim/10 text-[#2a6673] text-[12px] font-semibold px-md py-1 rounded-full border border-primary-fixed-dim/30">Anomalía</span>
+                </td>
+              </tr>
+              <tr class="hover:bg-surface-container transition-colors">
+                <td class="px-lg py-md text-[14px]">Acceso Norte - Puerta 3</td>
+                <td class="px-lg py-md font-headline font-bold text-primary-container">KJL-9981</td>
+                <td class="px-lg py-md text-[14px]">Nestlé Perú</td>
+                <td class="px-lg py-md text-[14px] text-on-surface-variant">24 Oct 2023, 13:58</td>
+                <td class="px-lg py-md">
+                  <span class="bg-success-text/10 text-success-text text-[12px] font-semibold px-md py-1 rounded-full border border-success-text/20">Autorizado</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      const dayName = days[now.getDay()];
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('realtime-clock').textContent =
+        `${dayName}, ${day} ${month} ${year}  —  ${hours}:${minutes}:${seconds}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
