@@ -329,4 +329,26 @@ CREATE TABLE configuracion_kpi (
         REFERENCES administrador(id_admin)
 );
 
+CREATE TABLE snapshot_kpi_diario (
+    id_snapshot         SERIAL PRIMARY KEY,
+    fecha_snapshot      DATE        NOT NULL UNIQUE,
+    total_vehiculos     INT         NOT NULL DEFAULT 0,
+    total_autorizados   INT         NOT NULL DEFAULT 0,
+    total_denegados     INT         NOT NULL DEFAULT 0,
+    total_anomalias     INT         NOT NULL DEFAULT 0,
+    var_pct_vehiculos   DECIMAL(5,2),
+    var_pct_autorizados DECIMAL(5,2),
+    var_pct_denegados   DECIMAL(5,2),
+    generado_en         TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE metrica_operacional_sistema (
+    id_metrica      SERIAL PRIMARY KEY,
+    fecha_hora      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    uptime_pct      DECIMAL(5,2) NOT NULL,
+    alertas_activas INT          NOT NULL DEFAULT 0,
+    camaras_activas INT          NOT NULL DEFAULT 0,
+    camaras_total   INT          NOT NULL DEFAULT 0
+);
+
 
