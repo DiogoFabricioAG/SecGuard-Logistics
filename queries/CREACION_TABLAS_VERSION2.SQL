@@ -309,7 +309,7 @@ CREATE TABLE auditoria_modificacion_acceso (
     CONSTRAINT fk_audit_original FOREIGN KEY (id_acceso_original) 
         REFERENCES registro_acceso(id_acceso), 
     CONSTRAINT fk_audit_corregido FOREIGN KEY (id_acceso_corregido)
-        REFERENCES registro_acceso(id_acceso)
+        REFERENCES registro_acceso(id_acceso),
     CONSTRAINT fk_audit_admin  FOREIGN KEY (id_admin_modificador)
         REFERENCES administrador(id_admin)
 );
