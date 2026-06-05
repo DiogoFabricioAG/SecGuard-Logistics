@@ -107,6 +107,7 @@ CREATE TABLE conductor_ransa (
     nro_brevete               VARCHAR(15)  NOT NULL UNIQUE,
     vigencia_sctr             DATE         NOT NULL,
     charla_induccion_aprobada BOOLEAN      NOT NULL DEFAULT FALSE,
+    empresa_transportista     VARCHAR(150)
     estado_empleado           VARCHAR(20)  NOT NULL DEFAULT 'ACTIVO'
     -- estado_empleado: ACTIVO, EN_RUTA, DESCANSO, INACTIVO
     -- La disponibilidad se infiere desde este campo, sin columna extra
@@ -120,6 +121,7 @@ CREATE TABLE camion_ransa (
     tipo_unidad                 VARCHAR(30)   NOT NULL,   -- TRACTO_CAMION, CAMION_RIGIDO, FURGON
     vigencia_soat               DATE          NOT NULL,
     vigencia_tarjeta_propiedad  DATE          NOT NULL,
+    observaciones      TEXT
     estado_operativo            VARCHAR(24)   NOT NULL DEFAULT 'DISPONIBLE',
     -- MODIFICACIÓN v2.0: columnas agregadas para pantalla Gestión de Flota
     url_foto_vehiculo           VARCHAR(255),
@@ -176,6 +178,7 @@ CREATE TABLE detalle_pedido_mercancia (
     tipo_carga              VARCHAR(50)  NOT NULL, -- REFRIGERADA, SECA, MATPEL, GENERAL
     cantidad_bultos         INT          NOT NULL,
     peso_subtotal_kg        DECIMAL(10,2) NOT NULL,
+    tipo_mercancia     VARCHAR(20)
     requiere_camion_especial VARCHAR(50),
     CONSTRAINT fk_detalle_pedido FOREIGN KEY (id_pedido)
         REFERENCES pedido_cliente(id_pedido) ON DELETE CASCADE
@@ -244,11 +247,15 @@ CREATE TABLE registro_acceso (
     confianza_alpr      DECIMAL(5,2) NOT NULL,
     url_foto_captura    VARCHAR(255),
     timestamp_evento    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    estado_deteccion      VARCHAR(20), 
+    latencia_ms           INT, 
+    nivel_iluminacion     VARCHAR(20), 
+    nivel_obstruccion     VARCHAR(20); 
     puerta_asignada     INT,
     muelle_dock         VARCHAR(10),
     estado_barrera      VARCHAR(30)  NOT NULL, -- OPEN, CLOSED
     decision_acceso     VARCHAR(30)  NOT NULL, -- AUTORIZADO_SALIDA, AUTORIZADO_RETORNO, DENEGADO
-    revisado_por_admin  INT          NOT NULL,
+    revisado_por_admin  BOOLEAN         NOT NULL,
     CONSTRAINT fk_acceso_viaje     FOREIGN KEY (id_viaje)
         REFERENCES viaje_programado(id_viaje),
     CONSTRAINT fk_acceso_camion    FOREIGN KEY (id_camion)
