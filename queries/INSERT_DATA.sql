@@ -464,14 +464,14 @@ INSERT INTO anomalia_acceso (id_acceso, tipo_anomalia, descripcion_detallada, au
 -- Alertas preventivas menores (Donde la barrera sí abrió por aprobación del Supervisor)
 (1, 'CAMION_SUCIO', 'Placa legible con éxito, pero la estructura trasera del chasis registra salpicaduras severas de lodo andino.', TRUE),
 
-(3, 'RESTRICCION_HORARIA_PROXIMA', 'La unidad E1W-789 inició salida con un desfase de 40 minutos sobre el rango estimado debido a demoras en el muelle de carga B1.', TRUE),
+(6, 'RESTRICCION_HORARIA_PROXIMA', 'La unidad E1W-789 inició salida con un desfase de 40 minutos sobre el rango estimado debido a demoras en el muelle de carga B1.', TRUE),
 
 (8, 'FALLA_ILUMINACION_EXTERNA', 'Se observa intermitencia en el faro neblinero izquierdo del tracto camión durante la captura fotográfica del ALPR. Notificado a taller.', TRUE),
 
 -- Nuevas anomalías reales registradas en Ransa
 (11, 'MATRICULA_DESGASTADA', 'Placa delantera N3X-608 presenta pérdida notable de pintura reflectante en el borde inferior. El sistema logró identificarla, pero se sugiere cambio.', TRUE),
 
-(12, 'DOCUMENTACION_SCTR_PROXIMO_VENCER', 'El conductor Juan Pablo Torres ingresa a ruta teniendo el SCTR activo solo por 48 horas más. Notificación de renovación prioritaria enviada a RRHH.', TRUE),
+(13, 'DOCUMENTACION_VENCIDA', 'El conductor Juan Pablo Torres ingresa a ruta teniendo el SCTR activo solo por 48 horas más. Notificación de renovación prioritaria enviada a RRHH.', TRUE),
 
-(13, 'SOAT_POR_VENCER', 'Alerta amarilla automatizada: El camión R5U-723 posee SOAT vigente solo hasta fin de mes. Alerta guardada en el planificador analítico.', TRUE);
+(12, 'SOAT_POR_VENCER', 'Alerta amarilla automatizada: El camión R5U-723 posee SOAT vigente solo hasta fin de mes. Alerta guardada en el planificador analítico.', TRUE);
 
