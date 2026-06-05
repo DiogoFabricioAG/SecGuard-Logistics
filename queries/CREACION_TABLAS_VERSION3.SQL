@@ -4,7 +4,7 @@
 -- DESCRIPCIÓN: Creación limpia de todas las tablas con las modificaciones
 --              acordadas ya integradas. Incluye DROP CASCADE y reset de
 --              secuencias para ejecución idempotente.
--- VERSION: 2.0
+-- VERSION: 3.0
 -- ===========================================================================
 
 
@@ -321,8 +321,8 @@ CREATE TABLE configuracion_kpi (
     unidad_medida       VARCHAR(20)  NOT NULL, -- Minutos, Porcentaje, Cantidad
     formula_defined     TEXT         NOT NULL,
     umbral_critico      DECIMAL(10,2) NOT NULL,
-    umbral_aceptable    DECIMAL(10,2) NOT NULL,
-    umbral_optimo       DECIMAL(10,2) NOT NULL,
+    valor_meta          DECIMAL(10,2) NOT NULL,
+    umbral_alerta       DECIMAL(10,2) NOT NULL,
     estado_kpi          VARCHAR(20)  NOT NULL DEFAULT 'ACTIVO',
     creado_por          INT          NOT NULL,
     creado_en           TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
