@@ -475,3 +475,106 @@ INSERT INTO anomalia_acceso (id_acceso, tipo_anomalia, descripcion_detallada, au
 
 (12, 'SOAT_POR_VENCER', 'Alerta amarilla automatizada: El camión R5U-723 posee SOAT vigente solo hasta fin de mes. Alerta guardada en el planificador analítico.', TRUE);
 
+
+
+-- ===========================================================================
+-- MÓDULO 4: INTENTOS DE ACCESO — PLACAS NO REGISTRADAS
+-- ===========================================================================
+
+INSERT INTO intento_acceso_no_registrado
+    (placa_detectada, id_camara, timestamp_intento, url_foto_captura, confianza_alpr, decision)
+VALUES
+('XYZ-7890', 1, '2026-05-22 14:32:45', '/img/capturas/nreg_xyz7890_01.jpg',  91.20, 'DENEGADO'),
+-- Reincidencia de la misma placa 6 días después
+('XYZ-7890', 1, '2026-05-28 09:17:03', '/img/capturas/nreg_xyz7890_02.jpg',  88.70, 'DENEGADO'),
+-- Camión de empresa de transporte no contratada por Ransa
+('TRK-4421', 1, '2026-05-23 07:14:10', '/img/capturas/nreg_trk4421_01.jpg',  87.50, 'DENEGADO'),
+-- Placa con baja confianza por lluvia intensa
+('LMN-9902', 1, '2026-05-25 16:43:00', '/img/capturas/nreg_lmn9902_01.jpg',  62.30, 'DENEGADO'),
+-- Vehículo particular sin autorización intentando ingresar a zona de carga
+('ABC-0134', 1, '2026-05-26 11:55:33', '/img/capturas/nreg_abc0134_01.jpg',  94.80, 'DENEGADO'),
+-- Tracto de empresa competidora (Neptunia) detectado en garita Ransa
+('W9K-551', 1,  '2026-05-27 06:28:19', '/img/capturas/nreg_w9k551_01.jpg',   96.10, 'DENEGADO'),
+-- Placa con sticker roto, confianza baja
+('F2B-803', 1,  '2026-05-29 08:05:44', '/img/capturas/nreg_f2b803_01.jpg',   58.40, 'DENEGADO'),
+-- Intento nocturno con mala iluminación
+('ZZP-1120', 1, '2026-05-30 23:41:07', '/img/capturas/nreg_zzp1120_01.jpg',  71.90, 'DENEGADO'),
+-- Camión de proveedor no dado de alta en sistema
+('T4R-667', 1,  '2026-06-01 10:22:55', '/img/capturas/nreg_t4r667_01.jpg',   93.50, 'DENEGADO'),
+-- Reincidencia de camión de proveedor no registrado
+('T4R-667', 1,  '2026-06-02 10:48:31', '/img/capturas/nreg_t4r667_02.jpg',   92.80, 'DENEGADO'),
+-- Camión refrigerado de Gloria que opera otra ruta no vinculada a Ransa
+('H6D-294', 1,  '2026-06-02 14:09:22', '/img/capturas/nreg_h6d294_01.jpg',   97.20, 'DENEGADO'),
+-- Furgón sin placa legible, ALPR extrae cadena parcial
+('PEN-???', 1,  '2026-06-03 07:33:48', '/img/capturas/nreg_pen_xxx_01.jpg',  31.60, 'DENEGADO'),
+-- Tracto pesado de Almacenera del Oriente intentando acceso equivocado de terminal
+('V7M-082', 1,  '2026-06-04 05:57:12', '/img/capturas/nreg_v7m082_01.jpg',   95.70, 'DENEGADO'),
+-- Camioneta de seguridad privada externa sin pase vigente
+('SPC-3341', 1, '2026-06-04 19:15:40', '/img/capturas/nreg_spc3341_01.jpg',  89.30, 'DENEGADO'),
+-- Tercer intento de XYZ-7890, patrón de reincidencia consolidado
+('XYZ-7890', 1, '2026-06-05 14:32:45', '/img/capturas/nreg_xyz7890_03.jpg',  90.60, 'DENEGADO');
+
+-- ===========================================================================
+-- MÓDULO 4: MOTIVOS DE ACCESO DENEGADO
+-- ===========================================================================
+
+INSERT INTO motivo_acceso (id_acceso, tipo_motivo) VALUES
+(4,  'GUIA_CON_FALTANTES'),
+(4,  'INTRUSION_SOSPECHOSA'),
+(4,  'FALLA_CAMARA'),
+(7,  'FALLA_CAMARA'),
+(7,  'GUIA_CON_FALTANTES'),
+(7,  'INTRUSION_SOSPECHOSA'),
+(10, 'INTRUSION_SOSPECHOSA'),
+(10, 'GUIA_CON_FALTANTES'),
+(10, 'FALLA_CAMARA');
+
+-- ===========================================================================
+-- MÓDULO 5: SNAPSHOTS KPI DIARIOS
+-- ===========================================================================
+
+INSERT INTO snapshot_kpi_diario
+    (fecha_snapshot, total_vehiculos, total_autorizados, total_denegados, total_anomalias,
+     var_pct_vehiculos, var_pct_autorizados, var_pct_denegados, generado_en)
+VALUES
+('2026-05-20', 101,  93,  8, 3,   NULL,   NULL,   NULL, '2026-05-20 23:59:00'),
+('2026-05-21', 108,  99,  9, 4,   6.93,   6.45,  12.50, '2026-05-21 23:59:00'),
+('2026-05-22', 115, 104, 11, 5,   6.48,   5.05,  22.22, '2026-05-22 23:59:00'),
+('2026-05-25', 112, 102, 10, 3,  -2.61,  -1.92,  -9.09, '2026-05-25 23:59:00'), -- lunes
+('2026-05-26', 119, 109, 10, 4,   6.25,   6.86,   0.00, '2026-05-26 23:59:00'),
+('2026-05-27', 124, 113, 11, 6,   4.20,   3.67,  10.00, '2026-05-27 23:59:00'),
+('2026-05-28', 121, 111, 10, 3,  -2.42,  -1.77,  -9.09, '2026-05-28 23:59:00'),
+('2026-05-29', 127, 116, 11, 5,   4.96,   4.50,  10.00, '2026-05-29 23:59:00'),
+('2026-06-01', 118, 107, 11, 4,  -7.09,  -7.76,   0.00, '2026-06-01 23:59:00'), -- lunes
+('2026-06-02', 122, 111, 11, 5,   3.39,   3.74,   0.00, '2026-06-02 23:59:00'),
+('2026-06-03', 130, 118, 12, 6,   6.56,   6.31,   9.09, '2026-06-03 23:59:00'),
+('2026-06-04', 132, 127, 14, 7,   1.54,   7.63,  16.67, '2026-06-04 23:59:00'),
+-- ↓ Día del Dashboard 4.2.5: 148 / 134 / 14 / +12.12% / +5.51% / -2.1%
+('2026-06-05', 148, 134, 14, 9,  12.12,   5.51,  -2.14, '2026-06-05 23:59:00'),
+('2026-06-06', 141, 138,  3, 2,  -4.73,   2.99, -78.57, '2026-06-06 23:59:00'),
+('2026-06-08', 152, 143,  9, 5,   7.80,   3.62, 200.00, '2026-06-08 23:59:00'); -- lunes
+
+-- ===========================================================================
+-- MÓDULO 5: MÉTRICAS OPERACIONALES DEL SISTEMA
+-- ===========================================================================
+
+INSERT INTO metrica_operacional_sistema
+    (fecha_hora, uptime_pct, alertas_activas, camaras_activas, camaras_total)
+VALUES
+('2026-05-20 23:59:00', 100.00,  2, 1, 1),
+('2026-05-21 23:59:00',  99.90,  3, 1, 1),
+('2026-05-22 23:59:00',  99.70,  5, 1, 1),
+('2026-05-25 23:59:00', 100.00,  2, 1, 1),
+('2026-05-26 23:59:00',  99.80,  4, 1, 1),
+('2026-05-27 23:59:00',  98.50,  8, 1, 1), -- falla técnica breve en cámara (madrugada)
+('2026-05-28 23:59:00',  99.60,  3, 1, 1),
+('2026-05-29 23:59:00',  99.90,  4, 1, 1),
+('2026-06-01 23:59:00', 100.00,  1, 1, 1),
+('2026-06-02 23:59:00',  99.95,  3, 1, 1),
+('2026-06-03 23:59:00',  99.80,  6, 1, 1),
+('2026-06-04 23:59:00',  99.70,  7, 1, 1),
+-- ↓ Lectura exacta del Dashboard 4.2.5 (Viernes 05 Jun 2026 — 16:38:18)
+('2026-06-05 16:38:18',  99.80, 12, 1, 1),
+('2026-06-06 23:59:00',  99.90,  1, 1, 1),
+('2026-06-08 23:59:00', 100.00,  3, 1, 1);
+
