@@ -393,64 +393,68 @@ INSERT INTO mantenimiento_camion (id_camion, tipo_mantenimiento, fecha_mantenimi
 -- MÓDULO 4: CONTROL DE ACCESOS PERIMETRALES 
 -- ===========================================================================
 
+
 INSERT INTO registro_acceso (
-    id_viaje, id_camion, id_conductor, id_camara, tipo_evento, 
-    placa_detectada_alpr, confianza_alpr, url_foto_captura, timestamp_evento, 
-    estado_deteccion, latencia_ms, nivel_iluminacion, nivel_obstruccion, 
-    puerta_asignada, muelle_dock, estado_barrera, decision_acceso, revisado_por_admin, prioridad_envio
+    id_viaje, id_camion, id_conductor, id_camara, tipo_evento,
+    placa_detectada_alpr, confianza_alpr, url_foto_captura, timestamp_evento,
+    estado_deteccion, latencia_ms, nivel_iluminacion, nivel_obstruccion,
+    puerta_asignada, muelle_dock, estado_barrera, decision_acceso,
+    tipo_registro, revisado_por_admin, prioridad_envio
 ) VALUES
--- [ID_ACCESO 1] Despacho Exitoso de la mañana (Scania R450)
-(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 1, 'ALTO'),
 
--- [ID_ACCESO 2] Despacho Exitoso (VW Constellation)
-(5, 4, 5, 1, 'SALIDA', 'A2M-190', 22.30, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'ERROR EN LECTURA', 95, 'INSUFICIENTE', 'DETECTADA', 1, 1, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO'),
+-- [ID_ACCESO 1]
+(4, 3, 3, 1, 'SALIDA', 'C9P-671', 98.50, '/img/capturas/alpr_c9p671_out.jpg', '2026-06-05 05:45:00', 'COMPLETADO', 120, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 'ALPR', 1, 'ALTO'),
 
--- [ID_ACCESO 3] Despacho Exitoso (Isuzu NPR 400)
-(6, 7, 8, 1, 'SALIDA', 'E1W-789', 97.80, '/img/capturas/alpr_e1w789_out.jpg', '2026-06-05 08:10:00', 'COMPLETADO', 140, 'NORMAL', 'NINGUNA', 2, 3, 'ABIERTO', 'AUTORIZADO', 4, 'MEDIO'),
+-- [ID_ACCESO 2]
+(5, 4, 5, 1, 'SALIDA', 'A2M-190', 22.30, '/img/capturas/alpr_a2m190_out.jpg', '2026-06-05 06:40:00', 'ERROR EN LECTURA', 95, 'INSUFICIENTE', 'DETECTADA', 1, 1, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'MEDIO'),
 
--- [ID_ACCESO 4] CASO DENEGADO: Conductor Pedro Callo no aprobó Charla de Inducción de Seguridad Obligatoria
-(7, 6, 4, 1, 'SALIDA', 'B8R-056', 96.40, '/img/capturas/alpr_b8r056_rej.jpg', '2026-06-05 08:55:00', 'EN REVISION', 110, 'NORMAL', 'DETECTADA', 1, NULL, 'CERRADO', 'DENEGADO', 2, 'ALTO'),
+-- [ID_ACCESO 3]
+(6, 7, 8, 1, 'SALIDA', 'E1W-789', 97.80, '/img/capturas/alpr_e1w789_out.jpg', '2026-06-05 08:10:00', 'COMPLETADO', 140, 'NORMAL', 'NINGUNA', 2, 3, 'ABIERTO', 'AUTORIZADO', 'ALPR', 4, 'MEDIO'),
 
--- [ID_ACCESO 5] Retorno Exitoso a Patio - Fin de Ruta del primer camión (Scania R450)
-(4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'BAJO'),
+-- [ID_ACCESO 4]
+(7, 6, 4, 1, 'SALIDA', 'B8R-056', 96.40, '/img/capturas/alpr_b8r056_rej.jpg', '2026-06-05 08:55:00', 'EN REVISION', 110, 'NORMAL', 'DETECTADA', 1, NULL, 'CERRADO', 'DENEGADO', 'ALPR', 2, 'ALTO'),
 
--- [ID_ACCESO 6] Retorno Exitoso a Patio - Fin de Ruta (VW Constellation)
-(5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'CERRADO', 'DENEGADO', 1, 'BAJO'),
+-- [ID_ACCESO 5]
+(4, 3, 3, 1, 'ENTRADA', 'C9P-671', 99.30, '/img/capturas/alpr_c9p671_in.jpg', '2026-06-05 11:30:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 3, 4, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'BAJO'),
 
--- [ID_ACCESO 7] CASO DENEGADO: Placa con lodo denso. El ALPR confunde el '4' por una 'A'. Requiere verificación manual
-(8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', NULL, 'ALTO'),
+-- [ID_ACCESO 6]
+(5, 4, 5, 1, 'ENTRADA', 'A2M-190', 95.20, '/img/capturas/alpr_a2m190_in.jpg', '2026-06-05 14:15:00', 'COMPLETADO', 160, 'NORMAL', 'NINGUNA', 3, 2, 'CERRADO', 'DENEGADO', 'ALPR', 1, 'BAJO'),
 
--- [ID_ACCESO 8] Operación de la tarde: Salida Autorizada (Volvo FM 370)
-(9, 10, 10, 1, 'SALIDA', 'J2Q-867', 98.90, '/img/capturas/alpr_j2q867_out.jpg', '2026-06-05 15:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', 1, 'MEDIO'),
+-- [ID_ACCESO 7]
+(8, 8, 9, 1, 'SALIDA', 'G4N-234', 12.80, '/img/capturas/alpr_g4n234_err.jpg', '2026-06-05 09:40:00', 'ERROR EN LECTURA', 310, 'INSUFICIENTE', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', 'ALPR', NULL, 'ALTO'),
 
--- [ID_ACCESO 9] Salida Autorizada al finalizar la tarde (Ford F-4000)
-(10, 14, 11, 1, 'SALIDA', 'Q1S-490', 97.40, '/img/capturas/alpr_q1s490_out.jpg', '2026-06-05 16:20:00', 'COMPLETADO', 115, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', 4, 'BAJO'),
+-- [ID_ACCESO 8]
+(9, 10, 10, 1, 'SALIDA', 'J2Q-867', 98.90, '/img/capturas/alpr_j2q867_out.jpg', '2026-06-05 15:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', 'ALPR', 1, 'MEDIO'),
 
--- [ID_ACCESO 10] CASO DENEGADO: Intento de salida de camión bloqueado en el sistema por estado "INOPERATIVO"
-(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'NORMAL', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 2, 'ALTO'),
+-- [ID_ACCESO 9]
+(10, 14, 11, 1, 'SALIDA', 'Q1S-490', 97.40, '/img/capturas/alpr_q1s490_out.jpg', '2026-06-05 16:20:00', 'COMPLETADO', 115, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', 'ALPR', 4, 'BAJO'),
 
--- [ID_ACCESO 11] Siguiente día (06 de Junio): Despacho matutino Exitoso (Mercedes Atego)
-(3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'ALTO'),
+-- [ID_ACCESO 10]
+(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_soat.jpg', '2026-06-06 06:10:00', 'EN REVISION', 90, 'NORMAL', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 'ALPR', 2, 'ALTO'),
 
--- [ID_ACCESO 12] Despacho Exitoso (Isuzu ELF 150)
-(9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO'),
+-- [ID_ACCESO 11]
+(3, 12, 1, 1, 'ENTRADA', 'N3X-608', 98.20, '/img/capturas/alpr_n3x608_out.jpg', '2026-06-06 07:15:00', 'COMPLETADO', 122, 'NORMAL', 'NINGUNA', 1, 4, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'ALTO'),
 
--- [ID_ACCESO 13] Salida de Carga Pesada Autorizada (Volvo FMX 500)
-(6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 3, 'CERRADO', 'DENEGADO', 1, 'ALTO'),
+-- [ID_ACCESO 12]
+(9, 13, 2, 1, 'ENTRADA', 'P7Z-175', 96.90, '/img/capturas/alpr_p7z175_out.jpg', '2026-06-06 08:45:00', 'COMPLETADO', 145, 'NORMAL', 'NINGUNA', 2, 5, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'MEDIO'),
 
--- [ID_ACCESO 14] Despacho Corporativo Exitoso (Volvo FH16)
-(1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'ALTO'),
+-- [ID_ACCESO 13]
+(6, 15, 6, 1, 'ENTRADA', 'R5U-723', 99.00, '/img/capturas/alpr_r5u723_out.jpg', '2026-06-06 10:40:00', 'COMPLETADO', 99, 'NORMAL', 'NINGUNA', 1, 3, 'CERRADO', 'DENEGADO', 'ALPR', 1, 'ALTO'),
 
--- [ID_ACCESO 15] Último despacho del turno de mañana (Mercedes Actros)
-(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO'),
+-- [ID_ACCESO 14]
+(1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'ALTO'),
+
+-- [ID_ACCESO 15]
+(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'MEDIO'),
+
 -- [ID_ACCESO 16] Corrección del caso 4
-(7, 6, 4, 1, 'SALIDA','B8R-056', 99.00, '/img/capturas/alpr_b8r056_corr.jpg', '2026-06-05 09:35:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO','CORREGIDO', 2),
+(7, 6, 4, 1, 'SALIDA', 'B8R-056', 99.00, '/img/capturas/alpr_b8r056_corr.jpg', '2026-06-05 09:35:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 'CORREGIDO', 2, NULL),
 
 -- [ID_ACCESO 17] Corrección del caso 7
-(8, 8, 9, 1, 'SALIDA', 'G4N-234', 98.40, '/img/capturas/alpr_g4n234_corr.jpg', '2026-06-05 10:15:00','COMPLETADO', 118, 'NORMAL', 'NINGUNA',2, 3, 'ABIERTO', 'AUTORIZADO','CORREGIDO', 3),
+(8, 8, 9, 1, 'SALIDA', 'G4N-234', 98.40, '/img/capturas/alpr_g4n234_corr.jpg', '2026-06-05 10:15:00', 'COMPLETADO', 118, 'NORMAL', 'NINGUNA', 2, 3, 'ABIERTO', 'AUTORIZADO', 'CORREGIDO', 3, NULL),
 
 -- [ID_ACCESO 18] Corrección del caso 10
-(7, 11, 12, 1, 'ENTRADA','M9V-341', 99.50, '/img/capturas/alpr_m9v341_corr.jpg', '2026-06-06 06:55:00','COMPLETADO', 92, 'NORMAL', 'NINGUNA',2, 1, 'ABIERTO', 'AUTORIZADO', 'CORREGIDO', 4);
+(7, 11, 12, 1, 'ENTRADA', 'M9V-341', 99.50, '/img/capturas/alpr_m9v341_corr.jpg', '2026-06-06 06:55:00', 'COMPLETADO', 92, 'NORMAL', 'NINGUNA', 2, 1, 'ABIERTO', 'AUTORIZADO', 'CORREGIDO', 4, NULL);
 -- ===========================================================================
 -- MÓDULO 4: ANOMALÍAS DE ACCESO 
 -- ===========================================================================
