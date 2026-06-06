@@ -443,7 +443,14 @@ INSERT INTO registro_acceso (
 
 -- [ID_ACCESO 15] Último despacho del turno de mañana (Mercedes Actros)
 (2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO');
+-- [ID_ACCESO 16] Corrección del caso 4
+(7, 6, 4, 1, 'SALIDA','B8R-056', 99.00, '/img/capturas/alpr_b8r056_corr.jpg', '2026-06-05 09:35:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO','CORREGIDO', 2),
 
+-- [ID_ACCESO 17] Corrección del caso 7
+(8, 8, 9, 1, 'SALIDA', 'G4N-234', 98.40, '/img/capturas/alpr_g4n234_corr.jpg', '2026-06-05 10:15:00','COMPLETADO', 118, 'NORMAL', 'NINGUNA',2, 3, 'ABIERTO', 'AUTORIZADO','CORREGIDO', 3),
+
+-- [ID_ACCESO 18] Corrección del caso 10
+(7, 11, 12, 1, 'ENTRADA','M9V-341', 99.50, '/img/capturas/alpr_m9v341_corr.jpg', '2026-06-06 06:55:00','COMPLETADO', 92, 'NORMAL', 'NINGUNA',2, 1, 'ABIERTO', 'AUTORIZADO', 'CORREGIDO', 4);
 -- ===========================================================================
 -- MÓDULO 4: ANOMALÍAS DE ACCESO 
 -- ===========================================================================
