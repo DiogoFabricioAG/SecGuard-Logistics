@@ -442,7 +442,7 @@ INSERT INTO registro_acceso (
 (1, 1, 7, 1, 'SALIDA', 'F3I-845', 98.70, '/img/capturas/alpr_f3i845_out.jpg', '2026-06-06 11:15:00', 'COMPLETADO', 112, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', NULL, 'ALTO'),
 
 -- [ID_ACCESO 15] Último despacho del turno de mañana (Mercedes Actros)
-(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO');
+(2, 2, 14, 1, 'SALIDA', 'D7K-312', 97.30, '/img/capturas/alpr_d7k312_out.jpg', '2026-06-06 13:05:00', 'COMPLETADO', 130, 'NORMAL', 'NINGUNA', 1, 5, 'ABIERTO', 'AUTORIZADO', NULL, 'MEDIO'),
 -- [ID_ACCESO 16] Corrección del caso 4
 (7, 6, 4, 1, 'SALIDA','B8R-056', 99.00, '/img/capturas/alpr_b8r056_corr.jpg', '2026-06-05 09:35:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO','CORREGIDO', 2),
 
