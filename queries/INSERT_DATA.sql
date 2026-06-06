@@ -631,3 +631,12 @@ INSERT INTO auditoria_modificacion_acceso (
  'AUTORIZADO',
  'El sistema ALPR detectó datos no actualizados en BD para la unidad DFT-5521 de Falabella. Se autoriza ingreso preventivo tras verificación manual en garita Hangar 4.',
  '2026-05-22 14:20:00');
+
+INSERT INTO configuracion_kpi (
+    nombre_kpi, categoria_operativa, unidad_medida, formula_defined, umbral_critico, valor_meta, umbral_alerta, estado_kpi, creado_por, creado_en, eliminado_en
+) VALUES
+('Nivel de Servicio (OTIF %)', 'Operaciones', 'Porcentaje', 'viajes_a_tiempo / viajes_totales', 85.00, 95.00, 90.00, 'ACTIVO', 1, CURRENT_TIMESTAMP, NULL),
+('Utilización de Flota Activa', 'Operaciones', 'Porcentaje', 'camiones_en_ruta / camiones_totales', 75.00, 93.00, 85.00, 'ACTIVO', 1, CURRENT_TIMESTAMP, NULL),
+('Índice de Viajes sin Retrasos', 'Operaciones', 'Porcentaje', 'viajes_puntuales / viajes_totales', 80.00, 93.00, 88.00, 'ACTIVO', 1, CURRENT_TIMESTAMP, NULL),
+('Tiempo Promedio de Permanencia en Garita', 'Seguridad', 'Minutos', 'tiempo_total_garita / accesos_totales', 45.00, 20.00, 30.00, 'ACTIVO', 1, CURRENT_TIMESTAMP, NULL),
+('Tasa de Incidencias / Anomalías en Accesos', 'Seguridad', 'Porcentaje', 'alertas_bloqueadas / accesos_totales', 10.00, 2.00, 5.00, 'INACTIVO', 1, '2026-06-05 07:30:00', '2026-06-05 07:30:00');
