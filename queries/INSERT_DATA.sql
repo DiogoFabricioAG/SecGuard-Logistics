@@ -578,3 +578,45 @@ VALUES
 ('2026-06-06 23:59:00',  99.90,  1, 1, 1),
 ('2026-06-08 23:59:00', 100.00,  3, 1, 1);
 
+INSERT INTO auditoria_modificacion_acceso (
+    id_acceso_original,
+    id_acceso_corregido,
+    id_admin_modificador,
+    campo_modificado,
+    valor_original_inmutable,
+    valor_corregido_nuevo,
+    motivo_justificacion,
+    modificado_en
+) VALUES
+
+-- AUDITORÍA 1: Caso conductor sin inducción (acceso 4 → corregido en 16)
+(4, 16, 2,
+ 'decision_acceso',
+ 'DENEGADO',
+ 'AUTORIZADO',
+ 'El conductor Walter Hugo Chura Ticona presentó certificado físico vigente de Charla de Inducción SSO Ransa emitido el 15/03/2025. El registro en base de datos estaba desactualizado. Se autorizó salida con supervisión presencial. Se notificó a RRHH para actualizar el campo charla_induccion_aprobada en la tabla conductor_ransa.',
+ '2026-06-05 09:40:00'),
+
+-- AUDITORÍA 2: Caso ALPR con lectura errónea por barro (acceso 7 → corregido en 17)
+(7, 17, 3,
+ 'placa_detectada_alpr',
+ 'G4N-23A',
+ 'G4N-234',
+ 'La placa real del vehículo es G4N-234. La cámara ALPR confundió el dígito "4" con la letra "A" por acumulación de barro andino en el borde inferior de la placa trasera. Unidad retenida en bahía secundaria, se procedió a la limpieza de la placa y se realizó nueva lectura con confianza del 98.40%. Se generó reporte para el área de mantenimiento de cámaras para ajuste de umbral mínimo de confianza ALPR a 75%.',
+ '2026-06-05 10:20:00'),
+
+-- AUDITORÍA 3: Caso camión bloqueado por estado INOPERATIVO (acceso 10 → corregido en 18)
+(10, 18, 4,
+ 'decision_acceso',
+ 'DENEGADO',
+ 'AUTORIZADO',
+ 'El tracto Scania G410 (M9V-341) fue desbloqueado tras revisión del historial de mantenimiento correctivo registrado el 08/05/2025. El jefe de taller confirmó que la unidad completó reparación de caja de cambios y fue liberada operativamente. El campo estado_operativo fue actualizado a DISPONIBLE en camion_ransa por el administrador Ramírez. Se autorizó el ingreso al patio para asignación de nueva ruta.',
+ '2026-06-06 07:00:00'),
+
+-- AUDITORÍA 4: Datos no actualizados en BD para unidad Falabella (acceso 4 → corregido en 4)
+(4, 4, 2,
+ 'decision_acceso',
+ 'DENEGADO',
+ 'AUTORIZADO',
+ 'El sistema ALPR detectó datos no actualizados en BD para la unidad DFT-5521 de Falabella. Se autoriza ingreso preventivo tras verificación manual en garita Hangar 4.',
+ '2026-05-22 14:20:00');
