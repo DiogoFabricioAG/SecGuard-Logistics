@@ -820,6 +820,220 @@ RESPONSE 200:
 
 ---
 
+### 3.9 DASHBOARD (11 endpoints) — Jose Venegas
+
+#### KPI de cabecera — Estado del dia (Pantalla 4.2.5)
+
+**GET** `/api/dashboard/kpi-cabecera`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": {
+    "total_vehiculos": 148,
+    "total_autorizados": 134,
+    "total_denegados": 14,
+    "var_pct_vehiculos": 12.12,
+    "var_pct_autorizados": 5.51,
+    "var_pct_denegados": -2.14
+  }
+}
+```
+
+#### Grafico de barras — Actividad ultimos 7 dias (Pantalla 4.2.5)
+
+**GET** `/api/dashboard/actividad-semanal`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": [
+    {
+      "fecha_snapshot": "2026-05-30T00:00:00.000Z",
+      "dia_semana": "SAT",
+      "total_autorizados": 111,
+      "total_denegados": 10
+    },
+    {
+      "fecha_snapshot": "2026-06-01T00:00:00.000Z",
+      "dia_semana": "MON",
+      "total_autorizados": 107,
+      "total_denegados": 11
+    }
+  ]
+}
+```
+
+#### Grafico donut — Motivos de denegacion (Pantalla 4.2.5)
+
+**GET** `/api/dashboard/motivos-denegacion`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": [
+    { "tipo_motivo": "FALLA_CAMARA", "total": 3, "porcentaje": 33 },
+    { "tipo_motivo": "GUIA_CON_FALTANTES", "total": 3, "porcentaje": 33 },
+    { "tipo_motivo": "INTRUSION_SOSPECHOSA", "total": 3, "porcentaje": 33 }
+  ]
+}
+```
+
+#### Tabla — Ultimos eventos de acceso (Pantalla 4.2.5)
+
+**GET** `/api/dashboard/ultimos-eventos`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": [
+    {
+      "punto_de_control": "Garita Principal de Control Perimetral",
+      "placa": "M9V-341",
+      "empresa_cliente": "SUPERMERCADOS PERUANOS S.A.",
+      "fecha_hora": "2026-06-06T06:55:00.000Z",
+      "resultado": "AUTORIZADO"
+    }
+  ]
+}
+```
+
+#### Widget — Estado del sistema (Pantalla 4.2.5)
+
+**GET** `/api/dashboard/estado-sistema`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": {
+    "alertas_activas": 12,
+    "uptime_pct": 99.80
+  }
+}
+```
+
+#### Ultimo intento de placa no registrada (Pantalla 4.2.21)
+
+**GET** `/api/dashboard/intento-placa/XYZ-7890`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": {
+    "placa_detectada": "XYZ-7890",
+    "url_foto_captura": "/img/capturas/nreg_xyz7890_03.jpg",
+    "confianza_alpr": 90.60,
+    "punto_de_control": "Garita Principal de Control Perimetral",
+    "timestamp_evento": "2026-06-05T14:32:45.000Z",
+    "decision": "DENEGADO"
+  }
+}
+```
+
+#### Badge — Verificacion de placa no registrada (Pantalla 4.2.21)
+
+**GET** `/api/dashboard/verificar-placa/XYZ-7890`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": { "motivo_badge": "PLACA_NO_REGISTRADA" }
+}
+```
+
+#### Historial de intentos de una placa (Pantalla 4.2.21)
+
+**GET** `/api/dashboard/historial-intentos/XYZ-7890`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": [
+    {
+      "placa_detectada": "XYZ-7890",
+      "punto_de_control": "Garita Principal de Control Perimetral",
+      "timestamp_intento": "2026-06-05T14:32:45.000Z",
+      "confianza_alpr": 90.60,
+      "decision": "DENEGADO",
+      "url_foto_captura": "/img/capturas/nreg_xyz7890_03.jpg"
+    },
+    {
+      "placa_detectada": "XYZ-7890",
+      "punto_de_control": "Garita Principal de Control Perimetral",
+      "timestamp_intento": "2026-05-28T09:17:03.000Z",
+      "confianza_alpr": 88.70,
+      "decision": "DENEGADO",
+      "url_foto_captura": "/img/capturas/nreg_xyz7890_02.jpg"
+    }
+  ]
+}
+```
+
+#### Ultima anomalia detectada (Pantalla 4.2.22)
+
+**GET** `/api/dashboard/ultima-anomalia`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": {
+    "tipo_anomalia": "SOAT_POR_VENCER",
+    "descripcion_detallada": "Alerta amarilla automatizada: El camion...",
+    "autorizado_preventivo": true,
+    "placa": "D7K-312",
+    "empresa_cliente": "INDUSTRIAS SAN MIGUEL S.A.",
+    "punto_de_control": "Garita Principal de Control Perimetral",
+    "timestamp_evento": "2026-06-06T10:40:00.000Z",
+    "estado_barrera": "CERRADO"
+  }
+}
+```
+
+#### Banner — Anomalias sin revisar hoy (Pantalla 4.2.22)
+
+**GET** `/api/dashboard/anomalias-sin-revisar`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": { "anomalias_sin_revisar": 3 }
+}
+```
+
+#### Auditoria de anomalia por placa (Pantalla 4.2.22)
+
+**GET** `/api/dashboard/auditoria-anomalia/DFT-5521`
+
+```
+RESPONSE 200:
+{
+  "success": true,
+  "data": [
+    {
+      "id_auditoria": 4,
+      "campo_modificado": "decision_acceso",
+      "valor_original_inmutable": "DENEGADO",
+      "valor_corregido_nuevo": "AUTORIZADO",
+      "motivo_justificacion": "El sistema ALPR detecto datos no actualizados...",
+      "modificado_en": "2026-05-22T14:20:00.000Z",
+      "modificado_por": "Maria Fernanda Salas Huanca"
+    }
+  ]
+}
+```
+
+---
+
 ## 4. ESTRUCTURA DE DIRECTORIOS
 
 ```
@@ -838,7 +1052,8 @@ backend/
 │   ├── flota/       (camiones.*.js, viajes.*.js, pedidos.*.js)
 │   ├── accesos/     (accesos.*.js — Nicole)
 │   ├── monitoreo/   (monitoreo.*.js — Nelson)
-│   └── kpi/         (kpi.*.js — Steven)
+│   ├── kpi/         (kpi.*.js — Steven)
+│   └── dashboard/   (dashboard.*.js — Venegas)
 └── utils/
     ├── AppError.js
     └── pagination.js
