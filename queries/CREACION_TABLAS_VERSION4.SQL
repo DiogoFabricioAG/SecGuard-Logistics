@@ -84,7 +84,7 @@ CREATE TABLE administrador (
 CREATE TABLE sesion_admin (
     id_sesion            SERIAL PRIMARY KEY,
     id_admin             INT          NOT NULL,
-    token_autenticacion  VARCHAR(255) NOT NULL,
+    token_autenticacion  TEXT         NOT NULL,
     ip_origen            VARCHAR(45)  NOT NULL,
     ingresado_en         TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     expiracion_en        TIMESTAMP    NOT NULL,

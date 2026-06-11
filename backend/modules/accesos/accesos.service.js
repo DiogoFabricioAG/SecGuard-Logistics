@@ -1,0 +1,89 @@
+const pool = require('../../config/db');
+
+async function historialAccesos({ offset, limit }) {
+  const { rows } = await pool.query(
+    `SELECT
+      ra.id_acceso, ra.timestamp_evento, ra.placa_detectada_alpr,
+      CONCAT(c.nombres, ' ', c.apellidos) AS conductor,
+      ra.tipo_evento, ra.estado_deteccion, ra.decision_acceso,
+      aa.tipo_anomalia,
+      COUNT(*) OVER() AS total_registros
+    FROM registro_acceso ra
+    JOIN conductor_ransa c ON ra.id_conductor = c.id_conductor
+    LEFT JOIN anomalia_acceso aa ON ra.id_acceso = aa.id_acceso
+    ORDER BY ra.timestamp_evento DESC
+    LIMIT $1 OFFSET $2`,
+    [limit, offset]
+  );
+  const total = rows.length > 0 ? parseInt(rows[0].total_registros, 10) : 0;
+  return { rows, total };
+}
+
+async function accesosPorPlaca(placa) {
+  const { rows } = await pool.query(
+    `SELECT
+      ra.id_acceso, ra.timestamp_evento, ra.placa_detectada_alpr,
+      ra.tipo_registro, CONCAT(c.nombres, ' ', c.apellidos) AS conductor,
+      ra.tipo_evento, ra.estado_deteccion, ra.decision_acceso,
+      ra.puerta_asignada, aa.tipo_anomalia
+    FROM registro_acceso ra
+    JOIN conductor_ransa c ON ra.id_conductor = c.id_conductor
+    LEFT JOIN anomalia_acceso aa ON ra.id_acceso = aa.id_acceso
+    WHERE ra.placa_detectada_alpr = $1`,
+    [placa]
+  );
+  return rows;
+}
+
+async function detalleAcceso(id_acceso) {
+  const { rows } = await pool.query(
+    `SELECT
+      ra.id_acceso, ra.timestamp_evento, ra.tipo_evento,
+      CONCAT(co.nombres, ' ', co.apellidos) AS conductor,
+      co.nro_brevete, ra.placa_detectada_alpr, ra.confianza_alpr,
+      ra.url_foto_captura, ra.estado_deteccion, ra.latencia_ms,
+      ra.nivel_iluminacion, ra.nivel_obstruccion,
+      ra.puerta_asignada, ra.muelle_dock,
+      ra.estado_barrera, ra.decision_acceso, ra.tipo_registro,
+      ra.prioridad_envio
+    FROM registro_acceso ra
+    JOIN conductor_ransa co ON ra.id_conductor = co.id_conductor
+    WHERE ra.id_acceso = $1`,
+    [id_acceso]
+  );
+  return rows[0] || null;
+}
+
+async function auditoriaOriginal(id_acceso) {
+  const { rows } = await pool.query(
+    `SELECT
+      ama.id_auditoria, ama.id_acceso_original,
+      ama.valor_original_inmutable, ama.valor_corregido_nuevo,
+      ama.modificado_en,
+      CONCAT(a.nombres, ' ', a.apellidos) AS administrador
+    FROM auditoria_modificacion_acceso ama
+    JOIN administrador a ON ama.id_admin_modificador = a.id_admin
+    WHERE ama.id_acceso_corregido = $1
+    ORDER BY ama.modificado_en DESC`,
+    [id_acceso]
+  );
+  return rows;
+}
+
+async function auditoriaCorregido(id_acceso) {
+  const { rows } = await pool.query(
+    `SELECT
+      r_corr.*,
+      a.campo_modificado,
+      a.valor_original_inmutable AS valor_antes,
+      a.valor_corregido_nuevo AS valor_despues,
+      a.motivo_justificacion
+    FROM auditoria_modificacion_acceso a
+    JOIN registro_acceso r_corr ON a.id_acceso_corregido = r_corr.id_acceso
+    WHERE a.id_acceso_original = $1`,
+    [id_acceso]
+  );
+  return rows;
+}
+
+module.exports = { historialAccesos, accesosPorPlaca, detalleAcceso, auditoriaOriginal, auditoriaCorregido };

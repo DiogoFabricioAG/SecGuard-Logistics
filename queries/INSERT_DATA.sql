@@ -11,9 +11,9 @@
 -- ===========================================================================
 
 INSERT INTO administrador (nombres, apellidos, correo_electronico, nombre_usuario, contrasenia_hash, estado_cuenta) VALUES
-('Carlos Ernesto',   'Villalobos Quispe',   'c.villalobos@ransa.pe',   'cvillalobos',   '$2b$12$KLMxyz123abc', 'ACTIVO'),
-('María Fernanda',   'Salas Huanca',        'm.salas@ransa.pe',        'msalas',        '$2b$12$ABCdef456ghi', 'ACTIVO'),
-('Jorge Luis',       'Paredes Cárdenas',    'j.paredes@ransa.pe',      'jparedes',      '$2b$12$DEFghi789jkl', 'ACTIVO'),
+('Carlos Ernesto',   'Villalobos Quispe',   'c.villalobos@ransa.pe',   'cvillalobos',   '$2a$04$HkC2gHyjLTDKaVCLYenqTu7hBmLvgewYa6w5aq2U1ujaXnAKkPF4m', 'ACTIVO'),
+('María Fernanda',   'Salas Huanca',        'm.salas@ransa.pe',        'msalas',        '$2a$05$oy6S6WFK/bWSPBXHEc3Ho.En7kFDOmoRhsownkgFSxECrvEAKptDu', 'ACTIVO'),
+('Jorge Luis',       'Paredes Cárdenas',    'j.paredes@ransa.pe',      'jparedes',      '$2a$05$Ak81zOQe8onfBqoK65fZhuHj6nRw5EUwgA2rYzQOiS8/khoz.EqzW', 'ACTIVO'),
 ('Lucía Beatriz',    'Ramírez Flores',      'l.ramirez@ransa.pe',      'lramirez',      '$2b$12$GHIjkl012mno', 'ACTIVO'),
 ('Andrés Felipe',    'Chávez Mendoza',      'a.chavez@ransa.pe',       'achavez',       '$2b$12$JKLmno345pqr', 'INACTIVO');
 

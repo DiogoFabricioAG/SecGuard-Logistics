@@ -1,0 +1,59 @@
+RESUMEN DE ESTRUCTURA DE BASE DE DATOS - SECGUARD LOGISTICS
+
+Se ha diseñado e implementado una arquitectura relacional completa para el
+sistema de control y monitoreo de acceso vehicular. La base de datos integra
+5 módulos funcionales con 14 tablas normalizadas y relaciones referenciables.
+
+ESTRUCTURA DE TABLAS:
+─────────────────────────────────────────────────────────────────────────────
+
+MÓDULO 1: SEGURIDAD Y AUTENTICACIÓN (2 tablas)
+  • administrador: Gestión de usuarios administrativos
+  • sesion_admin: Control de sesiones activas con tokens y expiración
+
+MÓDULO 2: CLIENTES Y FLOTA RANSA (4 tablas)
+  • cliente_empresa: Datos de clientes (RUC, razón social, sector)
+  • conductor_ransa: Conductores con documentación vigente
+  • camion_ransa: Flota vehicular con clasificación técnica
+  • mantenimiento_camion: Historial preventivo y correctivo
+
+MÓDULO 3: PEDIDOS Y DISTRIBUCIÓN (4 tablas)
+  • pedido_cliente: Órdenes de compra con geolocalización
+  • detalle_pedido_mercancia: Detalles de carga por pedido
+  • viaje_programado: Planificación de viajes y rutas
+  • viaje_camion_asignado: Asignación N-a-N de camiones/conductores por viaje
+
+MÓDULO 4: CONTROL DE ACCESOS PERIMETRALES (4 tablas)
+  • camara_dispositivo: Cámaras ALPR para detección de placas
+  • registro_acceso: Log de eventos de entrada/salida con trazabilidad
+  • anomalia_acceso: Detección de inconsistencias (documentos vencidos, etc.)
+  • infraccion_transito: Infracciones por incumplimiento de reglas
+
+MÓDULO 5: AUDITORÍA Y CONFIGURACIÓN (2 tablas)
+  • auditoria_modificacion_acceso: Historial de correcciones manuales
+  • configuracion_kpi: Indicadores de desempeño configurable
+
+TOTAL: 14 tablas | 16 secuencias de auto-incremento
+
+CARACTERÍSTICAS DE DISEÑO:
+─────────────────────────────────────────────────────────────────────────────
+✓ Integridad referencial con FOREIGN KEYS en cascada
+✓ Normalización relacional (3FN) para evitar redundancia
+✓ Timestamps automáticos para auditoría
+✓ Documentación vigente controlada por fechas
+✓ Geolocalización integrada (latitud/longitud)
+✓ Seguridad: contraseñas hasheadas, tokens de sesión
+✓ Trazabilidad completa de eventos y modificaciones
+✓ Escalabilidad para N camiones y conductores por viaje
+✓ Idempotencia: DROP CASCADE y reset de secuencias
+
+CAPACIDAD OPERACIONAL:
+─────────────────────────────────────────────────────────────────────────────
+• Gestión de hasta 15+ empresas clientes
+• Flota de 15+ unidades vehiculares categorizadas
+• 15+ conductores con documentación verificada
+• 20+ pedidos simultáneos con restricciones personalizadas
+• Detección ALPR con confianza y métricas de calidad
+• Auditoría completa de modificaciones administrativas
+
+Fecha: 05/06/2026 | Versión: 3.0 | Normalización: 3FN

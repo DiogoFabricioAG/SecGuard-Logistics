@@ -1,3 +1,5 @@
+<!-- Aquí utilizas (ENDPOINT 1 | ENDPOINT 2) -->
+
 <!doctype html>
 <html class="light" lang="es">
   <head>
@@ -5,201 +7,353 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>SecGuard Logistics – Configurar KPI</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
             colors: {
-              "primary": "#001d22",
+              primary: "#001d22",
               "on-primary": "#ffffff",
               "primary-container": "#00333c",
               "on-primary-container": "#659eab",
-              "secondary": "#006e2b",
-              "surface": "#faf9fb",
+              secondary: "#006e2b",
+              surface: "#faf9fb",
               "surface-container": "#eeedf0",
               "surface-variant": "#e2e2e3",
               "on-surface": "#1a1c1d",
               "on-surface-variant": "#41484a",
-              "outline": "#70787b",
+              outline: "#70787b",
               "outline-variant": "#bfc8ca",
-              "error": "#ba1a1a",
+              error: "#ba1a1a",
               "primary-fixed-dim": "#96d0de",
-              "border-subtle": "#EEEEEF"
+              "border-subtle": "#EEEEEF",
             },
             borderRadius: {
-              "DEFAULT": "0.125rem",
-              "lg": "0.25rem",
-              "xl": "0.5rem",
-              "full": "0.75rem"
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
             },
             spacing: {
-              "xs": "4px",
-              "lg": "24px",
-              "sm": "8px",
-              "md": "16px",
-              "sidebar-width": "220px"
+              xs: "4px",
+              lg: "24px",
+              sm: "8px",
+              md: "16px",
+              "sidebar-width": "220px",
             },
             fontFamily: {
-              "headline": ["Manrope", "sans-serif"],
-              "body": ["Inter", "sans-serif"]
-            }
-          }
-        }
+              headline: ["Manrope", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+            },
+          },
+        },
       };
     </script>
     <style>
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
         vertical-align: middle;
       }
 
       /* Parpadeo sutil para el item activo adaptado a los colores de la marca */
       @keyframes pulse-active {
-        0%, 100% { background-color: rgb(0 51 60 / 1); }
-        50%       { background-color: rgb(0 51 60 / 0.85); }
+        0%,
+        100% {
+          background-color: rgb(0 51 60 / 1);
+        }
+        50% {
+          background-color: rgb(0 51 60 / 0.85);
+        }
       }
       .nav-active {
         animation: pulse-active 2.5s ease-in-out infinite;
       }
 
-      #kpi-preview { transition: all 0.3s ease; }
+      #kpi-preview {
+        transition: all 0.3s ease;
+      }
 
-      .step-active .step-circle { background-color: #00333c; color: #fff; }
-      .step-done  .step-circle  { background-color: #006e2b; color: #fff; }
+      .step-active .step-circle {
+        background-color: #00333c;
+        color: #fff;
+      }
+      .step-done .step-circle {
+        background-color: #006e2b;
+        color: #fff;
+      }
     </style>
   </head>
-  <body class="bg-surface font-body text-on-surface overflow-hidden min-h-screen flex">
-
-    <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
+  <body
+    class="bg-surface font-body text-on-surface overflow-hidden min-h-screen flex"
+  >
+    <aside
+      class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle"
+    >
       <div class="px-md mb-xl">
         <div class="flex items-center gap-sm mb-1">
-          <span class="material-symbols-outlined text-[24px]" style="color: #00333c;">local_shipping</span>
+          <span
+            class="material-symbols-outlined text-[24px]"
+            style="color: #00333c"
+            >local_shipping</span
+          >
           <div class="flex flex-col">
-            <span class="font-headline text-[13px] font-bold text-primary-container leading-none">SecGuard</span>
-            <span class="font-headline text-[13px] font-bold text-primary-container leading-none">Logistics</span>
+            <span
+              class="font-headline text-[13px] font-bold text-primary-container leading-none"
+              >SecGuard</span
+            >
+            <span
+              class="font-headline text-[13px] font-bold text-primary-container leading-none"
+              >Logistics</span
+            >
           </div>
         </div>
-        <p class="text-[10px] font-normal text-outline pl-[32px]">Centro Logístico Global</p>
+        <p class="text-[10px] font-normal text-outline pl-[32px]">
+          Centro Logístico Global
+        </p>
       </div>
 
       <nav class="flex-1 px-sm space-y-1">
-        <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+        <a
+          class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors"
+          href="#"
+        >
           <span class="material-symbols-outlined text-[20px]">dashboard</span>
           <span class="text-[13px] font-medium">Dashboard</span>
         </a>
-        <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
-          <span class="material-symbols-outlined text-[20px]">local_shipping</span>
+        <a
+          class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]"
+          href="#"
+        >
+          <span class="material-symbols-outlined text-[20px]"
+            >local_shipping</span
+          >
           <span class="text-[13px] font-medium">Flota</span>
         </a>
-        <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+        <a
+          class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]"
+          href="#"
+        >
           <span class="material-symbols-outlined text-[20px]">route</span>
           <span class="text-[13px] font-medium">Rutas</span>
         </a>
-        <a class="nav-active flex items-center gap-md px-md py-[10px] transition-colors rounded-[6px] bg-primary-container text-white" href="consultar_metricas.html">
-          <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+        <a
+          class="nav-active flex items-center gap-md px-md py-[10px] transition-colors rounded-[6px] bg-primary-container text-white"
+          href="consultar_metricas.html"
+        >
+          <span
+            class="material-symbols-outlined text-[20px]"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >analytics</span
+          >
           <span class="text-[13px] font-medium">Analítica</span>
         </a>
       </nav>
 
       <div class="px-sm mt-auto space-y-1">
-        <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
-          <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        <a
+          class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]"
+          href="#"
+        >
+          <span class="material-symbols-outlined text-[20px]"
+            >help_outline</span
+          >
           <span class="text-[13px] font-medium">Soporte</span>
         </a>
-        <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+        <a
+          class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]"
+          href="#"
+        >
           <span class="material-symbols-outlined text-[20px]">logout</span>
           <span class="text-[13px] font-medium">Cerrar Sesión</span>
         </a>
       </div>
     </aside>
     <div class="flex-1 ml-[220px] flex flex-col h-screen overflow-hidden">
-
-      <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+      <header
+        class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0"
+      >
         <div class="flex items-center gap-2">
-          <h1 class="font-headline text-[16px] font-semibold text-primary-container">Configuración nueva métrica</h1>
+          <h1
+            class="font-headline text-[16px] font-semibold text-primary-container"
+          >
+            Configuración nueva métrica
+          </h1>
         </div>
 
         <div class="flex items-center gap-md">
-          <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <button
+            class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant"
+          >
             <span class="material-symbols-outlined">notifications</span>
-            <span class="absolute top-1 right-1 w-1.5 h-1.5 bg-error rounded-full"></span>
+            <span
+              class="absolute top-1 right-1 w-1.5 h-1.5 bg-error rounded-full"
+            ></span>
           </button>
-          <button class="w-8 h-8 flex items-center justify-center text-on-surface-variant">
+          <button
+            class="w-8 h-8 flex items-center justify-center text-on-surface-variant"
+          >
             <span class="material-symbols-outlined">settings</span>
           </button>
-          <div class="relative w-8 h-8 rounded-full flex items-center justify-center cursor-pointer overflow-hidden" style="background-color: #00333c;">
-            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+          <div
+            class="relative w-8 h-8 rounded-full flex items-center justify-center cursor-pointer overflow-hidden"
+            style="background-color: #00333c"
+          >
+            <svg
+              viewBox="0 0 40 40"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-full h-full"
+            >
               <rect width="40" height="40" fill="#00333c"></rect>
-              <path d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z" fill="white"></path>
+              <path
+                d="M20 21C23.866 21 27 17.866 27 14C27 10.134 23.866 7 20 7C16.134 7 13 10.134 13 14C13 17.866 16.134 21 20 21ZM20 24C14.66 24 4 26.67 4 32V35H36V32C36 26.67 25.34 24 20 24Z"
+                fill="white"
+              ></path>
             </svg>
           </div>
         </div>
       </header>
+      <!-- Aqui usas el ENDPOINT 1-->
 
-      <section class="flex-1 p-lg overflow-y-auto bg-surface flex flex-col gap-lg">
-
-        <div class="bg-white rounded-xl border border-border-subtle p-5 shadow-sm shrink-0">
+      <section
+        class="flex-1 p-lg overflow-y-auto bg-surface flex flex-col gap-lg"
+      >
+        <div
+          class="bg-white rounded-xl border border-border-subtle p-5 shadow-sm shrink-0"
+        >
           <div class="flex items-center gap-0">
             <div class="flex items-center gap-3 flex-1" id="step1-wrapper">
-              <div class="w-8 h-8 rounded-full bg-primary-container text-white flex items-center justify-center text-[12px] font-semibold shrink-0">1</div>
+              <div
+                class="w-8 h-8 rounded-full bg-primary-container text-white flex items-center justify-center text-[12px] font-semibold shrink-0"
+              >
+                1
+              </div>
               <div class="flex flex-col">
-                <span class="text-[12px] font-semibold text-primary-container">Identificación</span>
-                <span class="text-[11px] text-on-surface-variant">Nombre y categoría</span>
+                <span class="text-[12px] font-semibold text-primary-container"
+                  >Identificación</span
+                >
+                <span class="text-[11px] text-on-surface-variant"
+                  >Nombre y categoría</span
+                >
               </div>
             </div>
             <div class="h-px flex-1 bg-surface-container mx-2"></div>
 
             <div class="flex items-center gap-3 flex-1">
-              <div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[12px] font-semibold shrink-0" id="step2-circle">2</div>
+              <div
+                class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[12px] font-semibold shrink-0"
+                id="step2-circle"
+              >
+                2
+              </div>
               <div class="flex flex-col">
-                <span class="text-[12px] font-semibold text-on-surface-variant" id="step2-label">Fórmula y Datos</span>
-                <span class="text-[11px] text-on-surface-variant">Cálculo del indicador</span>
+                <span
+                  class="text-[12px] font-semibold text-on-surface-variant"
+                  id="step2-label"
+                  >Fórmula y Datos</span
+                >
+                <span class="text-[11px] text-on-surface-variant"
+                  >Cálculo del indicador</span
+                >
               </div>
             </div>
             <div class="h-px flex-1 bg-surface-container mx-2"></div>
 
             <div class="flex items-center gap-3 flex-1">
-              <div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[12px] font-semibold shrink-0" id="step3-circle">3</div>
+              <div
+                class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[12px] font-semibold shrink-0"
+                id="step3-circle"
+              >
+                3
+              </div>
               <div class="flex flex-col">
-                <span class="text-[12px] font-semibold text-on-surface-variant" id="step3-label">Metas y Alertas</span>
-                <span class="text-[11px] text-on-surface-variant">Umbrales y notificaciones</span>
+                <span
+                  class="text-[12px] font-semibold text-on-surface-variant"
+                  id="step3-label"
+                  >Metas y Alertas</span
+                >
+                <span class="text-[11px] text-on-surface-variant"
+                  >Umbrales y notificaciones</span
+                >
               </div>
             </div>
             <div class="h-px flex-1 bg-surface-container mx-2"></div>
 
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[12px] font-semibold shrink-0" id="step4-circle">4</div>
+              <div
+                class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[12px] font-semibold shrink-0"
+                id="step4-circle"
+              >
+                4
+              </div>
               <div class="flex flex-col">
-                <span class="text-[12px] font-semibold text-on-surface-variant" id="step4-label">Visualización</span>
-                <span class="text-[11px] text-on-surface-variant">Gráfico y dashboard</span>
+                <span
+                  class="text-[12px] font-semibold text-on-surface-variant"
+                  id="step4-label"
+                  >Visualización</span
+                >
+                <span class="text-[11px] text-on-surface-variant"
+                  >Gráfico y dashboard</span
+                >
               </div>
             </div>
           </div>
         </div>
 
         <div class="flex gap-6 flex-1 items-start">
-
           <div class="flex-1 flex flex-col gap-md">
-
-            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden" id="panel-1">
-              <div class="px-5 py-4 border-b border-border-subtle flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary-container text-[20px]">label</span>
-                <h2 class="font-headline text-[16px] font-bold text-on-surface">Identificación del KPI</h2>
+            <div
+              class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden"
+              id="panel-1"
+            >
+              <div
+                class="px-5 py-4 border-b border-border-subtle flex items-center gap-2"
+              >
+                <span
+                  class="material-symbols-outlined text-primary-container text-[20px]"
+                  >label</span
+                >
+                <h2 class="font-headline text-[16px] font-bold text-on-surface">
+                  Identificación del KPI
+                </h2>
               </div>
               <div class="p-5 grid grid-cols-2 gap-4">
                 <div class="col-span-2 flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Nombre del KPI <span class="text-error">*</span></label>
-                  <input id="kpi-nombre" type="text" placeholder="Ej: Tasa de entregas a tiempo" oninput="actualizarPreview()"
-                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Nombre del KPI <span class="text-error">*</span></label
+                  >
+                  <input
+                    id="kpi-nombre"
+                    type="text"
+                    placeholder="Ej: Tasa de entregas a tiempo"
+                    oninput="actualizarPreview()"
+                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                  />
                 </div>
 
                 <div class="flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Categoría <span class="text-error">*</span></label>
-                  <select id="kpi-categoria" onchange="actualizarPreview()"
-                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Categoría <span class="text-error">*</span></label
+                  >
+                  <select
+                    id="kpi-categoria"
+                    onchange="actualizarPreview()"
+                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                  >
                     <option value="">Seleccionar categoría</option>
                     <option value="operaciones">Operaciones</option>
                     <option value="flota">Flota</option>
@@ -210,9 +364,15 @@
                 </div>
 
                 <div class="flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Unidad de Medida <span class="text-error">*</span></label>
-                  <select id="kpi-unidad" onchange="actualizarPreview()"
-                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Unidad de Medida <span class="text-error">*</span></label
+                  >
+                  <select
+                    id="kpi-unidad"
+                    onchange="actualizarPreview()"
+                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                  >
                     <option value="">Seleccionar unidad</option>
                     <option value="%">Porcentaje (%)</option>
                     <option value="hrs">Horas (hrs)</option>
@@ -224,9 +384,14 @@
                 </div>
 
                 <div class="flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Frecuencia de Medición</label>
-                  <select id="kpi-frecuencia"
-                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Frecuencia de Medición</label
+                  >
+                  <select
+                    id="kpi-frecuencia"
+                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                  >
                     <option value="diario">Diario</option>
                     <option value="semanal">Semanal</option>
                     <option value="mensual" selected>Mensual</option>
@@ -235,10 +400,12 @@
                 </div>
 
                 <div class="flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                  >
                     Responsable
                   </label>
-                  <select 
+                  <select
                     disabled
                     class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 opacity-70 cursor-not-allowed"
                   >
@@ -247,28 +414,61 @@
                 </div>
 
                 <div class="col-span-2 flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Descripción</label>
-                  <textarea rows="2" placeholder="Describe brevemente qué mide este KPI..."
-                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none resize-none"></textarea>
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Descripción</label
+                  >
+                  <textarea
+                    rows="2"
+                    placeholder="Describe brevemente qué mide este KPI..."
+                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none resize-none"
+                  ></textarea>
                 </div>
               </div>
             </div>
 
-            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
-              <div class="px-5 py-4 border-b border-border-subtle flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary-container text-[20px]">functions</span>
-                <h2 class="font-headline text-[16px] font-bold text-on-surface">Fórmula y Fuente de Datos</h2>
+            <div
+              class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden"
+            >
+              <div
+                class="px-5 py-4 border-b border-border-subtle flex items-center gap-2"
+              >
+                <span
+                  class="material-symbols-outlined text-primary-container text-[20px]"
+                  >functions</span
+                >
+                <h2 class="font-headline text-[16px] font-bold text-on-surface">
+                  Fórmula y Fuente de Datos
+                </h2>
               </div>
               <div class="p-5 flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Tipo de Cálculo</label>
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Tipo de Cálculo</label
+                  >
                   <div class="flex gap-3">
-                    <label class="flex items-center gap-2 cursor-pointer text-[13px]">
-                      <input type="radio" name="tipo-calculo" value="porcentaje" checked class="text-primary-container focus:ring-primary-container" />
+                    <label
+                      class="flex items-center gap-2 cursor-pointer text-[13px]"
+                    >
+                      <input
+                        type="radio"
+                        name="tipo-calculo"
+                        value="porcentaje"
+                        checked
+                        class="text-primary-container focus:ring-primary-container"
+                      />
                       <span>Porcentaje (A/B × 100)</span>
                     </label>
-                    <label class="flex items-center gap-2 cursor-pointer text-[13px]">
-                      <input type="radio" name="tipo-calculo" value="promedio" class="text-primary-container focus:ring-primary-container" />
+                    <label
+                      class="flex items-center gap-2 cursor-pointer text-[13px]"
+                    >
+                      <input
+                        type="radio"
+                        name="tipo-calculo"
+                        value="promedio"
+                        class="text-primary-container focus:ring-primary-container"
+                      />
                       <span>Promedio</span>
                     </label>
                   </div>
@@ -276,135 +476,243 @@
 
                 <div class="grid grid-cols-2 gap-3">
                   <div class="flex flex-col gap-1">
-                    <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Numerador (A)</label>
-                    <input type="text" placeholder="Ej: Viajes entregados a tiempo"
-                      class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                    <label
+                      class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                      >Numerador (A)</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Ej: Viajes entregados a tiempo"
+                      class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                    />
                   </div>
                   <div class="flex flex-col gap-1">
-                    <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Denominador (B)</label>
-                    <input type="text" placeholder="Ej: Total de viajes programados"
-                      class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                    <label
+                      class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                      >Denominador (B)</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Ej: Total de viajes programados"
+                      class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
-              <div class="px-5 py-4 border-b border-border-subtle flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary-container text-[20px]">target</span>
-                <h2 class="font-headline text-[16px] font-bold text-on-surface">Metas y Alertas</h2>
+            <div
+              class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden"
+            >
+              <div
+                class="px-5 py-4 border-b border-border-subtle flex items-center gap-2"
+              >
+                <span
+                  class="material-symbols-outlined text-primary-container text-[20px]"
+                  >target</span
+                >
+                <h2 class="font-headline text-[16px] font-bold text-on-surface">
+                  Metas y Alertas
+                </h2>
               </div>
               <div class="p-5 grid grid-cols-3 gap-4">
                 <div class="flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Meta Corporativa</label>
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Meta Corporativa</label
+                  >
                   <div class="relative">
-                    <input id="kpi-meta" type="number" placeholder="95" oninput="actualizarPreview()"
-                      class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 w-full focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
-                    <span id="meta-unit" class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-on-surface-variant">%</span>
+                    <input
+                      id="kpi-meta"
+                      type="number"
+                      placeholder="95"
+                      oninput="actualizarPreview()"
+                      class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 w-full focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none"
+                    />
+                    <span
+                      id="meta-unit"
+                      class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-on-surface-variant"
+                      >%</span
+                    >
                   </div>
                 </div>
                 <div class="flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Umbral Alerta</label>
-                  <input type="number" placeholder="90" class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 w-full outline-none" />
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Umbral Alerta</label
+                  >
+                  <input
+                    type="number"
+                    placeholder="90"
+                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 w-full outline-none"
+                  />
                 </div>
                 <div class="flex flex-col gap-1">
-                  <label class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider">Umbral Crítico</label>
-                  <input type="number" placeholder="85" class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 w-full outline-none" />
+                  <label
+                    class="text-[11px] font-medium text-on-surface-variant uppercase tracking-wider"
+                    >Umbral Crítico</label
+                  >
+                  <input
+                    type="number"
+                    placeholder="85"
+                    class="bg-surface border border-outline-variant text-on-surface rounded text-[13px] px-3 py-2 w-full outline-none"
+                  />
                 </div>
               </div>
             </div>
           </div>
 
           <div class="w-[280px] shrink-0 flex flex-col gap-md sticky top-0">
-            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
-              <div class="px-4 py-3 border-b border-border-subtle flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary-container text-[18px]">preview</span>
-                <h3 class="font-headline text-[14px] font-bold text-on-surface">Vista previa</h3>
+            <div
+              class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden"
+            >
+              <div
+                class="px-4 py-3 border-b border-border-subtle flex items-center gap-2"
+              >
+                <span
+                  class="material-symbols-outlined text-primary-container text-[18px]"
+                  >preview</span
+                >
+                <h3 class="font-headline text-[14px] font-bold text-on-surface">
+                  Vista previa
+                </h3>
               </div>
               <div class="p-4" id="kpi-preview">
-                <div class="bg-surface rounded-xl border border-border-subtle p-4 flex flex-col gap-2">
+                <div
+                  class="bg-surface rounded-xl border border-border-subtle p-4 flex flex-col gap-2"
+                >
                   <div class="flex items-center justify-between">
-                    <span class="text-[11px] text-on-surface-variant uppercase tracking-wider" id="prev-categoria">—</span>
-                    <span class="material-symbols-outlined text-primary-container" id="prev-icono">analytics</span>
+                    <span
+                      class="text-[11px] text-on-surface-variant uppercase tracking-wider"
+                      id="prev-categoria"
+                      >—</span
+                    >
+                    <span
+                      class="material-symbols-outlined text-primary-container"
+                      id="prev-icono"
+                      >analytics</span
+                    >
                   </div>
                   <div class="flex items-baseline gap-1">
-                    <span class="font-headline text-[28px] font-bold text-primary-container" id="prev-valor">—</span>
-                    <span class="text-[14px] text-on-surface-variant" id="prev-unidad"></span>
+                    <span
+                      class="font-headline text-[28px] font-bold text-primary-container"
+                      id="prev-valor"
+                      >—</span
+                    >
+                    <span
+                      class="text-[14px] text-on-surface-variant"
+                      id="prev-unidad"
+                    ></span>
                   </div>
-                  <p class="text-[13px] font-semibold text-on-surface" id="prev-nombre">Nuevo KPI</p>
-                  <div class="mt-2 w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
-                    <div class="bg-[#006e2b] h-1.5 rounded-full" style="width: 0%" id="prev-barra"></div>
+                  <p
+                    class="text-[13px] font-semibold text-on-surface"
+                    id="prev-nombre"
+                  >
+                    Nuevo KPI
+                  </p>
+                  <div
+                    class="mt-2 w-full bg-surface-container h-1.5 rounded-full overflow-hidden"
+                  >
+                    <div
+                      class="bg-[#006e2b] h-1.5 rounded-full"
+                      style="width: 0%"
+                      id="prev-barra"
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="bg-primary-container/5 border border-primary-container/10 rounded-xl p-4 flex gap-2">
-              <span class="material-symbols-outlined text-primary-container text-[18px]">lightbulb</span>
-              <p class="text-[12px] text-on-surface-variant leading-relaxed">Define umbrales realistas basados en el histórico operativo.</p>
+            <div
+              class="bg-primary-container/5 border border-primary-container/10 rounded-xl p-4 flex gap-2"
+            >
+              <span
+                class="material-symbols-outlined text-primary-container text-[18px]"
+                >lightbulb</span
+              >
+              <p class="text-[12px] text-on-surface-variant leading-relaxed">
+                Define umbrales realistas basados en el histórico operativo.
+              </p>
             </div>
           </div>
-
         </div>
 
-        <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm shrink-0 flex items-center justify-between mt-auto">
-          <a href="consultar_metricas.html" class="flex items-center gap-2 px-4 py-2 rounded border border-outline-variant text-[13px] font-medium hover:bg-surface-container transition-colors">
+        <div
+          class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm shrink-0 flex items-center justify-between mt-auto"
+        >
+          <a
+            href="consultar_metricas.html"
+            class="flex items-center gap-2 px-4 py-2 rounded border border-outline-variant text-[13px] font-medium hover:bg-surface-container transition-colors"
+          >
             Cancelar
           </a>
           <div class="flex items-center gap-3">
-            <button class="px-4 py-2 rounded border border-outline-variant text-[13px] font-medium hover:bg-surface-container transition-colors">
+            <button
+              class="px-4 py-2 rounded border border-outline-variant text-[13px] font-medium hover:bg-surface-container transition-colors"
+            >
               Guardar borrador
             </button>
-            <button onclick="guardarKPI()" class="bg-primary-container text-white px-5 py-2 rounded text-[13px] font-medium hover:opacity-90 transition-opacity shadow-sm">
+            <button
+              onclick="guardarKPI()"
+              class="bg-primary-container text-white px-5 py-2 rounded text-[13px] font-medium hover:opacity-90 transition-opacity shadow-sm"
+            >
               Crear KPI
             </button>
           </div>
         </div>
-
       </section>
     </div>
 
-    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#00333c] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div
+      id="toast"
+      class="fixed bottom-6 right-6 z-50 bg-[#00333c] text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none"
+    >
       <span class="material-symbols-outlined text-[20px]">check_circle</span>
       <span class="text-[13px] font-medium">KPI creado exitosamente</span>
     </div>
 
     <script>
       const iconosPorCategoria = {
-        operaciones: 'local_shipping',
-        flota: 'directions_bus',
-        seguridad: 'security',
-        costos: 'payments',
-        servicio: 'verified',
+        operaciones: "local_shipping",
+        flota: "directions_bus",
+        seguridad: "security",
+        costos: "payments",
+        servicio: "verified",
       };
 
       function actualizarPreview() {
-        const nombre   = document.getElementById('kpi-nombre').value.trim();
-        const cat      = document.getElementById('kpi-categoria').value;
-        const unidad   = document.getElementById('kpi-unidad').value;
-        const meta     = document.getElementById('kpi-meta').value;
+        const nombre = document.getElementById("kpi-nombre").value.trim();
+        const cat = document.getElementById("kpi-categoria").value;
+        const unidad = document.getElementById("kpi-unidad").value;
+        const meta = document.getElementById("kpi-meta").value;
 
-        document.getElementById('prev-nombre').textContent    = nombre || 'Nuevo KPI';
-        document.getElementById('prev-categoria').textContent = cat ? cat.toUpperCase() : '—';
-        document.getElementById('prev-unidad').textContent    = unidad || '';
-        document.getElementById('prev-icono').textContent     = iconosPorCategoria[cat] || 'analytics';
+        document.getElementById("prev-nombre").textContent =
+          nombre || "Nuevo KPI";
+        document.getElementById("prev-categoria").textContent = cat
+          ? cat.toUpperCase()
+          : "—";
+        document.getElementById("prev-unidad").textContent = unidad || "";
+        document.getElementById("prev-icono").textContent =
+          iconosPorCategoria[cat] || "analytics";
 
         if (meta) {
-          document.getElementById('prev-barra').style.width = Math.min(parseFloat(meta), 100) + '%';
-          document.getElementById('prev-valor').textContent = meta + (unidad || '');
+          document.getElementById("prev-barra").style.width =
+            Math.min(parseFloat(meta), 100) + "%";
+          document.getElementById("prev-valor").textContent =
+            meta + (unidad || "");
         } else {
-          document.getElementById('prev-barra').style.width = '0%';
-          document.getElementById('prev-valor').textContent = '—';
+          document.getElementById("prev-barra").style.width = "0%";
+          document.getElementById("prev-valor").textContent = "—";
         }
       }
 
       function guardarKPI() {
-        const toast = document.getElementById('toast');
-        toast.classList.remove('translate-y-20', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
+        const toast = document.getElementById("toast");
+        toast.classList.remove("translate-y-20", "opacity-0");
+        toast.classList.add("translate-y-0", "opacity-100");
         setTimeout(() => {
-          toast.classList.add('translate-y-20', 'opacity-0');
-          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add("translate-y-20", "opacity-0");
+          toast.classList.remove("translate-y-0", "opacity-100");
         }, 3000);
       }
     </script>
