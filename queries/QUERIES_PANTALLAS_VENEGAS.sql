@@ -25,7 +25,8 @@ SELECT
     total_autorizados,
     total_denegados
 FROM snapshot_kpi_diario
-WHERE fecha_snapshot >= CURRENT_DATE - INTERVAL '6 days'
+WHERE fecha_snapshot >= (SELECT MAX(fecha_snapshot) FROM snapshot_kpi_diario WHERE fecha_snapshot < CURRENT_DATE) - INTERVAL '7 days'
+  AND fecha_snapshot <= (SELECT MAX(fecha_snapshot) FROM snapshot_kpi_diario WHERE fecha_snapshot < CURRENT_DATE)
 ORDER BY fecha_snapshot ASC;
 
 -- Gráfico donut — Motivos de denegación
