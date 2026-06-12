@@ -572,7 +572,7 @@ RESPONSE 200:
 
 ---
 
-### 3.7 MONITOREO (7 endpoints)
+### 3.7 REGISTRO - ACCESO - DENEGACIÓN . SISTEMA Y ADMINISTRADOR (7 endpoints)
 
 #### Completados — Carga Pesada (Pantalla 1)
 
