@@ -73,7 +73,7 @@
     </div>
 
     <nav class="flex-1 px-sm space-y-1">
-      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="4.2.5_panel_de_control_y_monitoreo_general.html">
         <span class="material-symbols-outlined text-[20px]">dashboard</span>
         <span class="text-[13px] font-medium">Dashboard</span>
       </a>
@@ -96,7 +96,7 @@
         <span class="material-symbols-outlined text-[20px]">help_outline</span>
         <span class="text-[13px] font-medium">Soporte</span>
       </a>
-      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="4.2.1_login.html">
         <span class="material-symbols-outlined text-[20px]">logout</span>
         <span class="text-[13px] font-medium">Cerrar Sesión</span>
       </a>
@@ -110,6 +110,10 @@
         Panel de Métricas
       </h1>
       <div class="flex items-center gap-md">
+        <a href="configurar_kpi.html" class="bg-primary-container text-white px-4 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          Nuevo KPI
+        </a>
         <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
           <span class="material-symbols-outlined">notifications</span>
           <span class="absolute top-1 right-1 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
@@ -274,7 +278,7 @@
               <h2 class="font-headline text-[20px] font-semibold text-on-surface">Desempeño Operativo por Ruta</h2>
               <p class="text-[14px] text-on-surface-variant mt-0.5">Últimos 30 días · Todas las zonas</p>
             </div>
-            <button class="bg-white border border-border-subtle text-primary-container px-3 py-1.5 rounded text-[12px] font-semibold flex items-center gap-1 hover:bg-slate-50 transition-colors">
+            <button class="bg-white border border-border-subtle text-primary-container px-3 py-1.5 rounded text-[12px] font-semibold flex items-center gap-1 hover:bg-slate-50 transition-colors" onclick="window.location.href='generar_reporte.html'">
               <span class="material-symbols-outlined text-[16px]">download</span>
               Exportar
             </button>
@@ -289,6 +293,7 @@
                   <th class="p-3 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-right">OTIF %</th>
                   <th class="p-3 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-right">T. Promedio (Hrs)</th>
                   <th class="p-3 pr-4 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-center">Estado de Meta</th>
+                  <th class="p-3 pr-4 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-center">Acción</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-surface-variant text-[14px]">
@@ -311,6 +316,11 @@
                     <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#009A3F]/10 text-[#009A3F] text-[11px] font-medium border border-[#009A3F]/20">
                       <span class="material-symbols-outlined text-[12px]">check_circle</span>Cumplido
                     </span>
+                  </td>
+                  <td class="p-3 pr-4 text-center">
+                    <a href="eliminar_metrica.html" class="text-error hover:text-error/80 transition-colors" title="Eliminar">
+                      <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </a>
                   </td>
                 </tr>
                 <tr class="hover:bg-surface-container transition-colors">

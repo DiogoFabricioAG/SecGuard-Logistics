@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecGuard Logistics</title>
+  <meta http-equiv="refresh" content="0;url=4.2.1_login.html">
+  <script>window.location.replace('4.2.1_login.html');</script>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #001d22;
+      font-family: 'Inter', sans-serif;
+    }
+    .loader {
+      text-align: center;
+      color: #96d0de;
+    }
+    .loader .logo {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .loader .sub {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #00333c;
+      border-top-color: #96d0de;
+      border-radius: 50%;
+      margin: 24px auto 0;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="loader">
+    <div class="logo">SecGuard Logistics</div>
+    <div class="sub">Centro Logistico Global</div>
+    <div class="spinner"></div>
+  </div>
+</body>
+</html>

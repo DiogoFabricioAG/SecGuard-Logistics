@@ -1,214 +1,288 @@
-<!DOCTYPE html>
+<!-- /api/flota/pedidos/:id/capacidad -->
+<!doctype html>
 
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Registro | SecGuard Logistics</title>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "primary": "#00333c",
-                        "primary-light": "#96d0de",
-                        "on-surface": "#1a1c1d",
-                        "on-surface-variant": "#40484a",
-                        "outline": "#70787b",
-                        "outline-variant": "#c0c8ca",
-                        "border-subtle": "#EEEEEF",
-                        "focus-glow": "rgba(0, 75, 87, 0.15)"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "fontFamily": {
-                        "inter": ["Inter", "sans-serif"],
-                        "manrope": ["Manrope", "sans-serif"]
-                    }
-                },
+<html class="light" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Registro | SecGuard Logistics</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#00333c",
+              "primary-light": "#96d0de",
+              "on-surface": "#1a1c1d",
+              "on-surface-variant": "#40484a",
+              outline: "#70787b",
+              "outline-variant": "#c0c8ca",
+              "border-subtle": "#EEEEEF",
+              "focus-glow": "rgba(0, 75, 87, 0.15)",
             },
-        }
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem",
+            },
+            fontFamily: {
+              inter: ["Inter", "sans-serif"],
+              manrope: ["Manrope", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-            display: inline-block;
-            vertical-align: middle
-        }
-        .hero-background {
-            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC11fRSJPQZuRxv6hRKa-MU4Vi3D2im172DjCUWuNsS1-uDE_8fLv6vwAWN0dWfYSEIoVkifFj60vvKTWp8Jt_EgGflg_N4h_1FIa9t_p1AWxLz-hn0XF7mtWOeb3iPOC8pWtrrlsCZf5jHsp-_GoyXYBRi36XIXxMJMoMvY6hHzo46dTx9WAUlXccN7iGjiMDsiZGrLZs6BlLfjaa3NyfDcVe5Nbr58JDblhTdsAeYHNmdOKCxosJ4p9fLdbj_gY2yOp2ond4DFG0');
-            background-size: cover;
-            background-position: center;
-            filter: blur(8px);
-            transform: scale(1.05);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -10
-        }
-        .hero-overlay {
-            background-color: rgba(0, 51, 60, 0.55);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -5
-        }
-        .auth-card {
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 1px solid #EEEEEF;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 480px;
-            padding: 32px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1)
-        }
-        .input-field {
-            height: 40px;
-            border: 1px solid #EEEEEF;
-            border-radius: 4px;
-            background-color: white;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            font-family: "Inter", sans-serif;
-            font-size: 14px
-        }
-        .input-field:focus {
-            outline: none;
-            border-color: #004b57;
-            box-shadow: 0 0 0 2px rgba(0, 75, 87, 0.15)
-        }
-        .read-only-field {
-            height: 40px;
-            border: 1px solid #EEEEEF;
-            border-radius: 4px;
-            background-color: #f4f3f5;
-            font-family: "Inter", sans-serif;
-            font-size: 14px;
-            color: #1a1c1d;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px
-        }
-        .primary-btn {
-            background-color: #00333c;
-            height: 44px;
-            border-radius: 4px;
-            transition: opacity 0.2s;
-            font-family: "Inter", sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            color: white;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center
-        }
-        .primary-btn:hover {
-            opacity: 0.9
-        }
-        .separator {
-            height: 1px;
-            background-color: #c0c8ca;
-            margin: 20px 0;
-            width: 100%
-        }
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .hero-background {
+        background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC11fRSJPQZuRxv6hRKa-MU4Vi3D2im172DjCUWuNsS1-uDE_8fLv6vwAWN0dWfYSEIoVkifFj60vvKTWp8Jt_EgGflg_N4h_1FIa9t_p1AWxLz-hn0XF7mtWOeb3iPOC8pWtrrlsCZf5jHsp-_GoyXYBRi36XIXxMJMoMvY6hHzo46dTx9WAUlXccN7iGjiMDsiZGrLZs6BlLfjaa3NyfDcVe5Nbr58JDblhTdsAeYHNmdOKCxosJ4p9fLdbj_gY2yOp2ond4DFG0");
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px);
+        transform: scale(1.05);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -10;
+      }
+      .hero-overlay {
+        background-color: rgba(0, 51, 60, 0.55);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -5;
+      }
+      .auth-card {
+        background-color: rgba(255, 255, 255, 0.95);
+        border: 1px solid #eeeeef;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 480px;
+        padding: 32px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      }
+      .input-field {
+        height: 40px;
+        border: 1px solid #eeeeef;
+        border-radius: 4px;
+        background-color: white;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+      }
+      .input-field:focus {
+        outline: none;
+        border-color: #004b57;
+        box-shadow: 0 0 0 2px rgba(0, 75, 87, 0.15);
+      }
+      .read-only-field {
+        height: 40px;
+        border: 1px solid #eeeeef;
+        border-radius: 4px;
+        background-color: #f4f3f5;
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        color: #1a1c1d;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+      }
+      .primary-btn {
+        background-color: #00333c;
+        height: 44px;
+        border-radius: 4px;
+        transition: opacity 0.2s;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: white;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .primary-btn:hover {
+        opacity: 0.9;
+      }
+      .separator {
+        height: 1px;
+        background-color: #c0c8ca;
+        margin: 20px 0;
+        width: 100%;
+      }
     </style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6 overflow-x-hidden">
-<!-- Background Layers -->
-<div class="hero-background"></div>
-<div class="hero-overlay"></div>
-<!-- Main Registration Card -->
-<main class="auth-card">
-<!-- Header -->
-<header class="flex flex-col items-center text-center">
-<div class="mb-4">
-<span class="material-symbols-outlined text-[40px] text-primary-light" style="font-variation-settings: 'FILL' 1;">shield</span>
-</div>
-<h1 class="font-manrope text-[28px] font-bold text-primary mb-1">SecGuard Logistics</h1>
-<p class="font-inter text-[14px] font-semibold text-on-surface-variant">Control de acceso vehicular</p>
-<p class="font-inter text-[13px] font-normal text-outline">Complete el formulario para solicitar acceso al sistema</p>
-</header>
-<!-- Separator -->
-<div class="separator"></div>
-<!-- Form -->
-<form class="space-y-4">
-<!-- Full Name -->
-<div class="flex flex-col gap-1.5">
-<label class="font-inter text-[12px] font-semibold text-on-surface-variant" for="full_name">Nombre completo</label>
-<input class="input-field px-4 text-on-surface" id="full_name" placeholder="Ej. Juan Pérez" type="text"/>
-</div>
-<!-- Institutional Email -->
-<div class="flex flex-col gap-1.5">
-<label class="font-inter text-[12px] font-semibold text-on-surface-variant" for="email">Correo electrónico institucional</label>
-<input class="input-field px-4 text-on-surface" id="email" placeholder="usuario@secguard.com" type="email"/>
-</div>
-<!-- Role (Read-only) -->
-<div class="flex flex-col gap-1.5">
-<label class="font-inter text-[12px] font-semibold text-on-surface-variant">Rol</label>
-<div class="read-only-field">
-<span>Administrador</span>
-<span class="material-symbols-outlined text-[18px] text-outline">lock</span>
-</div>
-</div>
-<!-- Password -->
-<div class="flex flex-col gap-1.5">
-<label class="font-inter text-[12px] font-semibold text-on-surface-variant" for="password">Contraseña</label>
-<input class="input-field px-4 text-on-surface" id="password" placeholder="••••••••" type="password"/>
-</div>
-<!-- Confirm Password -->
-<div class="flex flex-col gap-1.5">
-<label class="font-inter text-[12px] font-semibold text-on-surface-variant" for="confirm_password">Confirmar contraseña</label>
-<input class="input-field px-4 text-on-surface" id="confirm_password" placeholder="••••••••" type="password"/>
-</div>
-<!-- Actions -->
-<div class="pt-2">
-<button class="primary-btn" type="submit">
-                    Enviar solicitud
-                </button>
-<p class="font-inter text-[12px] font-normal text-on-surface-variant mt-3 text-center">
-                    Recibirá un correo de validación para activar su cuenta.
-                </p>
-</div>
-</form>
-<!-- Footer Actions -->
-<footer class="mt-6 flex flex-col items-center">
-<a class="font-inter text-[13px] font-normal text-[#004b57] hover:underline transition-all" href="#">
-                Volver al inicio de sesión
-            </a>
-<p class="mt-6 text-center font-inter text-[11px] font-normal text-outline">
-                © 2026 SecGuard Logistics. <br/>Secure Global Supply Chain Management.
-            </p>
-</footer>
-</main>
-<script>
-        // Simple form interaction
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2">progress_activity</span> Procesando...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                alert('Solicitud enviada correctamente. Verifique su correo institucional.');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                e.target.reset();
-            }, 2000);
-        });
+  </head>
+  <body
+    class="min-h-screen flex flex-col items-center justify-center p-6 overflow-x-hidden"
+  >
+    <!-- Background Layers -->
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+    <!-- Main Registration Card -->
+    <main class="auth-card">
+      <!-- Header -->
+      <header class="flex flex-col items-center text-center">
+        <div class="mb-4">
+          <span
+            class="material-symbols-outlined text-[40px] text-primary-light"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >shield</span
+          >
+        </div>
+        <h1 class="font-manrope text-[28px] font-bold text-primary mb-1">
+          SecGuard Logistics
+        </h1>
+        <p class="font-inter text-[14px] font-semibold text-on-surface-variant">
+          Control de acceso vehicular
+        </p>
+        <p class="font-inter text-[13px] font-normal text-outline">
+          Complete el formulario para solicitar acceso al sistema
+        </p>
+      </header>
+      <!-- Separator -->
+      <div class="separator"></div>
+      <!-- Form -->
+      <form class="space-y-4">
+        <!-- Full Name -->
+        <div class="flex flex-col gap-1.5">
+          <label
+            class="font-inter text-[12px] font-semibold text-on-surface-variant"
+            for="full_name"
+            >Nombre completo</label
+          >
+          <input
+            class="input-field px-4 text-on-surface"
+            id="full_name"
+            placeholder="Ej. Juan Pérez"
+            type="text"
+          />
+        </div>
+        <!-- Institutional Email -->
+        <div class="flex flex-col gap-1.5">
+          <label
+            class="font-inter text-[12px] font-semibold text-on-surface-variant"
+            for="email"
+            >Correo electrónico institucional</label
+          >
+          <input
+            class="input-field px-4 text-on-surface"
+            id="email"
+            placeholder="usuario@secguard.com"
+            type="email"
+          />
+        </div>
+        <!-- Role (Read-only) -->
+        <div class="flex flex-col gap-1.5">
+          <label
+            class="font-inter text-[12px] font-semibold text-on-surface-variant"
+            >Rol</label
+          >
+          <div class="read-only-field">
+            <span>Administrador</span>
+            <span class="material-symbols-outlined text-[18px] text-outline"
+              >lock</span
+            >
+          </div>
+        </div>
+        <!-- Password -->
+        <div class="flex flex-col gap-1.5">
+          <label
+            class="font-inter text-[12px] font-semibold text-on-surface-variant"
+            for="password"
+            >Contraseña</label
+          >
+          <input
+            class="input-field px-4 text-on-surface"
+            id="password"
+            placeholder="••••••••"
+            type="password"
+          />
+        </div>
+        <!-- Confirm Password -->
+        <div class="flex flex-col gap-1.5">
+          <label
+            class="font-inter text-[12px] font-semibold text-on-surface-variant"
+            for="confirm_password"
+            >Confirmar contraseña</label
+          >
+          <input
+            class="input-field px-4 text-on-surface"
+            id="confirm_password"
+            placeholder="••••••••"
+            type="password"
+          />
+        </div>
+        <!-- Actions -->
+        <div class="pt-2">
+          <button class="primary-btn" type="submit">Enviar solicitud</button>
+          <p
+            class="font-inter text-[12px] font-normal text-on-surface-variant mt-3 text-center"
+          >
+            Recibirá un correo de validación para activar su cuenta.
+          </p>
+        </div>
+      </form>
+      <!-- Footer Actions -->
+      <footer class="mt-6 flex flex-col items-center">
+        <a
+          class="font-inter text-[13px] font-normal text-[#004b57] hover:underline transition-all"
+          href="4.2.1_login.html"
+        >
+          Volver al inicio de sesión
+        </a>
+        <p
+          class="mt-6 text-center font-inter text-[11px] font-normal text-outline"
+        >
+          © 2026 SecGuard Logistics. <br />Secure Global Supply Chain
+          Management.
+        </p>
+      </footer>
+    </main>
+    <script>
+      // Simple form interaction
+      document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const btn = e.target.querySelector("button");
+        const originalText = btn.innerHTML;
+
+        btn.innerHTML =
+          '<span class="material-symbols-outlined animate-spin mr-2">progress_activity</span> Procesando...';
+        btn.disabled = true;
+
+        setTimeout(() => {
+          alert(
+            "Solicitud enviada correctamente. Verifique su correo institucional.",
+          );
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          window.location.href = "4.2.1_login.html";
+        }, 2000);
+      });
     </script>
-</body></html>
+  </body>
+</html>

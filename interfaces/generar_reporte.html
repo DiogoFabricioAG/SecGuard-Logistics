@@ -117,15 +117,15 @@
 
     <!-- Nav Links -->
     <nav class="flex-1 px-sm space-y-1">
-      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="4.2.5_panel_de_control_y_monitoreo_general.html">
         <span class="material-symbols-outlined text-[20px]">dashboard</span>
         <span class="text-[13px] font-medium">Dashboard</span>
       </a>
-      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
+      <a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="gestion_flota.html">
         <span class="material-symbols-outlined text-[20px]">local_shipping</span>
         <span class="text-[13px] font-medium">Flota</span>
       </a>
-      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
+      <a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="registrar_viaje.html">
         <span class="material-symbols-outlined text-[20px]">route</span>
         <span class="text-[13px] font-medium">Rutas</span>
       </a>
@@ -142,7 +142,7 @@
         <span class="material-symbols-outlined text-[20px]">help_outline</span>
         <span class="text-[13px] font-medium">Soporte</span>
       </a>
-      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
+      <a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="4.2.1_login.html">
         <span class="material-symbols-outlined text-[20px]">logout</span>
         <span class="text-[13px] font-medium">Cerrar Sesión</span>
       </a>
@@ -533,7 +533,7 @@
 
             <!-- ACTION BUTTONS -->
             <div class="flex justify-between items-center pb-2">
-              <button class="text-outline hover:text-on-surface-variant text-[12px] font-semibold px-4 py-2 transition-colors flex items-center gap-2">
+              <button class="text-outline hover:text-on-surface-variant text-[12px] font-semibold px-4 py-2 transition-colors flex items-center gap-2" onclick="window.location.href='consultar_metricas.html'">
                 <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                 Cancelar
               </button>
@@ -542,7 +542,7 @@
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
                   Vista Previa
                 </button>
-                <button onclick="triggerGenerate()" class="bg-primary-container text-on-primary px-6 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
+                <button onclick="triggerGenerate(); window.location.href='consultar_metricas.html'" class="bg-primary-container text-on-primary px-6 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
                   <span class="material-symbols-outlined text-[18px]">summarize</span>
                   Generar Reporte
                 </button>
