@@ -1,3 +1,32 @@
+<!--
+Módulo: Flota
+Descripción: Confirmación de los datos ingresados para el viaje, 
+mostrando un resumen de la información y validación de seguridad antes de registrar el viaje en el sistema.
+APIs utilizadas: 
+- POST /api/flota/viajes
+  Para registrar el viaje en el sistema, enviando toda la información recopilada 
+  en los pasos anteriores (datos de recogida, fecha, flota asignada, etc.).
+  ´´{
+   "id_pedido": 1,
+   "codigo_reserva_patio": "RSV-2025-0099",
+   "tipo_operacion": "DESPACHO",
+   "fecha_hora_estimada": "2025-05-15T08:00:00.000Z",
+   "guia_remision_ransa": "GRR-2025-00999",
+   "fecha_limite_entrega": "2025-05-15T14:00:00.000Z",
+   "hora_recogida_inicio": "07:30",
+   "hora_recogida_fin": "09:00"
+ }´´
+- POST /api/flota/viajes/:id/asignaciones
+  Registrar quienes son los conductores + vehículos asignados al viaje, 
+  para que quede registrado en el sistema y se pueda hacer seguimiento.
+  ´´ 
+  {
+    "id_camion": 2,
+    "id_conductor": 3
+  }
+  ´´
+-->
+
 <!doctype html>
 
 <html lang="en">
@@ -95,13 +124,37 @@
               "headline-lg": ["Manrope"],
             },
             fontSize: {
-              "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.02em",
+                  fontWeight: "600",
+                },
+              ],
               "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
               "label-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }],
-              "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
-              "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
               "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
-              "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
             },
           },
         },

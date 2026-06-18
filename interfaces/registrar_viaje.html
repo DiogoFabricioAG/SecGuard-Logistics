@@ -1,5 +1,30 @@
+<!--
+Módulo: Flota
+Descripción: Visualización de viajes programados y detalles de vehículos para la planificación de rutas.
+Parte inicial de la sección de la flota de viajes, se ve un listado de viajes programados.
+Además, se ve la primera parte del formulario para registrar un nuevo viaje.
+APIs utilizadas: 
+- GET /api/flota/viajes?page=1&limit=8&estado_viaje=PENDIENTE
+* page: Indica el offset que se va a colocar en la base de datos, consiguiendo el paginado deseado para la vista de tabla.
+* limit: Cantidad que devuelve la API, además, le indica al parámetro “page” de cuánto será el offset.
+* estado_viaje: PENDIENTE, CONFIRMADO, EN_TRANSITO
+- GET /api/flota/viajes/:id
+  Detalles del viaje, incluyendo información de recogida, contacto, mercancía y documentos requeridos. Cuando se le da click a un viaje programado, 
+  se muestra esta información en el lado derecho de la pantalla.
+- GET /api/flota/pedidos?page=1&limit=8
+  Listado de pedidos, para mostrar en el formulario de registro de viaje, 
+  al seleccionar un pedido, se muestra la información del mismo en el lado derecho de la pantalla.
+  OJO: Esta petición aparece en el registro de un nuevo viaje, además, es un paso anterior a lo que se ve en esta pantalla,
+  donde el administrador debe seleccionar el pedido para el cual se va a registrar el viaje, por lo que no se muestra en esta pantalla, pero es importante tenerlo en cuenta para la integración de la API.
+- GET /api/flota/pedidos/:id
+  Detalle del pedido, va ligado a la anterior petición, ya que al seleccionar un pedido para registrar un nuevo viaje, se muestra la información del mismo en el lado derecho de la pantalla, esta información es la que 
+  se muestra en el lado derecho de la pantalla, pero con datos del pedido seleccionado para registrar el nuevo viaje.
+- GET /api/flota/pedidos/1/mercancia
+  Listado de mercancías del pedido, va ligado a la anterior petición, ya que al seleccionar un pedido para registrar un nuevo viaje, se muestra la información del mismo en el lado derecho de la pantalla, esta información es la que 
+  se muestra en el lado derecho de la pantalla, pero con datos del pedido seleccionado para registrar el nuevo viaje.
+  Esta sección si aparece en la pantalla actual, en la linea 640.
+-->
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -99,13 +124,37 @@
               "headline-lg": ["Manrope"],
             },
             fontSize: {
-              "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.02em",
+                  fontWeight: "600",
+                },
+              ],
               "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
               "label-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }],
-              "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
-              "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
               "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
-              "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
             },
           },
         },

@@ -1,3 +1,14 @@
+<!--
+Módulo: Flota
+Descripción: Tercera parte del registro de un viaje, enfocada en la selección de la flota.
+APIs utilizadas: 
+- GET /api/flota/pedidos/1/capacidad
+  Para mostrar la capacidad total del pedido, y así ayudar a la selección de camiones en el siguiente paso.
+- GET /api/flota/viajes/disponibles?fecha=2026-06-12
+  Para obtener los viajes disponibles en una fecha específica. Conecta con el registro en el paso anterior, 
+  donde se selecciona la fecha del viaje, para mostrar solo la flota disponible en esa fecha.
+-->
+
 <!doctype html>
 
 <html lang="en">
@@ -95,13 +106,37 @@
               "headline-lg": ["Manrope"],
             },
             fontSize: {
-              "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.02em",
+                  fontWeight: "600",
+                },
+              ],
               "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
               "label-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }],
-              "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
-              "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
               "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
-              "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
             },
           },
         },

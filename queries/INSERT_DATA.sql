@@ -67,21 +67,21 @@ INSERT INTO conductor_ransa (dni, nombres, apellidos, nro_brevete, vigencia_sctr
 -- ===========================================================================
 
 INSERT INTO camion_ransa (placa_matricula, modelo, capacidad_toneladas, tipo_unidad, vigencia_soat, vigencia_tarjeta_propiedad, observaciones, estado_operativo, url_foto_vehiculo, clasificacion_peso, fecha_proximo_mantenimiento) VALUES
-('B7Y-912', 'Volvo FMX 460', 32.00, 'TRACTO_CAMION', '2027-01-15', '2028-06-30', 'Unidad con GPS dual activo', 'DISPONIBLE', '/img/flota/B7Y912.jpg', 'CARGA_PESADA', '2026-08-10'),
-('A4K-205', 'Scania G450 Streamline', 28.00, 'TRACTO_CAMION', '2026-12-01', '2027-11-15', 'Frenos ABS revisados', 'DISPONIBLE', '/img/flota/A4K205.jpg', 'CARGA_PESADA', '2026-07-22'),
-('C5O-784', 'Mercedes-Benz Axor 2644', 26.00, 'TRACTO_CAMION', '2026-10-20', '2027-09-05', 'Filtro de partículas nuevo', 'DISPONIBLE', '/img/flota/C5O784.jpg', 'CARGA_PESADA', '2026-08-01'),
-('F8U-112', 'International WorkStar', 18.00, 'CAMION_RIGIDO', '2026-11-18', '2027-04-12', 'Tolva abierta con barandas', 'DISPONIBLE', '/img/flota/F8U112.jpg', 'CARGA_MEDIA', '2026-09-14'),
-('D9X-334', 'Hino FM1A 700', 16.00, 'CAMION_RIGIDO', '2027-02-05', '2028-01-20', 'Caja cerrada furgonada', 'DISPONIBLE', '/img/flota/D9X334.jpg', 'CARGA_MEDIA', '2026-07-15'),
-('W3O-891', 'Isuzu Forward FRR', 10.00, 'CAMION_RIGIDO', '2026-09-12', '2027-08-11', 'Distribución urbana retail', 'DISPONIBLE', '/img/flota/W3O891.jpg', 'CARGA_MEDIA', '2026-06-30'),
-('E2P-445', 'Fuso FJ 2528', 15.00, 'CAMION_RIGIDO', '2026-12-28', '2027-10-14', 'Ideal para reparto masivo', 'DISPONIBLE', '/img/flota/E2P445.jpg', 'CARGA_MEDIA', '2026-08-05'),
-('V5T-702', 'Hyundai HD120', 8.50, 'FURGON', '2027-03-01', '2028-02-18', 'Equipo frigorífico Thermo King', 'DISPONIBLE', '/img/flota/V5T702.jpg', 'COMERCIAL_LIGERO', '2026-07-10'),
-('X1M-556', 'Jac HFC 1061', 5.00, 'FURGON', '2026-08-22', '2027-07-19', 'Furgón de fibra de vidrio', 'DISPONIBLE', '/img/flota/X1M556.jpg', 'COMERCIAL_LIGERO', '2026-06-25'),
-('Z4E-809', 'Kia Frontier K2500', 2.50, 'FURGON', '2026-11-05', '2027-05-20', 'Reparto capilar Lima Metropolitana', 'DISPONIBLE', '/img/flota/Z4E809.jpg', 'COMERCIAL_LIGERO', '2026-08-20'),
-('Y6N-221', 'Volvo FM 420', 24.00, 'TRACTO_CAMION', '2026-07-14', '2027-06-01', 'Requiere cambio de neumáticos traseros', 'DISPONIBLE', '/img/flota/Y6N221.jpg', 'CARGA_PESADA', '2026-06-18'),
-('P2W-104', 'Scania R500 V8', 30.00, 'TRACTO_CAMION', '2027-04-01', '2028-03-12', 'Flota Premium operaciones especiales', 'DISPONIBLE', '/img/flota/P2W104.jpg', 'CARGA_PESADA', '2026-09-02'),
-('M8I-673', 'Kenworth T660', 28.00, 'TRACTO_CAMION', '2026-09-30', '2027-08-25', 'Unidad asignada a ruta norte piura', 'DISPONIBLE', '/img/flota/M8I673.jpg', 'CARGA_PESADA', '2026-07-05'),
-('Q3B-519', 'Freightliner M2 112', 20.00, 'CAMION_RIGIDO', '2026-10-11', '2027-09-14', 'Revisión técnica vencimiento cercano', 'DISPONIBLE', '/img/flota/Q3B519.jpg', 'CARGA_MEDIA', '2026-07-11'),
-('O7R-402', 'Chevrolet NQR', 6.00, 'FURGON', '2027-01-22', '2028-01-10', 'Furgón Seco Operaciones Lima', 'DISPONIBLE', '/img/flota/O7R402.jpg', 'COMERCIAL_LIGERO', '2026-08-15');
+('B7Y-912', 'Volvo FMX 460', 32.00, 'TRACTO_CAMION', '2027-01-15', '2028-06-30', 'Unidad con GPS dual activo', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-1.avif', 'CARGA_PESADA', '2026-08-10'),
+('A4K-205', 'Scania G450 Streamline', 28.00, 'TRACTO_CAMION', '2026-12-01', '2027-11-15', 'Frenos ABS revisados', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-2.avif', 'CARGA_PESADA', '2026-07-22'),
+('C5O-784', 'Mercedes-Benz Axor 2644', 26.00, 'TRACTO_CAMION', '2026-10-20', '2027-09-05', 'Filtro de partículas nuevo', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-3.avif', 'CARGA_PESADA', '2026-08-01'),
+('F8U-112', 'International WorkStar', 18.00, 'CAMION_RIGIDO', '2026-11-18', '2027-04-12', 'Tolva abierta con barandas', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-4.jpg', 'CARGA_MEDIA', '2026-09-14'),
+('D9X-334', 'Hino FM1A 700', 16.00, 'CAMION_RIGIDO', '2027-02-05', '2028-01-20', 'Caja cerrada furgonada', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-5.webp', 'CARGA_MEDIA', '2026-07-15'),
+('W3O-891', 'Isuzu Forward FRR', 10.00, 'CAMION_RIGIDO', '2026-09-12', '2027-08-11', 'Distribución urbana retail', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-6.avif', 'CARGA_MEDIA', '2026-06-30'),
+('E2P-445', 'Fuso FJ 2528', 15.00, 'CAMION_RIGIDO', '2026-12-28', '2027-10-14', 'Ideal para reparto masivo', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-7.jpg', 'CARGA_MEDIA', '2026-08-05'),
+('V5T-702', 'Hyundai HD120', 8.50, 'FURGON', '2027-03-01', '2028-02-18', 'Equipo frigorífico Thermo King', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-8.webp', 'COMERCIAL_LIGERO', '2026-07-10'),
+('X1M-556', 'Jac HFC 1061', 5.00, 'FURGON', '2026-08-22', '2027-07-19', 'Furgón de fibra de vidrio', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-2.avif', 'COMERCIAL_LIGERO', '2026-06-25'),
+('Z4E-809', 'Kia Frontier K2500', 2.50, 'FURGON', '2026-11-05', '2027-05-20', 'Reparto capilar Lima Metropolitana', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-8.webp', 'COMERCIAL_LIGERO', '2026-08-20'),
+('Y6N-221', 'Volvo FM 420', 24.00, 'TRACTO_CAMION', '2026-07-14', '2027-06-01', 'Requiere cambio de neumáticos traseros', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-4.jpg', 'CARGA_PESADA', '2026-06-18'),
+('P2W-104', 'Scania R500 V8', 30.00, 'TRACTO_CAMION', '2027-04-01', '2028-03-12', 'Flota Premium operaciones especiales', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-7.jpg', 'CARGA_PESADA', '2026-09-02'),
+('M8I-673', 'Kenworth T660', 28.00, 'TRACTO_CAMION', '2026-09-30', '2027-08-25', 'Unidad asignada a ruta norte piura', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-1.avif', 'CARGA_PESADA', '2026-07-05'),
+('Q3B-519', 'Freightliner M2 112', 20.00, 'CAMION_RIGIDO', '2026-10-11', '2027-09-14', 'Revisión técnica vencimiento cercano', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-3.avif', 'CARGA_MEDIA', '2026-07-11'),
+('O7R-402', 'Chevrolet NQR', 6.00, 'FURGON', '2027-01-22', '2028-01-10', 'Furgón Seco Operaciones Lima', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-5.webp', 'COMERCIAL_LIGERO', '20２６‐０８‐１５');
 
 
 -- ===========================================================================

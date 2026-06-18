@@ -1,1 +1,130 @@
 @import "tailwindcss";
+
+@theme {
+  --font-label-md: "Inter", sans-serif;
+  --font-body-lg: "Inter", sans-serif;
+  --font-label-sm: "Inter", sans-serif;
+  --font-headline-sm: "Manrope", sans-serif;
+  --font-headline-md: "Manrope", sans-serif;
+  --font-body-md: "Inter", sans-serif;
+  --font-headline-lg: "Manrope", sans-serif;
+  --font-headline: "Manrope", sans-serif;
+
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.02em;
+  --text-label-md--font-weight: 600;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-lg--font-weight: 400;
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--font-weight: 500;
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--font-weight: 600;
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--letter-spacing: -0.01em;
+  --text-headline-md--font-weight: 600;
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-md--font-weight: 400;
+  --text-headline-lg: 32px;
+  --text-headline-lg--line-height: 40px;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 700;
+
+  --color-on-tertiary-container: #fd9a12;
+  --color-surface-dim: #dadadc;
+  --color-secondary: #006e2b;
+  --color-on-tertiary-fixed: #2c1600;
+  --color-primary-fixed: #b2ecfa;
+  --color-on-secondary-container: #00752e;
+  --color-error-container: #ffdad6;
+  --color-on-secondary: #ffffff;
+  --color-outline-variant: #bfc8ca;
+  --color-primary-fixed-dim: #96d0de;
+  --color-background: #faf9fb;
+  --color-tertiary: #462600;
+  --color-tertiary-fixed: #ffdcbd;
+  --color-outline: #70787b;
+  --color-inverse-surface: #2f3032;
+  --color-tertiary-container: #653a00;
+  --color-secondary-fixed-dim: #63df7a;
+  --color-error: #ba1a1a;
+  --color-surface-container: #eeedf0;
+  --color-on-secondary-fixed: #002108;
+  --color-on-background: #1a1c1d;
+  --color-on-error-container: #93000a;
+  --color-on-primary-container: #81bac8;
+  --color-surface: #faf9fb;
+  --color-on-primary-fixed: #001f25;
+  --color-tertiary-fixed-dim: #ffb86e;
+  --color-on-error: #ffffff;
+  --color-inverse-on-surface: #f1f0f2;
+  --color-surface-bright: #faf9fb;
+  --color-inverse-primary: #96d0de;
+  --color-on-surface: #1a1c1d;
+  --color-on-tertiary-fixed-variant: #693c00;
+  --color-secondary-fixed: #80fc93;
+  --color-primary: #00333c;
+  --color-surface-tint: #2a6673;
+  --color-on-primary: #ffffff;
+  --color-surface-container-high: #e8e8ea;
+  --color-primary-container: #004b57;
+  --color-on-primary-fixed-variant: #064e5a;
+  --color-secondary-container: #80fc93;
+  --color-surface-variant: #e3e2e4;
+  --color-surface-container-highest: #e3e2e4;
+  --color-surface-container-low: #f4f3f5;
+  --color-on-surface-variant: #40484a;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-tertiary: #ffffff;
+  --color-on-secondary-fixed-variant: #00531e;
+  --color-surface-lowest: #ffffff;
+  --color-success: #009A3F;
+  --color-warning: #F39200;
+  --color-border-subtle: #eeeef;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-inter);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.bg-login-hero {
+  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCnRN0yqrbzLq4Zi8sMhlq_gocpcVpgn7BddrlyZ-hD5sW9UoDsJaEnIepX6ir_eedS7rW-eUj6B_upFL7zEM7XcNiaxOZvlorxUKpqVlh1250Jeru1eZBVgGZRXCfTKAYnzBywvywTmNcE9scCVCcDra7uJ_-hL1AmhhKWYx6vKMoSvTU8jFnQbWzxi6NYY2jPBoNEVAnBCikVKU7iayx6C-OZuyJKsqTCE7rd4TqY94_p-TOlCDONRnYiEQtsNjp0wW99Z_vCFoo');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  transform: scale(1.05);
+}
+
+.input-focus:focus {
+  border-color: var(--color-primary-container);
+  box-shadow: 0 0 0 2px rgba(0, 75, 87, 0.2);
+  outline: none;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
