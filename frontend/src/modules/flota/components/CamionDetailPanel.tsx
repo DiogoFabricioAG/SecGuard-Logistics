@@ -26,12 +26,6 @@ function getBarColor(event: EventoProximo | undefined): string {
   }
 }
 
-function getBarHeight(event: EventoProximo | undefined): string {
-  if (!event) return "h-full";
-  if (event.tipo_evento === "MANTENIMIENTO") return "h-1/2";
-  return "h-full";
-}
-
 export function CamionDetailPanel({ camionId }: Props) {
   const [camion, setCamion] = useState<CamionDetail | null>(null);
   const [eventos, setEventos] = useState<EventoProximo[]>([]);
@@ -214,8 +208,8 @@ export function CamionDetailPanel({ camionId }: Props) {
                   key={dia}
                   className="flex flex-col items-center gap-2 flex-1"
                 >
-                   <div
-                    className={`w-full rounded-sm opacity-80 hover:opacity-100 transition-opacity ${getBarHeight(ev)} ${getBarColor(ev)}`}
+                  <div
+                    className={`w-full rounded-sm opacity-80 hover:opacity-100 transition-opacity h-[62.5px] ${getBarColor(ev)}`}
                     title={
                       ev ? `${ev.tipo_evento}: ${ev.detalle}` : "Disponible"
                     }
