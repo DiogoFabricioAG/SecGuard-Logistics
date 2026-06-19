@@ -170,10 +170,10 @@ async function registrarDeteccion({
 
 async function buscarViajePorPlaca(placa) {
   const { rows } = await pool.query(
-    `SELECT cr.id_camion, va.id_viaje, vp.codigo_reserva_patio, vp.estado_viaje
+    `SELECT cr.id_camion, vca.id_viaje, vp.codigo_reserva_patio, vp.estado_viaje
      FROM camion_ransa cr
-     LEFT JOIN viaje_asignacion va ON cr.id_camion = va.id_camion
-     LEFT JOIN viaje_programado vp ON va.id_viaje = vp.id_viaje
+     LEFT JOIN viaje_camion_asignado vca ON cr.id_camion = vca.id_camion
+     LEFT JOIN viaje_programado vp ON vca.id_viaje = vp.id_viaje
        AND vp.estado_viaje IN ('PENDIENTE', 'CONFIRMADO')
      WHERE cr.placa_matricula = $1
      ORDER BY vp.fecha_hora_estimada ASC
