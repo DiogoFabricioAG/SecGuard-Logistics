@@ -155,14 +155,16 @@ async function registrarDeteccion({
   const { rows } = await pool.query(
     `INSERT INTO registro_acceso (
       placa_detectada_alpr, confianza_alpr, estado_deteccion,
-      timestamp_evento, tipo_evento, decision_acceso, estado_barrera,
-      latencia_ms, nivel_iluminacion, nivel_obstruccion,
-      id_viaje, id_camion, id_conductor, puerta_asignada,
-      url_foto_captura, tipo_anomalia, prioridad_envio, revisado_por_admin
-    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5, $6, $7, $8, $9, $10, NULL, NULL, NULL, NULL, NULL, NULL)
+      timestamp_evento, latencia_ms, nivel_iluminacion, nivel_obstruccion,
+      tipo_evento, decision_acceso, estado_barrera,
+      id_viaje, id_camion, id_conductor,
+      revisado_por_admin, prioridad_envio
+    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5,
+      $6, $7, $8, $9, $10, NULL, NULL, NULL)
     RETURNING id_acceso`,
-    [placa_detectada_alpr, confianza_alpr, tipo_evento, decision_acceso,
-      estado_barrera, latencia_ms, nivel_iluminacion, nivel_obstruccion,
+    [placa_detectada_alpr, confianza_alpr,
+      latencia_ms, nivel_iluminacion, nivel_obstruccion,
+      tipo_evento, decision_acceso, estado_barrera,
       id_viaje || null, id_camion || null],
   );
   return rows[0];
