@@ -15,6 +15,9 @@ router.get('/desempeno-clientes', controller.desempenoClientes);
 router.get('/distribucion-carga', controller.distribucionCarga);
 router.get('/resumen-periodo', controller.resumenPeriodo);
 
+// Generación de reportes
+router.post('/generar-reporte', controller.generarReporte);
+
 // Rutas genéricas (va al final para no interceptar las específicas)
 router.get('/:id', controller.detalleKPI);
 router.get('/', controller.listarKPIs);

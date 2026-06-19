@@ -73,17 +73,6 @@
     .report-checkbox:checked {
       accent-color: #00333c;
     }
-    /* Step indicator connector */
-    .step-connector {
-      flex: 1;
-      height: 2px;
-      background: #e2e2e3;
-      margin: 0 8px;
-      margin-top: -20px;
-    }
-    .step-connector.done {
-      background: #00333c;
-    }
     /* Toast animation */
     @keyframes slideUp {
       from { transform: translateY(16px); opacity: 0; }
@@ -160,15 +149,6 @@
         Generación de Reporte
       </h1>
       <div class="flex items-center gap-md">
-        <!-- Botones extra del header original -->
-        <button class="flex items-center gap-2 px-3 py-1 border border-outline-variant text-on-surface-variant bg-surface hover:bg-surface-container font-medium rounded text-xs transition-all duration-150">
-          <span class="material-symbols-outlined text-[16px]">bookmark</span>
-          Plantillas
-        </button>
-        <button class="flex items-center gap-2 px-3 py-1 border border-outline-variant text-on-surface-variant bg-surface hover:bg-surface-container font-medium rounded text-xs transition-all duration-150">
-          <span class="material-symbols-outlined text-[16px]">history</span>
-          Historial
-        </button>
         <!-- Notificaciones -->
         <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
           <span class="material-symbols-outlined">notifications</span>
@@ -192,33 +172,6 @@
     <section class="flex-1 overflow-y-auto overflow-x-hidden bg-surface">
       <div class="p-lg flex flex-col gap-lg max-w-full">
 
-        <!-- ── STEP INDICATOR ── -->
-        <div class="flex items-start gap-0 shrink-0">
-          <!-- Step 1 -->
-          <div class="flex flex-col items-center gap-2 flex-1">
-            <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[12px] font-semibold shadow-sm">1</div>
-            <span class="text-[11px] font-medium text-primary-container text-center">Tipo y Período</span>
-          </div>
-          <div class="step-connector done mt-4"></div>
-          <!-- Step 2 -->
-          <div class="flex flex-col items-center gap-2 flex-1">
-            <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[12px] font-semibold shadow-sm">2</div>
-            <span class="text-[11px] font-medium text-primary-container text-center">Secciones</span>
-          </div>
-          <div class="step-connector done mt-4"></div>
-          <!-- Step 3 -->
-          <div class="flex flex-col items-center gap-2 flex-1">
-            <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[12px] font-semibold shadow-sm">3</div>
-            <span class="text-[11px] font-medium text-primary-container text-center">Formato y Entrega</span>
-          </div>
-          <div class="step-connector mt-4"></div>
-          <!-- Step 4 -->
-          <div class="flex flex-col items-center gap-2 flex-1">
-            <div class="w-8 h-8 rounded-full bg-surface-container border-2 border-outline-variant text-on-surface-variant flex items-center justify-center text-[12px] font-semibold">4</div>
-            <span class="text-[11px] font-medium text-on-surface-variant text-center">Confirmar</span>
-          </div>
-        </div>
-
         <!-- ── MAIN GRID: Form LEFT + Preview RIGHT ── -->
         <div class="grid grid-cols-3 gap-md">
 
@@ -240,28 +193,15 @@
                 <!-- Report Type Grid -->
                 <div>
                   <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Seleccionar Tipo</p>
-                  <div class="grid grid-cols-3 gap-3">
+                    <div class="grid grid-cols-2 gap-3">
 
-                    <!-- Rendimiento Operativo (selected) -->
+                    <!-- Reporte Completo (selected) -->
                     <label class="relative cursor-pointer group">
-                      <input type="radio" name="report_type" value="operativo" class="sr-only peer" checked />
+                      <input type="radio" name="report_type" value="completo" class="sr-only peer" checked />
                       <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
-                        <span class="material-symbols-outlined text-primary-container text-[28px]">speed</span>
-                        <span class="text-[12px] font-semibold text-on-surface">Rendimiento Operativo</span>
-                        <span class="text-[11px] font-medium text-on-surface-variant">KPIs y OTIF por ruta</span>
-                      </div>
-                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
-                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
-                      </div>
-                    </label>
-
-                    <!-- Consumo de Combustible -->
-                    <label class="relative cursor-pointer group">
-                      <input type="radio" name="report_type" value="combustible" class="sr-only peer" />
-                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
-                        <span class="material-symbols-outlined text-primary-container text-[28px]">local_gas_station</span>
-                        <span class="text-[12px] font-semibold text-on-surface">Consumo de Combustible</span>
-                        <span class="text-[11px] font-medium text-on-surface-variant">Rendimiento por vehículo</span>
+                        <span class="material-symbols-outlined text-primary-container text-[28px]">summarize</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Reporte Completo</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Todos los KPIs operativos</span>
                       </div>
                       <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
                         <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
@@ -274,46 +214,33 @@
                       <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
                         <span class="material-symbols-outlined text-primary-container text-[28px]">local_shipping</span>
                         <span class="text-[12px] font-semibold text-on-surface">Estado de Flota</span>
-                        <span class="text-[11px] font-medium text-on-surface-variant">Disponibilidad</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Disponibilidad y mantenimiento</span>
                       </div>
                       <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
                         <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
                       </div>
                     </label>
 
-                    <!-- Viajes y Rutas -->
+                    <!-- Operaciones y Carga -->
+                    <label class="relative cursor-pointer group">
+                      <input type="radio" name="report_type" value="carga" class="sr-only peer" />
+                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
+                        <span class="material-symbols-outlined text-primary-container text-[28px]">inventory_2</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Operaciones y Carga</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Clientes y tipo de carga</span>
+                      </div>
+                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
+                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+                      </div>
+                    </label>
+
+                    <!-- Gestión de Viajes -->
                     <label class="relative cursor-pointer group">
                       <input type="radio" name="report_type" value="viajes" class="sr-only peer" />
                       <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
                         <span class="material-symbols-outlined text-primary-container text-[28px]">route</span>
-                        <span class="text-[12px] font-semibold text-on-surface">Viajes y Rutas</span>
-                        <span class="text-[11px] font-medium text-on-surface-variant">Historial y trazabilidad</span>
-                      </div>
-                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
-                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
-                      </div>
-                    </label>
-
-                    <!-- Incidencias -->
-                    <label class="relative cursor-pointer group">
-                      <input type="radio" name="report_type" value="incidencias" class="sr-only peer" />
-                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
-                        <span class="material-symbols-outlined text-[#F39200] text-[28px]">warning</span>
-                        <span class="text-[12px] font-semibold text-on-surface">Incidencias</span>
-                        <span class="text-[11px] font-medium text-on-surface-variant">Retrasos y eventos críticos</span>
-                      </div>
-                      <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
-                        <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
-                      </div>
-                    </label>
-
-                    <!-- Conductores -->
-                    <label class="relative cursor-pointer group">
-                      <input type="radio" name="report_type" value="conductores" class="sr-only peer" />
-                      <div class="peer-checked:border-primary-container peer-checked:bg-primary-fixed/10 border-2 border-surface-variant rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-outline-variant transition-colors">
-                        <span class="material-symbols-outlined text-primary-container text-[28px]">badge</span>
-                        <span class="text-[12px] font-semibold text-on-surface">Conductores</span>
-                        <span class="text-[11px] font-medium text-on-surface-variant">Desempeño por operador</span>
+                        <span class="text-[12px] font-semibold text-on-surface">Gestión de Viajes</span>
+                        <span class="text-[11px] font-medium text-on-surface-variant">Conversión y resumen</span>
                       </div>
                       <div class="absolute top-2 right-2 hidden peer-checked:flex w-5 h-5 rounded-full bg-primary-container items-center justify-center">
                         <span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
@@ -327,31 +254,33 @@
                 <div class="grid grid-cols-2 gap-4 pt-2 border-t border-border-subtle">
                   <div class="flex flex-col gap-1">
                     <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fecha Inicio</label>
-                    <input type="date" value="2025-04-01" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                    <input type="date" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" id="report-fecha-inicio" />
                   </div>
                   <div class="flex flex-col gap-1">
                     <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Fecha Fin</label>
-                    <input type="date" value="2025-04-30" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                    <input type="date" class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" id="report-fecha-fin" />
                   </div>
                   <div class="flex flex-col gap-1">
-                    <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Ruta / Zona</label>
-                    <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
-                      <option value="">Todas las Rutas</option>
+                    <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Zona / Distrito</label>
+                    <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" id="report-zona">
+                      <option value="">Todas las Zonas</option>
                       <option>Callao</option>
                       <option>Huachipa</option>
                       <option>San Juan de Lurigancho</option>
                       <option>Ate Vitarte</option>
                       <option>Villa El Salvador</option>
+                      <option>Santa Anita</option>
+                      <option>Lurín</option>
+                      <option>Ventanilla</option>
                     </select>
                   </div>
                   <div class="flex flex-col gap-1">
                     <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Tipo de Vehículo</label>
-                    <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none">
-                      <option value="">Todos</option>
-                      <option>Camión Pesado</option>
-                      <option>Furgón</option>
-                      <option>Semirremolque</option>
-                      <option>Camioneta</option>
+                    <select class="bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" id="report-vehiculo">
+                      <option value="">Todos los Vehículos</option>
+                      <option value="TRACTO_CAMION">Tracto Camión</option>
+                      <option value="CAMION_RIGIDO">Camión Rígido</option>
+                      <option value="FURGON">Furgón</option>
                     </select>
                   </div>
                 </div>
@@ -368,72 +297,64 @@
                   </div>
                   <h2 class="font-headline text-[16px] font-semibold text-on-surface">Secciones a Incluir</h2>
                 </div>
-                <button class="text-[12px] font-semibold text-primary-container hover:underline">Seleccionar todo</button>
+                <button class="text-[12px] font-semibold text-primary-container hover:underline" id="btn-seleccionar-todo" onclick="toggleSecciones()">Seleccionar todo</button>
               </div>
               <div class="p-5">
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-3" id="secciones-grid">
 
                   <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant seccion-check" value="disponibilidad" checked />
                     <div>
-                      <div class="text-[12px] font-semibold text-on-surface">Resumen Ejecutivo</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Indicadores clave del período</div>
+                      <div class="text-[12px] font-semibold text-on-surface">Disponibilidad de Flota</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">% vehículos disponibles</div>
                     </div>
                   </label>
 
                   <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
-                    <div>
-                      <div class="text-[12px] font-semibold text-on-surface">KPIs y Métricas OTIF</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Niveles de servicio y metas</div>
-                    </div>
-                  </label>
-
-                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
-                    <div>
-                      <div class="text-[12px] font-semibold text-on-surface">Desempeño por Ruta</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Tabla detallada por zona</div>
-                    </div>
-                  </label>
-
-                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" checked />
-                    <div>
-                      <div class="text-[12px] font-semibold text-on-surface">Análisis de Retrasos</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Causas y distribución</div>
-                    </div>
-                  </label>
-
-                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant seccion-check" value="utilizacion" checked />
                     <div>
                       <div class="text-[12px] font-semibold text-on-surface">Utilización de Flota</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Disponibilidad y rotación</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">% vehículos activos</div>
                     </div>
                   </label>
 
                   <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant seccion-check" value="conversion" checked />
                     <div>
-                      <div class="text-[12px] font-semibold text-on-surface">Consumo de Combustible</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Rendimiento Km/Gal</div>
+                      <div class="text-[12px] font-semibold text-on-surface">Conversión de Viajes</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">% viajes activos</div>
                     </div>
                   </label>
 
                   <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant seccion-check" value="prevencion" checked />
                     <div>
-                      <div class="text-[12px] font-semibold text-on-surface">Registro de Incidencias</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Eventos y resoluciones</div>
+                      <div class="text-[12px] font-semibold text-on-surface">Prevención de Mantenimiento</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">% preventivos vs correctivos</div>
                     </div>
                   </label>
 
                   <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant" />
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant seccion-check" value="clientes" checked />
                     <div>
-                      <div class="text-[12px] font-semibold text-on-surface">Desempeño de Conductores</div>
-                      <div class="text-[11px] font-medium text-on-surface-variant">Ranking por operador</div>
+                      <div class="text-[12px] font-semibold text-on-surface">Desempeño por Cliente</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Pedidos, peso y bultos</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant seccion-check" value="carga" checked />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Distribución por Tipo de Carga</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">% REFRIGERADA, SECA, MATPEL, GENERAL</div>
+                    </div>
+                  </label>
+
+                  <label class="flex items-start gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
+                    <input type="checkbox" class="report-checkbox mt-0.5 w-4 h-4 rounded border-outline-variant seccion-check" value="resumen" checked />
+                    <div>
+                      <div class="text-[12px] font-semibold text-on-surface">Resumen del Período</div>
+                      <div class="text-[11px] font-medium text-on-surface-variant">Pedidos, viajes, peso, bultos</div>
                     </div>
                   </label>
 
@@ -456,24 +377,24 @@
                   <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Formato de Salida</p>
                   <div class="flex flex-col gap-2">
                     <label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                      <input type="radio" name="format" value="pdf" class="w-4 h-4" style="accent-color:#00333c" checked />
+                      <input type="radio" name="format" value="pdf" class="w-4 h-4" style="accent-color:#00333c" checked id="formato-pdf" />
                       <span class="material-symbols-outlined text-error text-[20px]">picture_as_pdf</span>
                       <div>
                         <div class="text-[12px] font-semibold text-on-surface">PDF</div>
-                        <div class="text-[11px] font-medium text-on-surface-variant">Documento con gráficos</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Documento para imprimir</div>
                       </div>
                     </label>
                     <label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                      <input type="radio" name="format" value="excel" class="w-4 h-4" style="accent-color:#00333c" />
+                      <input type="radio" name="format" value="excel" class="w-4 h-4" style="accent-color:#00333c" id="formato-excel" />
                       <span class="material-symbols-outlined text-[#009A3F] text-[20px]">table_chart</span>
                       <div>
-                        <div class="text-[12px] font-semibold text-on-surface">Excel (.xlsx)</div>
-                        <div class="text-[11px] font-medium text-on-surface-variant">Datos editables y tablas</div>
+                        <div class="text-[12px] font-semibold text-on-surface">CSV (Excel)</div>
+                        <div class="text-[11px] font-medium text-on-surface-variant">Datos separados por comas</div>
                       </div>
                     </label>
                     <label class="flex items-center gap-3 p-3 rounded-lg border border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                      <input type="radio" name="format" value="csv" class="w-4 h-4" style="accent-color:#00333c" />
-                      <span class="material-symbols-outlined text-on-surface-variant text-[20px]">csv</span>
+                      <input type="radio" name="format" value="csv" class="w-4 h-4" style="accent-color:#00333c" id="formato-csv" />
+                      <span class="material-symbols-outlined text-on-surface-variant text-[20px]">data_array</span>
                       <div>
                         <div class="text-[12px] font-semibold text-on-surface">CSV</div>
                         <div class="text-[11px] font-medium text-on-surface-variant">Datos en texto plano</div>
@@ -487,43 +408,15 @@
                   <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Método de Entrega</p>
                   <div class="flex flex-col gap-3">
                     <label class="flex items-center gap-3 cursor-pointer">
-                      <input type="checkbox" class="report-checkbox w-4 h-4 rounded border-outline-variant" checked />
+                      <input type="checkbox" class="report-checkbox w-4 h-4 rounded border-outline-variant" checked id="opcion-descargar" />
                       <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
                         <span class="text-[14px] text-on-surface">Descargar directamente</span>
                       </div>
                     </label>
-                    <label class="flex items-center gap-3 cursor-pointer">
-                      <input type="checkbox" class="report-checkbox w-4 h-4 rounded border-outline-variant" />
-                      <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary-container text-[18px]">email</span>
-                        <span class="text-[14px] text-on-surface">Enviar por correo</span>
-                      </div>
-                    </label>
-                    <!-- Email input -->
-                    <div class="ml-7">
-                      <input type="email" placeholder="correo@ransa.com.pe" class="w-full bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none placeholder:text-outline" />
-                    </div>
-                    <label class="flex items-center gap-3 cursor-pointer">
-                      <input type="checkbox" class="report-checkbox w-4 h-4 rounded border-outline-variant" />
-                      <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary-container text-[18px]">schedule_send</span>
-                        <span class="text-[14px] text-on-surface">Programar envío recurrente</span>
-                      </div>
-                    </label>
-                    <!-- Recurrence select -->
-                    <div class="ml-7">
-                      <select class="w-full bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 outline-none text-outline">
-                        <option value="" disabled selected>Seleccionar frecuencia…</option>
-                        <option>Diariamente</option>
-                        <option>Semanalmente (lunes)</option>
-                        <option>Mensualmente (día 1)</option>
-                        <option>Personalizado</option>
-                      </select>
-                    </div>
                     <div class="pt-2 border-t border-border-subtle">
-                      <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Nombre del reporte</p>
-                      <input type="text" value="Reporte_Operativo_Abril_2025" class="w-full bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" />
+                      <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider mb-2">Nombre del archivo</p>
+                      <input type="text" class="w-full bg-surface border border-outline-variant text-on-surface rounded text-[14px] px-3 py-2 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none" id="report-nombre" />
                     </div>
                   </div>
                 </div>
@@ -538,11 +431,11 @@
                 Cancelar
               </button>
               <div class="flex gap-3">
-                <button class="bg-white border border-outline-variant text-primary-container px-5 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:bg-surface-container transition-colors">
+                <button class="bg-white border border-outline-variant text-primary-container px-5 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:bg-surface-container transition-colors" onclick="actualizarResumen()">
                   <span class="material-symbols-outlined text-[18px]">visibility</span>
                   Vista Previa
                 </button>
-                <button onclick="triggerGenerate(); window.location.href='consultar_metricas.html'" class="bg-primary-container text-on-primary px-6 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
+                <button onclick="generarReporte()" class="bg-primary-container text-on-primary px-6 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm">
                   <span class="material-symbols-outlined text-[18px]">summarize</span>
                   Generar Reporte
                 </button>
@@ -562,145 +455,43 @@
                 <div class="w-7 h-7 rounded-lg bg-primary-container/10 flex items-center justify-center">
                   <span class="material-symbols-outlined text-primary-container text-[16px]">preview</span>
                 </div>
-                <h2 class="font-headline text-[16px] font-semibold text-on-surface">Vista Previa</h2>
+                <h2 class="font-headline text-[16px] font-semibold text-on-surface">Resumen del Reporte</h2>
               </div>
-              <div class="p-4 flex flex-col gap-3">
-
-                <!-- Mock PDF Preview -->
-                <div class="bg-surface-container rounded-lg border border-surface-variant overflow-hidden">
-                  <!-- PDF Header mock -->
-                  <div class="bg-primary-container p-4 flex items-center gap-3">
-                    <span class="material-symbols-outlined text-on-primary text-[24px]">local_shipping</span>
-                    <div>
-                      <div class="text-[12px] font-semibold text-on-primary">RANSA LOGISTICS</div>
-                      <div class="text-[11px] font-medium text-on-primary/70">Comando de Flota</div>
-                    </div>
-                  </div>
-                  <!-- Content mock lines -->
-                  <div class="p-4 flex flex-col gap-2.5">
-                    <div class="h-3 bg-outline-variant/50 rounded-full w-3/4"></div>
-                    <div class="h-2 bg-outline-variant/30 rounded-full w-full"></div>
-                    <div class="h-2 bg-outline-variant/30 rounded-full w-5/6"></div>
-                    <div class="grid grid-cols-2 gap-2 my-1">
-                      <div class="h-12 bg-primary-fixed/20 rounded border border-primary-fixed/30 flex items-center justify-center">
-                        <span class="text-[12px] font-semibold text-primary-container">94.2%</span>
-                      </div>
-                      <div class="h-12 bg-primary-fixed/20 rounded border border-primary-fixed/30 flex items-center justify-center">
-                        <span class="text-[12px] font-semibold text-primary-container">87.5%</span>
-                      </div>
-                    </div>
-                    <div class="h-2 bg-outline-variant/30 rounded-full w-full"></div>
-                    <div class="h-2 bg-outline-variant/30 rounded-full w-4/5"></div>
-                    <div class="h-16 bg-surface-variant/50 rounded border border-surface-variant mt-1 flex items-center justify-center gap-1">
-                      <div class="flex items-end gap-1 h-10">
-                        <div class="w-4 bg-primary-container rounded-sm" style="height:60%"></div>
-                        <div class="w-4 bg-primary-container rounded-sm" style="height:85%"></div>
-                        <div class="w-4 bg-primary-container rounded-sm" style="height:45%"></div>
-                        <div class="w-4 bg-[#F39200] rounded-sm" style="height:70%"></div>
-                        <div class="w-4 bg-primary-container rounded-sm" style="height:90%"></div>
-                        <div class="w-4 bg-error rounded-sm" style="height:30%"></div>
-                      </div>
-                    </div>
-                    <div class="h-2 bg-outline-variant/30 rounded-full w-full"></div>
-                    <div class="h-2 bg-outline-variant/30 rounded-full w-3/4"></div>
-                  </div>
-                  <div class="px-4 pb-3 flex items-center justify-between">
-                    <div class="text-[11px] font-medium text-on-surface-variant">Página 1 de 6</div>
-                    <div class="text-[11px] font-medium text-on-surface-variant">Abril 2025</div>
-                  </div>
-                </div>
-
-                <!-- Report summary info -->
+              <div class="p-4 flex flex-col gap-3" id="panel-resumen">
                 <div class="bg-primary-fixed/10 border border-primary-fixed/30 rounded-lg p-3 flex flex-col gap-2">
-                  <p class="text-[12px] font-semibold text-primary-container">Resumen del Reporte</p>
                   <div class="flex justify-between">
                     <span class="text-[11px] font-medium text-on-surface-variant">Tipo</span>
-                    <span class="text-[11px] font-medium text-on-surface">Rendimiento Operativo</span>
+                    <span class="text-[11px] font-medium text-on-surface" id="resumen-tipo">Reporte Completo</span>
                   </div>
                   <div class="flex justify-between">
                     <span class="text-[11px] font-medium text-on-surface-variant">Período</span>
-                    <span class="text-[11px] font-medium text-on-surface">01 - 30 Abr 2025</span>
+                    <span class="text-[11px] font-medium text-on-surface" id="resumen-periodo">--</span>
                   </div>
                   <div class="flex justify-between">
                     <span class="text-[11px] font-medium text-on-surface-variant">Secciones</span>
-                    <span class="text-[11px] font-medium text-on-surface">4 seleccionadas</span>
+                    <span class="text-[11px] font-medium text-on-surface" id="resumen-secciones">7 seleccionadas</span>
                   </div>
                   <div class="flex justify-between">
                     <span class="text-[11px] font-medium text-on-surface-variant">Formato</span>
-                    <span class="text-[11px] font-medium text-on-surface">PDF</span>
+                    <span class="text-[11px] font-medium text-on-surface" id="resumen-formato">CSV</span>
                   </div>
                   <div class="flex justify-between">
-                    <span class="text-[11px] font-medium text-on-surface-variant">Peso estimado</span>
-                    <span class="text-[11px] font-medium text-on-surface">~2.4 MB</span>
+                    <span class="text-[11px] font-medium text-on-surface-variant">Nombre</span>
+                    <span class="text-[11px] font-medium text-on-surface" id="resumen-nombre">--</span>
                   </div>
                 </div>
-
-              </div>
-            </div>
-
-            <!-- Recent Reports History -->
-            <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
-              <div class="px-4 py-4 border-b border-border-subtle flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-7 h-7 rounded-lg bg-primary-container/10 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary-container text-[16px]">history</span>
-                  </div>
-                  <h2 class="font-headline text-[16px] font-semibold text-on-surface">Reportes Recientes</h2>
-                </div>
-              </div>
-              <div class="divide-y divide-surface-variant">
-
-                <!-- Report item 1 -->
-                <div class="p-4 hover:bg-surface-container transition-colors cursor-pointer group">
-                  <div class="flex items-start justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="material-symbols-outlined text-error text-[20px]">picture_as_pdf</span>
-                      <div>
-                        <div class="text-[12px] font-semibold text-on-surface">Rend. Operativo - Mar 2025</div>
-                        <div class="text-[11px] font-medium text-on-surface-variant">Hace 32 días · 2.1 MB</div>
-                      </div>
-                    </div>
-                    <button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-surface-variant">
-                      <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
-                    </button>
+                <div id="panel-kpis" class="flex flex-col gap-2">
+                  <p class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Secciones incluidas</p>
+                  <div class="flex flex-wrap gap-1" id="panel-secciones-lista">
+                    <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">Disponibilidad</span>
+                    <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">Utilización</span>
+                    <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">Conversión</span>
+                    <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">Prevención</span>
+                    <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">Clientes</span>
+                    <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">Carga</span>
+                    <span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">Resumen</span>
                   </div>
                 </div>
-
-                <!-- Report item 2 -->
-                <div class="p-4 hover:bg-surface-container transition-colors cursor-pointer group">
-                  <div class="flex items-start justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="material-symbols-outlined text-[#009A3F] text-[20px]">table_chart</span>
-                      <div>
-                        <div class="text-[12px] font-semibold text-on-surface">Combustible - Q1 2025</div>
-                        <div class="text-[11px] font-medium text-on-surface-variant">Hace 61 días · 890 KB</div>
-                      </div>
-                    </div>
-                    <button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-surface-variant">
-                      <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Report item 3 -->
-                <div class="p-4 hover:bg-surface-container transition-colors cursor-pointer group">
-                  <div class="flex items-start justify-between gap-2">
-                    <div class="flex items-center gap-2">
-                      <span class="material-symbols-outlined text-error text-[20px]">picture_as_pdf</span>
-                      <div>
-                        <div class="text-[12px] font-semibold text-on-surface">Incidencias - Feb 2025</div>
-                        <div class="text-[11px] font-medium text-on-surface-variant">Hace 89 días · 1.3 MB</div>
-                      </div>
-                    </div>
-                    <button class="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-surface-variant">
-                      <span class="material-symbols-outlined text-primary-container text-[18px]">download</span>
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-              <div class="p-3 text-center border-t border-surface-variant hover:bg-surface-container cursor-pointer transition-colors">
-                <span class="text-[12px] font-semibold text-primary-container">Ver historial completo →</span>
               </div>
             </div>
 
@@ -744,7 +535,7 @@
         <ul class="flex flex-col gap-3" id="stepsList">
           <li class="flex items-center gap-3" id="step-data">
             <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-data">radio_button_unchecked</span>
-            <span class="text-[14px] text-on-surface-variant" id="text-data">Recopilando datos operativos</span>
+            <span class="text-[14px] text-on-surface-variant" id="text-data">Consultando datos operativos</span>
           </li>
           <li class="flex items-center gap-3" id="step-kpis">
             <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-kpis">radio_button_unchecked</span>
@@ -752,11 +543,11 @@
           </li>
           <li class="flex items-center gap-3" id="step-charts">
             <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-charts">radio_button_unchecked</span>
-            <span class="text-[14px] text-on-surface-variant" id="text-charts">Generando gráficos del reporte</span>
+            <span class="text-[14px] text-on-surface-variant" id="text-charts">Generando contenido del reporte</span>
           </li>
           <li class="flex items-center gap-3" id="step-export">
             <span class="material-symbols-outlined text-outline-variant text-[20px]" id="icon-export">radio_button_unchecked</span>
-            <span class="text-[14px] text-on-surface-variant" id="text-export">Compilando documento PDF</span>
+            <span class="text-[14px] text-on-surface-variant" id="text-export">Preparando archivo para descarga</span>
           </li>
         </ul>
       </div>
@@ -782,49 +573,152 @@
   </div>
 
   <script>
-    const steps = [
-      { id: 'data',   label: 'Recopilando datos operativos',    pct: 25 },
-      { id: 'kpis',   label: 'Calculando KPIs y métricas',       pct: 55 },
-      { id: 'charts', label: 'Generando gráficos del reporte',   pct: 80 },
-      { id: 'export', label: 'Compilando documento PDF',          pct: 100 },
-    ];
+    const API = '/api/kpi';
+    const NOMBRES_SECCION = {
+      disponibilidad: 'Disponibilidad de Flota',
+      utilizacion: 'Utilización de Flota',
+      conversion: 'Conversión de Viajes',
+      prevencion: 'Prevención de Mantenimiento',
+      clientes: 'Desempeño por Cliente',
+      carga: 'Distribución por Tipo de Carga',
+      resumen: 'Resumen del Período',
+    };
 
-    function triggerGenerate() {
-      document.getElementById('generateModal').classList.remove('hidden');
-      runSteps(0);
+    const TIPOS_REPORTE = {
+      completo: 'Reporte Completo',
+      flota: 'Estado de Flota',
+      carga: 'Operaciones y Carga',
+      viajes: 'Gestión de Viajes',
+    };
+
+    function getFiltros() {
+      return {
+        tipo: document.querySelector('input[name="report_type"]:checked')?.value || 'completo',
+        fecha_inicio: document.getElementById('report-fecha-inicio').value,
+        fecha_fin: document.getElementById('report-fecha-fin').value,
+        zona: document.getElementById('report-zona').value,
+        tipo_unidad: document.getElementById('report-vehiculo').value,
+        secciones: Array.from(document.querySelectorAll('.seccion-check:checked')).map(c => c.value),
+        formato: document.querySelector('input[name="format"]:checked')?.value || 'csv',
+        nombre: document.getElementById('report-nombre').value,
+      };
     }
 
-    function runSteps(i) {
+    function formatearNumero(n) {
+      return Number(n).toLocaleString('es-PE');
+    }
+
+    function formatearFecha(dateStr) {
+      if (!dateStr) return '--';
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function actualizarResumen() {
+      const f = getFiltros();
+      document.getElementById('resumen-tipo').textContent = TIPOS_REPORTE[f.tipo] || '--';
+      document.getElementById('resumen-periodo').textContent =
+        (f.fecha_inicio ? formatearFecha(f.fecha_inicio) : '--') + ' — ' +
+        (f.fecha_fin ? formatearFecha(f.fecha_fin) : '--');
+      const n = f.secciones.length;
+      document.getElementById('resumen-secciones').textContent = n + ' seleccionada' + (n !== 1 ? 's' : '');
+      document.getElementById('resumen-formato').textContent = f.formato.toUpperCase();
+      document.getElementById('resumen-nombre').textContent = f.nombre || 'Sin nombre';
+
+      const lista = document.getElementById('panel-secciones-lista');
+      if (n === 0) {
+        lista.innerHTML = '<span class="text-[11px] text-on-surface-variant">Ninguna sección seleccionada</span>';
+      } else {
+        lista.innerHTML = f.secciones.map(s =>
+          '<span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-medium border border-primary-container/20">' +
+          (NOMBRES_SECCION[s] || s) + '</span>'
+        ).join('');
+      }
+    }
+
+    function toggleSecciones() {
+      const checks = document.querySelectorAll('.seccion-check');
+      const todasMarcadas = Array.from(checks).every(c => c.checked);
+      checks.forEach(c => c.checked = !todasMarcadas);
+      document.getElementById('btn-seleccionar-todo').textContent = todasMarcadas ? 'Seleccionar todo' : 'Deseleccionar todo';
+      actualizarResumen();
+    }
+
+    // ─── GENERAR REPORTE ───
+
+    const steps = [
+      { id: 'data',   label: 'Consultando datos operativos',     pct: 20 },
+      { id: 'kpis',   label: 'Calculando indicadores',            pct: 50 },
+      { id: 'charts', label: 'Generando contenido del reporte',   pct: 80 },
+      { id: 'export', label: 'Preparando archivo para descarga',  pct: 100 },
+    ];
+
+    async function generarReporte() {
+      const f = getFiltros();
+      if (f.secciones.length === 0) {
+        alert('Selecciona al menos una sección para generar el reporte.');
+        return;
+      }
+
+      document.getElementById('generateModal').classList.remove('hidden');
+      resetModal();
+      runSteps(0, f);
+    }
+
+    async function runSteps(i, f) {
       if (i >= steps.length) {
-        document.getElementById('progressLabel').textContent = '¡Reporte listo para descargar!';
-        document.getElementById('modalTitle').textContent    = 'Reporte Generado';
-        document.getElementById('modalSubtitle').textContent = 'Reporte_Operativo_Abril_2025.pdf';
-        document.getElementById('modalIcon').textContent     = 'check_circle';
+        document.getElementById('progressLabel').textContent = '¡Reporte listo!';
+        document.getElementById('modalTitle').textContent = 'Reporte Generado';
+        document.getElementById('modalSubtitle').textContent = f.nombre || 'reporte';
+        document.getElementById('modalIcon').textContent = 'check_circle';
         document.getElementById('modalFooter').classList.remove('hidden');
         return;
       }
       const s = steps[i];
-      if (i > 0) {
-        const prev = steps[i - 1];
-        const icon = document.getElementById('icon-' + prev.id);
-        const text = document.getElementById('text-' + prev.id);
-        icon.textContent = 'check_circle';
-        icon.style.color = '#009A3F';
-        text.classList.remove('text-on-surface-variant');
-        text.classList.add('text-on-surface');
-      }
-      const icon = document.getElementById('icon-' + s.id);
-      const text = document.getElementById('text-' + s.id);
-      icon.textContent = 'pending';
-      icon.style.color = '#00333c';
-      text.classList.remove('text-on-surface-variant');
-      text.classList.add('text-primary-container', 'font-medium');
+      if (i > 0) completaPaso(steps[i - 1].id);
+      iniciaPaso(s.id, s.label);
 
       document.getElementById('progressBar').style.width = s.pct + '%';
       document.getElementById('progressPct').textContent = s.pct + '%';
       document.getElementById('progressLabel').textContent = s.label + '…';
 
-      setTimeout(() => runSteps(i + 1), 900);
+      if (i === 1) {
+        try {
+          const res = await fetch(`${API}/generar-reporte`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(f),
+          });
+          const json = await res.json();
+          if (json.success) {
+            window.__reporteData = json.data;
+          }
+        } catch (e) {
+          console.error('Error al generar reporte', e);
+        }
+      }
+
+      if (i === steps.length - 1 && window.__reporteData) {
+        descargarReporte(f, window.__reporteData);
+      }
+
+      setTimeout(() => runSteps(i + 1, f), 400);
+    }
+
+    function completaPaso(id) {
+      document.getElementById('icon-' + id).textContent = 'check_circle';
+      document.getElementById('icon-' + id).style.color = '#009A3F';
+      const t = document.getElementById('text-' + id);
+      t.classList.remove('text-on-surface-variant');
+      t.classList.add('text-on-surface');
+    }
+
+    function iniciaPaso(id, label) {
+      document.getElementById('icon-' + id).textContent = 'pending';
+      document.getElementById('icon-' + id).style.color = '#00333c';
+      const t = document.getElementById('text-' + id);
+      t.classList.remove('text-on-surface-variant');
+      t.classList.add('text-primary-container', 'font-medium');
     }
 
     function closeModal() {
@@ -832,21 +726,162 @@
       const toast = document.getElementById('toast');
       toast.classList.remove('hidden');
       setTimeout(() => toast.classList.add('hidden'), 3500);
-      setTimeout(() => {
-        document.getElementById('progressBar').style.width = '0%';
-        document.getElementById('progressPct').textContent = '0%';
-        document.getElementById('progressLabel').textContent = 'Consolidando métricas…';
-        document.getElementById('modalTitle').textContent = 'Generando Reporte…';
-        document.getElementById('modalSubtitle').textContent = 'Procesando datos del período seleccionado';
-        document.getElementById('modalIcon').textContent = 'summarize';
-        document.getElementById('modalFooter').classList.add('hidden');
-        steps.forEach(s => {
-          document.getElementById('icon-' + s.id).textContent = 'radio_button_unchecked';
-          document.getElementById('icon-' + s.id).style.color = '';
-          document.getElementById('text-' + s.id).className = 'text-[14px] text-on-surface-variant';
-        });
-      }, 500);
+      setTimeout(resetModal, 500);
     }
+
+    function resetModal() {
+      document.getElementById('progressBar').style.width = '0%';
+      document.getElementById('progressPct').textContent = '0%';
+      document.getElementById('progressLabel').textContent = 'Consultando datos operativos…';
+      document.getElementById('modalTitle').textContent = 'Generando Reporte…';
+      document.getElementById('modalSubtitle').textContent = 'Procesando datos del período seleccionado';
+      document.getElementById('modalIcon').textContent = 'summarize';
+      document.getElementById('modalFooter').classList.add('hidden');
+      steps.forEach(s => {
+        document.getElementById('icon-' + s.id).textContent = 'radio_button_unchecked';
+        document.getElementById('icon-' + s.id).style.color = '';
+        document.getElementById('text-' + s.id).className = 'text-[14px] text-on-surface-variant';
+      });
+    }
+
+    // ─── DESCARGA ───
+
+    function descargarReporte(f, data) {
+      if (f.formato === 'pdf') {
+        window.print();
+        return;
+      }
+      const csv = generarCSV(f, data);
+      const nombre = (f.nombre || 'Reporte') + '.csv';
+      const bom = '\uFEFF';
+      const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = nombre;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function generarCSV(f, data) {
+      const lineas = [];
+      const sep = ';';
+
+      lineas.push('SecGuard Logistics - Reporte de KPIs');
+      lineas.push('Tipo;' + (TIPOS_REPORTE[f.tipo] || f.tipo));
+      lineas.push('Período;' + (f.fecha_inicio || '') + ' - ' + (f.fecha_fin || ''));
+      lineas.push('Generado;' + new Date().toLocaleString('es-PE'));
+      lineas.push('');
+
+      for (const sec of f.secciones) {
+        switch (sec) {
+          case 'disponibilidad':
+            if (data.disponibilidad) {
+              lineas.push('DISPONIBILIDAD DE FLOTA');
+              lineas.push('Indicador;Valor');
+              lineas.push('Porcentaje Disponible;' + (data.disponibilidad.porcentaje || 0) + '%');
+              lineas.push('Vehículos Disponibles;' + (data.disponibilidad.disponibles || 0));
+              lineas.push('Total Flota;' + (data.disponibilidad.total || 0));
+              lineas.push('');
+            }
+            break;
+          case 'utilizacion':
+            if (data.utilizacion) {
+              lineas.push('UTILIZACIÓN DE FLOTA');
+              lineas.push('Indicador;Valor');
+              lineas.push('Porcentaje Activos;' + (data.utilizacion.porcentaje || 0) + '%');
+              lineas.push('Vehículos Activos;' + (data.utilizacion.activos || 0));
+              lineas.push('Total Flota;' + (data.utilizacion.total || 0));
+              lineas.push('');
+            }
+            break;
+          case 'conversion':
+            if (data.conversion) {
+              lineas.push('CONVERSIÓN DE VIAJES');
+              lineas.push('Indicador;Valor');
+              lineas.push('Porcentaje Activos;' + (data.conversion.porcentaje || 0) + '%');
+              lineas.push('Viajes Activos;' + (data.conversion.activos || 0));
+              lineas.push('Total Viajes;' + (data.conversion.total || 0));
+              lineas.push('');
+            }
+            break;
+          case 'prevencion':
+            if (data.prevencion) {
+              lineas.push('PREVENCIÓN DE MANTENIMIENTO');
+              lineas.push('Indicador;Valor');
+              lineas.push('Porcentaje Preventivos;' + (data.prevencion.porcentaje || 0) + '%');
+              lineas.push('Mant. Preventivos;' + (data.prevencion.preventivos || 0));
+              lineas.push('Mant. Correctivos;' + (data.prevencion.correctivos || 0));
+              lineas.push('Total Mantenimientos;' + (data.prevencion.total || 0));
+              lineas.push('');
+            }
+            break;
+          case 'clientes':
+            if (data.clientes && data.clientes.length > 0) {
+              lineas.push('DESEMPEÑO POR CLIENTE');
+              lineas.push('Cliente;Pedidos;Peso Total (kg);Bultos Totales;Estado Principal');
+              for (const c of data.clientes) {
+                lineas.push((c.cliente || '') + sep + (c.pedidos || 0) + sep + (c.peso_total || 0) + sep + (c.bultos_totales || 0) + sep + (c.estado_principal || ''));
+              }
+              lineas.push('');
+            }
+            break;
+          case 'carga':
+            if (data.carga && data.carga.length > 0) {
+              lineas.push('DISTRIBUCIÓN POR TIPO DE CARGA');
+              lineas.push('Tipo de Carga;Total;Porcentaje');
+              for (const c of data.carga) {
+                lineas.push((c.tipo_carga || '') + sep + (c.total || 0) + sep + (c.porcentaje || 0) + '%');
+              }
+              lineas.push('');
+            }
+            break;
+          case 'resumen':
+            if (data.resumen) {
+              lineas.push('RESUMEN DEL PERÍODO');
+              lineas.push('Indicador;Valor');
+              lineas.push('Total Pedidos;' + (data.resumen.total_pedidos || 0));
+              lineas.push('Total Viajes;' + (data.resumen.total_viajes || 0));
+              lineas.push('Peso Total (kg);' + (data.resumen.peso_total || 0));
+              lineas.push('Bultos Totales;' + (data.resumen.bultos_totales || 0));
+              lineas.push('');
+            }
+            break;
+        }
+      }
+
+      return lineas.join('\n');
+    }
+
+    // ─── INIT ───
+
+    (function init() {
+      const hoy = new Date();
+      const haceUnMes = new Date(hoy);
+      haceUnMes.setMonth(haceUnMes.getMonth() - 1);
+      document.getElementById('report-fecha-inicio').value = haceUnMes.toISOString().slice(0, 10);
+      document.getElementById('report-fecha-fin').value = hoy.toISOString().slice(0, 10);
+
+      const nombre = 'Reporte_' + hoy.toISOString().slice(0, 7).replace('-', '_');
+      document.getElementById('report-nombre').value = nombre;
+
+      document.querySelectorAll('.seccion-check').forEach(c => c.addEventListener('change', actualizarResumen));
+      document.querySelectorAll('input[name="report_type"]').forEach(r => r.addEventListener('change', function() {
+        const seccionesPorTipo = {
+          completo: ['disponibilidad', 'utilizacion', 'conversion', 'prevencion', 'clientes', 'carga', 'resumen'],
+          flota: ['disponibilidad', 'utilizacion', 'prevencion'],
+          carga: ['clientes', 'carga', 'resumen'],
+          viajes: ['conversion', 'resumen'],
+        };
+        const vals = seccionesPorTipo[this.value] || [];
+        document.querySelectorAll('.seccion-check').forEach(c => c.checked = vals.includes(c.value));
+        document.getElementById('btn-seleccionar-todo').textContent = 'Seleccionar todo';
+        actualizarResumen();
+      }));
+      document.querySelectorAll('input[name="format"]').forEach(r => r.addEventListener('change', actualizarResumen));
+      document.getElementById('report-nombre').addEventListener('input', actualizarResumen);
+      actualizarResumen();
+    })();
   </script>
 
 </body>
