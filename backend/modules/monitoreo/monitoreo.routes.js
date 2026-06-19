@@ -18,5 +18,7 @@ router.get('/historial-intentos/:placa', controller.historialIntentos);
 router.get('/ultima-anomalia', controller.ultimaAnomalia);
 router.get('/anomalias-sin-revisar', controller.anomaliasSinRevisar);
 router.get('/auditoria-anomalia/:placa', controller.auditoriaAnomalia);
+router.post('/registrar-deteccion', controller.registrarDeteccion);
+router.get('/viaje-por-placa/:placa', controller.viajePorPlaca);
 
 module.exports = router;

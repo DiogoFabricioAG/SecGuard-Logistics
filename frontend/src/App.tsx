@@ -6,6 +6,10 @@ import { Layout } from "./shared/components/Layout";
 import LoginPage from "./modules/auth/pages/LoginPage";
 import GestionFlotaPage from "./modules/flota/pages/GestionFlotaPage";
 import RutasPage from "./modules/flota/pages/RutasPage";
+import CamaraPage from "./modules/camara/pages/CamaraPage";
+import FallaPlacaPage from "./modules/camara/pages/FallaPlacaPage";
+import AccesosPage from "./modules/camara/pages/AccesosPage";
+import RegistroManualPage from "./modules/camara/pages/RegistroManualPage";
 
 export default function App() {
   return (
@@ -29,6 +33,10 @@ export default function App() {
                 </ViajeWizardProvider>
               }
             />
+            <Route path="/camara" element={<CamaraPage />} />
+            <Route path="/camara/falla" element={<FallaPlacaPage />} />
+            <Route path="/camara/accesos" element={<AccesosPage />} />
+            <Route path="/camara/registro-manual" element={<RegistroManualPage />} />
             <Route
               path="/dashboard"
               element={

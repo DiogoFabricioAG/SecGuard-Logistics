@@ -256,13 +256,13 @@ CREATE TABLE intento_acceso_no_registrado (
 
 CREATE TABLE registro_acceso (
     id_acceso           SERIAL PRIMARY KEY,
-    id_viaje            INT          NOT NULL,
-    id_camion           INT          NOT NULL,
-    id_conductor        INT          NOT NULL,
-    id_camara           INT          NOT NULL,
-    tipo_evento         VARCHAR(20)  NOT NULL, -- SALIDA_RUTA, RETORNO_RUTA
-    placa_detectada_alpr VARCHAR(15) NOT NULL,
-    confianza_alpr      DECIMAL(5,2) NOT NULL,
+    id_viaje            INT          ,
+    id_camion           INT          ,
+    id_conductor        INT          ,
+    id_camara           INT          ,
+    tipo_evento         VARCHAR(20)  , -- SALIDA_RUTA, RETORNO_RUTA
+    placa_detectada_alpr VARCHAR(15) ,
+    confianza_alpr      DECIMAL(5,2) ,
     url_foto_captura    VARCHAR(255),
     timestamp_evento    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado_deteccion      VARCHAR(20), 

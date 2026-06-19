@@ -93,15 +93,19 @@ export function Sidebar() {
           </span>
           <span className="text-[13px] font-medium">Analítica</span>
         </NavLink>
-        <span className="flex items-center gap-md px-md py-[10px] text-on-surface-variant/40 rounded-[6px] cursor-not-allowed select-none">
+        <NavLink
+          to="/camara"
+          className={({ isActive }) =>
+            `flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px] ${
+              isActive ? "bg-primary-container text-white" : ""
+            }`
+          }
+        >
           <span className="material-symbols-outlined text-[20px]">
             videocam
           </span>
           <span className="text-[13px] font-medium">Cámara</span>
-          <span className="ml-auto text-[10px] text-outline/60">
-            Próximamente
-          </span>
-        </span>
+        </NavLink>
       </nav>
 
       <div className="px-sm mt-auto space-y-1">

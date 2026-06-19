@@ -1,3 +1,8 @@
+<!-- Modulo : Detección 
+Descripción: Es la pantalla que sigue a la pantalla cuyo archivo html es : Falla en la identifiacion de la placa.html , aqui se va a llevar acabo el registro manual de la entrada o salida del vehiculo, por mientras que suceda ello se debe de mantener cerrado la barrera fisica, en si esta pantalla como mencione se hace uso cuando se desea registrar manualmente los datos en caso de una alerta como es la de falla de reconocimiento de placa.
+API Utilizada : GET /api/monitoreo/salidas-cerradas con este endopoint se tendria que vizualizar los datos que se va a mostrar en la pantalla, tener en cuenta que tambien puede ser tanto como salida o entrada de vehiculo-->
+
+
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>
@@ -54,15 +59,15 @@
         </div>
 
         <nav class="flex-1">
-            <a href="4.2.5_panel_de_control_y_monitoreo_general.html" class="nav-item"><span class="material-symbols-outlined">grid_view</span> Dashboard</a>
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">grid_view</span> Dashboard</a>
             <a href="#" class="nav-item nav-item-active"><span class="material-symbols-outlined text-white">local_shipping</span> Flota</a>
-            <a href="registrar_viaje.html" class="nav-item"><span class="material-symbols-outlined">alt_route</span> Rutas</a>
-            <a href="configurar_kpi.html" class="nav-item"><span class="material-symbols-outlined">analytics</span> Analítica</a>
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">alt_route</span> Rutas</a>
+            <a href="consultar_metricas.html" class="nav-item"><span class="material-symbols-outlined">analytics</span> Analítica</a>
         </nav>
 
         <div class="mt-auto border-t border-slate-100 pt-4">
             <a href="#" class="nav-item"><span class="material-symbols-outlined">help</span> Soporte</a>
-            <a href="4.2.1_login.html" class="nav-item !text-[#bc1c1c]"><span class="material-symbols-outlined">logout</span> Cerrar Sesión</a>
+            <a href="#" class="nav-item !text-[#bc1c1c]"><span class="material-symbols-outlined">logout</span> Cerrar Sesión</a>
         </div>
     </aside>
 
@@ -78,7 +83,7 @@
                 <span class="material-symbols-outlined header-icon">settings</span>
                 <div class="flex items-center gap-3 border-l border-slate-200 pl-6">
                     <div class="text-right">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase leading-none mb-1">Operador</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase leading-none mb-1">Administrador</p>
                         <p class="text-sm font-bold text-[#002b32]">ID_Admin01</p>
                     </div>
                     <div class="user-avatar"><span class="material-symbols-outlined">person</span></div>
@@ -91,7 +96,7 @@
                 
                 <div class="w-[360px] flex flex-col shrink-0">
                     <div class="section-card">
-                        <h3 class="text-5xl font-black text-[#002b32] tracking-tighter mb-1">ABC-123</h3>
+                        <h3 class="text-5xl font-black text-[#002b32] tracking-tighter mb-1">A1B-234</h3>
                         <p class="text-sm font-semibold text-slate-500 mb-3">Volvo FH16 - Carga Pesada (40T)</p>
                         <div class="flex gap-2">
                             <div class="flex-1 bg-slate-50 p-2 rounded-lg border border-slate-100">
@@ -183,8 +188,10 @@
                     <p class="text-[11px] text-slate-400 italic">Confirmando el acceso se activará el registro automático en el Dock 04.</p>
                 </div>
                 <div class="flex gap-4">
+                <!--Este boton de color rojo el cual dice : Cancelar Acceso debe de funcionar , este boton en si te va a llevar al archivo html: Cancelar acceso vehicular - Administrador.html , el cual va ser una venta emergente (como una notificación) que te debe de salir encima de esta pantalla-->
                     <button class="btn-cancel"><span class="material-symbols-outlined">block</span> Cancelar Acceso</button>
-                    <button class="btn-confirm" onclick="window.location.href='Registrar la Placa y los demas datos.html'"><span class="material-symbols-outlined">lock_open</span> Confirmar Ingreso</button>
+                <!--Este boton de color verde el cual dice : Confirmar Acceso debe de funcionar , este boton en si te va a llevar al archivo html: Confirmar acceso vehicular - Administrador.html , el cual va ser una venta emergente (como una notificación) que te debe de salir encima de esta pantalla -->
+                    <button class="btn-confirm"><span class="material-symbols-outlined">lock_open</span> Confirmar Acceso</button>
                 </div>
             </div>
         </footer>

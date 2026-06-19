@@ -1,3 +1,7 @@
+<!-- Modulo : Detección 
+Descripción: Es la pantalla (como una notificacion - ventana emergente) que va aparecer en caso se haya aceptado el acceso del vehiculo, 
+ya sea la entrada o la salida, esto debe de aparecer encima como tipo una notificacion de la pantalla html:  Registrar datos de entrada_salida-Administrador.html, obviamente luego de hacer click en el boton verde de aceptar acceso-->
+
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>
@@ -61,15 +65,15 @@
         </div>
 
         <nav class="flex-1">
-            <a href="4.2.5_panel_de_control_y_monitoreo_general.html" class="nav-item"><span class="material-symbols-outlined">grid_view</span> Dashboard</a>
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">grid_view</span> Dashboard</a>
             <a href="#" class="nav-item nav-item-active"><span class="material-symbols-outlined text-white">local_shipping</span> Flota</a>
-            <a href="registrar_viaje.html" class="nav-item"><span class="material-symbols-outlined">alt_route</span> Rutas</a>
-            <a href="configurar_kpi.html" class="nav-item"><span class="material-symbols-outlined">analytics</span> Analítica</a>
+            <a href="#" class="nav-item"><span class="material-symbols-outlined">alt_route</span> Rutas</a>
+            <a href="consultar_metricas.html" class="nav-item"><span class="material-symbols-outlined">analytics</span> Analítica</a>
         </nav>
 
         <div class="mt-auto border-t border-slate-100 pt-4">
             <a href="#" class="nav-item"><span class="material-symbols-outlined">help</span> Soporte</a>
-            <a href="4.2.1_login.html" class="nav-item !text-[#bc1c1c]"><span class="material-symbols-outlined">logout</span> Cerrar Sesión</a>
+            <a href="#" class="nav-item !text-[#bc1c1c]"><span class="material-symbols-outlined">logout</span> Cerrar Sesión</a>
         </div>
     </aside>
 
@@ -85,7 +89,7 @@
                 <span class="material-symbols-outlined header-icon">settings</span>
                 <div class="flex items-center gap-3 border-l border-slate-200 pl-6">
                     <div class="text-right">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase leading-none mb-1">Operador</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase leading-none mb-1">Administrador</p>
                         <p class="text-sm font-bold text-[#002b32]">ID_Admin01</p>
                     </div>
                     <div class="user-avatar"><span class="material-symbols-outlined">person</span></div>
@@ -97,7 +101,7 @@
             <div class="p-6 flex gap-6">
                 <div class="w-[360px] flex flex-col shrink-0">
                     <div class="section-card">
-                        <h3 class="text-5xl font-black text-[#002b32] tracking-tighter mb-1">ABC-123</h3>
+                        <h3 class="text-5xl font-black text-[#002b32] tracking-tighter mb-1">A1B-234</h3>
                         <p class="text-sm font-semibold text-slate-500 mb-3">Volvo FH16 - Carga Pesada (40T)</p>
                     </div>
                 </div>
@@ -112,7 +116,7 @@
                     </div>
                     <h2 class="text-4xl font-extrabold mb-4 leading-tight">Acceso Confirmado</h2>
                     <p class="text-green-100 text-lg opacity-90 leading-relaxed mb-12">
-                        La solicitud de ingreso para el vehículo <strong class="text-white">ABC-123</strong> ha sido procesada exitosamente.
+                        La solicitud de ingreso para el vehículo <strong class="text-white">A1B-234</strong> ha sido procesada exitosamente.
                     </p>
                     
                     <div class="bg-black/20 p-5 rounded-xl border border-white/10">
@@ -135,18 +139,19 @@
                             <div class="w-10 h-10 bg-[#002b32] rounded flex items-center justify-center text-white shrink-0">
                                 <span class="material-symbols-outlined text-xl">tag</span>
                             </div>
+                      <!--Respecto a este campo de Estado de Vehiculo, tiene que tener relacion con la API : GET /api/monitoreo/salidas-autorizadas , respecto al estado ,en donde puede ser Entrada o salida-->
                             <div>
                                 <p class="text-[10px] font-extrabold text-slate-400 uppercase">Estado del Vehículo</p>
                                 <p class="font-bold text-[#002b32] text-lg">Ingreso Registrado</p>
                             </div>
                         </div>
-
                         <div class="flex gap-4">
                             <div class="w-10 h-10 bg-[#002b32] rounded flex items-center justify-center text-white shrink-0">
                                 <span class="material-symbols-outlined text-xl">schedule</span>
                             </div>
+                         <!--En esta parte del campo de Fecha / Hora debe ser respecto al tiempo real en donde se logra registrar los datos adecuadamente en el archivo html: Registrar datos de entrada_salida-Administrador.html , y al hacer click en el boton de aceptar acceso, en ese momento se debe de marcar la fecha y hora en tiempo real -->
                             <div>
-                                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Timestamp</p>
+                                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Fecha / Hora</p>
                                 <p class="font-bold text-[#002b32] text-lg">29 may 2026, 14:31:33</p>
                             </div>
                         </div>
@@ -155,6 +160,7 @@
                             <div class="w-10 h-10 bg-[#002b32] rounded flex items-center justify-center text-white shrink-0">
                                 <span class="material-symbols-outlined text-xl">location_on</span>
                             </div>
+                    <!--Mantener ese campo con su valor-->
                             <div>
                                 <p class="text-[10px] font-extrabold text-slate-400 uppercase">Ubicación Actual</p>
                                 <p class="font-bold text-[#002b32] text-lg">En Patio - Zona de Carga B</p>
@@ -163,10 +169,12 @@
                     </div>
 
                     <div class="mt-8 space-y-3">
-                        <button class="w-full bg-[#001e23] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-[#002b32] transition-colors" onclick="window.location.href='Registrar la Placa y los demas datos.html'">
-                            Ver Detalles del Viaje <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    <!--Este boton de :  Ver Detalles del acceso debe de funcionar, y al hacer click debe de llevar al archivo html : Detalledeacceso.html-->
+                        <button class="w-full bg-[#001e23] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-[#002b32] transition-colors">
+                            Ver Detalles del acceso <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </button>
-                        <button class="w-full bg-white border border-slate-200 text-slate-600 font-bold py-4 rounded-xl hover:bg-slate-50 transition-colors" onclick="window.location.href='4.2.5_panel_de_control_y_monitoreo_general.html'">
+                        <!--Este boton de : Cerrar Notificación debe de funcionar, de manera que al hacer click te lleve a la pantalla html: Registrar datos de entrada_salida-Administrador.html-->
+                        <button class="w-full bg-white border border-slate-200 text-slate-600 font-bold py-4 rounded-xl hover:bg-slate-50 transition-colors">
                             Cerrar Notificación
                         </button>
                     </div>
@@ -180,7 +188,7 @@
             </div>
             <div>
                 <p class="font-bold text-base leading-tight">Base de Datos Actualizada</p>
-                <p class="text-sm text-slate-400">El registro de ABC-123 ha sido sincronizado.</p>
+                <p class="text-sm text-slate-400">El registro de A1B-234 ha sido sincronizado.</p>
             </div>
         </div>
 
