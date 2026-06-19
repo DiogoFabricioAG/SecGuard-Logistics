@@ -111,6 +111,17 @@ async function resumenPeriodo(req, res, next) {
   } catch (err) { next(err); }
 }
 
+async function generarReporte(req, res, next) {
+  try {
+    const { secciones = [], fecha_inicio, fecha_fin, zona, tipo_unidad } = req.body;
+    if (!Array.isArray(secciones) || secciones.length === 0) {
+      throw new AppError('Debe incluir al menos una sección', 400);
+    }
+    const data = await service.generarReporte({ secciones, fecha_inicio, fecha_fin, zona, tipo_unidad });
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
 module.exports = {
   listarKPIs,
   listarKPIsInactivos,
@@ -122,4 +133,5 @@ module.exports = {
   desempenoClientes,
   distribucionCarga,
   resumenPeriodo,
+  generarReporte,
 };
