@@ -684,6 +684,7 @@
 
       if (i === 1) {
         try {
+          // → POST /api/kpi/generar-reporte
           const res = await fetch(`${API}/generar-reporte`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
