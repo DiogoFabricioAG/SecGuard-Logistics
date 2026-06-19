@@ -1,20 +1,31 @@
 import { useRef, useState, useCallback, useEffect } from "react";
-import Peer, { type MediaConnection } from "peerjs";
+import Peer, { type MediaConnection, type DataConnection } from "peerjs";
 
 export type CameraStatus = "idle" | "connecting" | "connected" | "error";
 
 const STREAM_PEER_ID = "secguard-garita-01";
 
-export function usePeerCamera() {
+export interface BroadcastMessage {
+  type: "plate-detected";
+  plate: string;
+  confidence: number;
+  timestamp: string;
+}
+
+export function usePeerCamera(onData?: (msg: BroadcastMessage) => void) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const peerRef = useRef<Peer | null>(null);
   const callRef = useRef<MediaConnection | null>(null);
+  const dataConnRef = useRef<DataConnection | null>(null);
+  const senderConnsRef = useRef<DataConnection[]>([]);
   const localStreamRef = useRef<MediaStream | null>(null);
   const [status, setStatus] = useState<CameraStatus>("idle");
   const [isSender, setIsSender] = useState(false);
   const autoConnectRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isSenderRef = useRef(false);
+  const onDataRef = useRef(onData);
 
+  useEffect(() => { onDataRef.current = onData; }, [onData]);
   useEffect(() => { isSenderRef.current = isSender; }, [isSender]);
 
   function stopInterval() {
@@ -23,27 +34,54 @@ export function usePeerCamera() {
 
   function cleanupPeer() {
     stopInterval();
+    senderConnsRef.current = [];
+    if (dataConnRef.current) { dataConnRef.current.close(); dataConnRef.current = null; }
     if (callRef.current) { callRef.current.close(); callRef.current = null; }
     if (peerRef.current) { peerRef.current.destroy(); peerRef.current = null; }
   }
 
-  const tryCall = useCallback(() => {
-    if (isSenderRef.current) return;
-    if (!peerRef.current) return;
-    if (callRef.current) { callRef.current.close(); callRef.current = null; }
-    setStatus("connecting");
+  function setupReceiverDataChannel(conn: DataConnection) {
+    dataConnRef.current = conn;
+    conn.on("open", () => {});
+    conn.on("data", (data) => {
+      onDataRef.current?.(data as BroadcastMessage);
+    });
+    conn.on("close", () => { dataConnRef.current = null; });
+  }
 
-    const call = peerRef.current.call(STREAM_PEER_ID, createDummyStream());
+  function setupSenderDataChannel(conn: DataConnection) {
+    conn.on("open", () => {});
+    conn.on("close", () => {
+      senderConnsRef.current = senderConnsRef.current.filter((c) => c !== conn);
+    });
+    senderConnsRef.current.push(conn);
+  }
+
+  const setupReceiverMedia = useCallback((call: MediaConnection) => {
     callRef.current = call;
-
+    call.answer();
     call.on("stream", (stream) => {
       const v = videoRef.current;
       if (v) { v.srcObject = stream; v.play().catch(() => {}); }
       setStatus("connected");
     });
     call.on("close", () => { callRef.current = null; setStatus("idle"); });
-    call.on("error", () => { callRef.current = null; setStatus("error"); });
+    call.on("error", () => { callRef.current = null; });
   }, []);
+
+  const tryCall = useCallback(() => {
+    if (isSenderRef.current) return;
+    if (!peerRef.current) return;
+    if (callRef.current) { callRef.current.close(); callRef.current = null; }
+    if (dataConnRef.current) { dataConnRef.current.close(); dataConnRef.current = null; }
+    setStatus("connecting");
+
+    const call = peerRef.current.call(STREAM_PEER_ID, createDummyStream());
+    setupReceiverMedia(call);
+
+    const conn = peerRef.current.connect(STREAM_PEER_ID, { reliable: true });
+    setupReceiverDataChannel(conn);
+  }, [setupReceiverMedia]);
 
   function startPolling() {
     stopInterval();
@@ -51,7 +89,7 @@ export function usePeerCamera() {
     tryCall();
     autoConnectRef.current = setInterval(() => {
       if (isSenderRef.current) { stopInterval(); return; }
-      if (videoRef.current?.srcObject) return;
+      if (videoRef.current?.srcObject && dataConnRef.current) return;
       tryCall();
     }, 5000);
   }
@@ -64,16 +102,17 @@ export function usePeerCamera() {
     p.on("call", (call) => {
       if (isSenderRef.current && localStreamRef.current) {
         call.answer(localStreamRef.current);
-        callRef.current = call;
+        call.on("close", () => {});
       } else {
-        call.answer();
-        call.on("stream", (stream) => {
-          const v = videoRef.current;
-          if (v) { v.srcObject = stream; v.play().catch(() => {}); }
-          setStatus("connected");
-        });
-        call.on("close", () => { callRef.current = null; setStatus("idle"); });
-        callRef.current = call;
+        setupReceiverMedia(call);
+      }
+    });
+
+    p.on("connection", (conn) => {
+      if (isSenderRef.current) {
+        setupSenderDataChannel(conn);
+      } else {
+        setupReceiverDataChannel(conn);
       }
     });
 
@@ -81,10 +120,8 @@ export function usePeerCamera() {
 
     startPolling();
 
-    return () => {
-      cleanupPeer();
-    };
-  }, []);
+    return () => { cleanupPeer(); };
+  }, [setupReceiverMedia]);
 
   const startSender = useCallback(async () => {
     try {
@@ -102,7 +139,10 @@ export function usePeerCamera() {
       p.on("error", () => setStatus("error"));
       p.on("call", (call) => {
         call.answer(localStreamRef.current!);
-        callRef.current = call;
+        call.on("close", () => {});
+      });
+      p.on("connection", (conn) => {
+        setupSenderDataChannel(conn);
       });
 
       const v = videoRef.current;
@@ -116,6 +156,12 @@ export function usePeerCamera() {
     }
   }, []);
 
+  const broadcast = useCallback((msg: BroadcastMessage) => {
+    senderConnsRef.current.forEach((conn) => {
+      try { conn.send(msg); } catch { /* ignore */ }
+    });
+  }, []);
+
   const stopSender = useCallback(() => {
     if (localStreamRef.current) { localStreamRef.current.getTracks().forEach((t) => t.stop()); localStreamRef.current = null; }
     cleanupPeer();
@@ -126,23 +172,10 @@ export function usePeerCamera() {
     peerRef.current = p;
     p.on("open", () => {});
     p.on("error", () => setStatus("error"));
-    p.on("call", (call) => {
-      if (isSenderRef.current && localStreamRef.current) {
-        call.answer(localStreamRef.current);
-        callRef.current = call;
-      } else {
-        call.answer();
-        call.on("stream", (stream) => {
-          const v = videoRef.current;
-          if (v) { v.srcObject = stream; v.play().catch(() => {}); }
-          setStatus("connected");
-        });
-        call.on("close", () => { callRef.current = null; setStatus("idle"); });
-        callRef.current = call;
-      }
-    });
+    p.on("call", (call) => setupReceiverMedia(call));
+    p.on("connection", (conn) => setupReceiverDataChannel(conn));
     startPolling();
-  }, []);
+  }, [setupReceiverMedia]);
 
   const disconnect = useCallback(() => {
     cleanupPeer();
@@ -153,23 +186,10 @@ export function usePeerCamera() {
     peerRef.current = p;
     p.on("open", () => {});
     p.on("error", () => setStatus("error"));
-    p.on("call", (call) => {
-      if (isSenderRef.current && localStreamRef.current) {
-        call.answer(localStreamRef.current);
-        callRef.current = call;
-      } else {
-        call.answer();
-        call.on("stream", (stream) => {
-          const v = videoRef.current;
-          if (v) { v.srcObject = stream; v.play().catch(() => {}); }
-          setStatus("connected");
-        });
-        call.on("close", () => { callRef.current = null; setStatus("idle"); });
-        callRef.current = call;
-      }
-    });
+    p.on("call", (call) => setupReceiverMedia(call));
+    p.on("connection", (conn) => setupReceiverDataChannel(conn));
     startPolling();
-  }, []);
+  }, [setupReceiverMedia]);
 
   const captureFrame = useCallback((): string | null => {
     const video = videoRef.current;
@@ -183,7 +203,7 @@ export function usePeerCamera() {
     return canvas.toDataURL("image/jpeg", 0.8);
   }, []);
 
-  return { videoRef, status, isSender, startSender, stopSender, disconnect, captureFrame };
+  return { videoRef, status, isSender, startSender, stopSender, disconnect, captureFrame, broadcast };
 }
 
 function createDummyStream() {

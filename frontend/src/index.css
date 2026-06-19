@@ -160,3 +160,6 @@ body {
   transition: opacity 0.2s;
 }
 .btn-confirm:hover, .btn-cancel:hover { opacity: 0.9; }
+
+@keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.animate-slide-up { animation: slide-up 0.3s ease-out; }

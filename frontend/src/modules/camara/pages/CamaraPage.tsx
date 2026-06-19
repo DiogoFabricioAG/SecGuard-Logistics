@@ -4,17 +4,32 @@ import { usePeerCamera } from "../hooks/usePeerCamera";
 import { detectPlate, type AlprResult } from "../services/alprService";
 import { getCompletadosPesados, type DeteccionCompletada } from "../services/monitoreoApi";
 
-export default function CamaraPage() {
-  const {
-    videoRef, status: camStatus, isSender,
-    startSender, stopSender, disconnect, captureFrame,
-  } = usePeerCamera();
+interface BroadcastMessage { type: "plate-detected"; plate: string; confidence: number; timestamp: string; }
 
+export default function CamaraPage() {
   const [deteccion, setDeteccion] = useState<DeteccionCompletada | null>(null);
   const [alpr, setAlpr] = useState<AlprResult | null>(null);
   const [alprLoading, setAlprLoading] = useState(false);
+  const [toast, setToast] = useState<{ plate: string; action: string } | null>(null);
   const alprInterval = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastResult = useRef<AlprResult | null>(null);
+
+  const onData = useCallback((msg: BroadcastMessage) => {
+    if (msg.type === "plate-detected") {
+      setAlpr({ plate: msg.plate, confidence: msg.confidence });
+      showToast(msg.plate, "Entrada");
+    }
+  }, []);
+
+  function showToast(plate: string, action: string) {
+    setToast({ plate, action });
+    setTimeout(() => setToast(null), 5000);
+  }
+
+  const {
+    videoRef, status: camStatus, isSender,
+    startSender, stopSender, disconnect, captureFrame, broadcast,
+  } = usePeerCamera(onData);
 
   const pollBackend = useCallback(() => {
     getCompletadosPesados()
@@ -29,7 +44,7 @@ export default function CamaraPage() {
   }, [pollBackend]);
 
   useEffect(() => {
-    if (camStatus !== "connected") {
+    if (camStatus !== "connected" || !isSender) {
       if (alprInterval.current) clearInterval(alprInterval.current);
       return;
     }
@@ -42,12 +57,20 @@ export default function CamaraPage() {
         if (result && result.plate !== lastResult.current?.plate) {
           lastResult.current = result;
           setAlpr(result);
+          const msg: BroadcastMessage = {
+            type: "plate-detected",
+            plate: result.plate,
+            confidence: result.confidence,
+            timestamp: new Date().toISOString(),
+          };
+          broadcast(msg);
+          showToast(result.plate, "Entrada");
         }
       }
       setAlprLoading(false);
     }, 4000);
     return () => { if (alprInterval.current) clearInterval(alprInterval.current); };
-  }, [camStatus, captureFrame, alprLoading]);
+  }, [camStatus, isSender, captureFrame, alprLoading, broadcast]);
 
   function handleDisconnect() {
     disconnect();
@@ -79,10 +102,7 @@ export default function CamaraPage() {
             </div>
 
             {!isSender && camStatus !== "connected" && (
-              <button
-                onClick={startSender}
-                className="bg-primary text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-primary-container transition-colors flex items-center gap-1.5"
-              >
+              <button onClick={startSender} className="bg-primary text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-primary-container transition-colors flex items-center gap-1.5">
                 <span className="material-symbols-outlined text-sm">videocam</span>
                 Activar Cámara
               </button>
@@ -158,18 +178,11 @@ export default function CamaraPage() {
                   </DataCard>
 
                   <div className="grid grid-cols-2 gap-2">
-                    <DataCard label="Vehículo">
-                      <p className="text-[10px] text-slate-500">ID: VH-{deteccion.id_camion}</p>
-                    </DataCard>
-                    <DataCard label="Modelo">
-                      <p className="font-bold text-[11px] text-primary">{deteccion.modelo}</p>
-                    </DataCard>
+                    <DataCard label="Vehículo"><p className="text-[10px] text-slate-500">ID: VH-{deteccion.id_camion}</p></DataCard>
+                    <DataCard label="Modelo"><p className="font-bold text-[11px] text-primary">{deteccion.modelo}</p></DataCard>
                   </div>
-
                   <div className="grid grid-cols-2 gap-2">
-                    <DataCard label="Tipo / Cap">
-                      <p className="font-bold text-[11px]">{deteccion.tipo_vehiculo} / {deteccion.capacidad_toneladas}T</p>
-                    </DataCard>
+                    <DataCard label="Tipo / Cap"><p className="font-bold text-[11px]">{deteccion.tipo_vehiculo} / {deteccion.capacidad_toneladas}T</p></DataCard>
                     <DataCard label="Estado">
                       <span className="bg-[#75f999] text-[#007236] font-black text-[9px] px-2 py-0.5 rounded-full inline-block">COMPLETADO</span>
                     </DataCard>
@@ -179,15 +192,9 @@ export default function CamaraPage() {
                         {new Date(deteccion.timestamp_evento).toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })}
                       </p>
                     </DataCard>
-                    <DataCard label="Latencia">
-                      <p className="font-bold text-[11px]">{deteccion.latencia_ms}ms</p>
-                    </DataCard>
-                    <DataCard label="Iluminación">
-                      <p className="font-bold text-[11px]">{deteccion.nivel_iluminacion}</p>
-                    </DataCard>
-                    <DataCard label="Obstrucción">
-                      <p className="font-bold text-[11px] text-[#006d33]">{deteccion.nivel_obstruccion}</p>
-                    </DataCard>
+                    <DataCard label="Latencia"><p className="font-bold text-[11px]">{deteccion.latencia_ms}ms</p></DataCard>
+                    <DataCard label="Iluminación"><p className="font-bold text-[11px]">{deteccion.nivel_iluminacion}</p></DataCard>
+                    <DataCard label="Obstrucción"><p className="font-bold text-[11px] text-[#006d33]">{deteccion.nivel_obstruccion}</p></DataCard>
                   </div>
                 </>
               ) : (
@@ -197,18 +204,11 @@ export default function CamaraPage() {
                       <p className="font-bold text-sm mb-1">Analizando transmisión...</p>
                       <p className="text-xs">{alprLoading ? "Detectando placa..." : "Esperando detección"}</p>
                     </div>
-                  ) : isSender && camStatus === "error" ? (
-                    <div className="text-center">
-                      <span className="material-symbols-outlined text-4xl text-slate-200 mb-3 block">no_photography</span>
-                      <p className="text-sm">No se pudo acceder a la cámara del dispositivo</p>
-                    </div>
                   ) : (
                     <div className="text-center">
                       <span className="material-symbols-outlined text-4xl text-slate-200 mb-3 block">videocam_off</span>
                       <p className="text-sm font-medium mb-1">Sin transmisión activa</p>
-                      <p className="text-xs">
-                        {camStatus === "connecting" ? "Conectando..." : "Active la cámara desde un celular para iniciar"}
-                      </p>
+                      <p className="text-xs">{camStatus === "connecting" ? "Conectando..." : "Active la cámara desde un celular para iniciar"}</p>
                     </div>
                   )}
                 </div>
@@ -226,12 +226,30 @@ export default function CamaraPage() {
                 Ver registros de acceso →
               </Link>
               <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                {alprLoading ? "ALPR: Analizando..." : camStatus === "connected" ? "ALPR: Activo" : "ALPR: En espera"}
+                {alprLoading && isSender ? "ALPR: Analizando..." : camStatus === "connected" ? "ALPR: Activo" : "ALPR: En espera"}
               </span>
             </div>
           </div>
         </div>
       </div>
+
+      {toast && (
+        <div className="fixed bottom-6 right-6 bg-[#001e23] text-white px-6 py-4 rounded-xl flex items-center gap-4 z-50 border border-[#0a3a40] shadow-xl animate-slide-up">
+          <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+            <span className="material-symbols-outlined text-green-400 text-2xl">check_circle</span>
+          </div>
+          <div>
+            <p className="font-bold text-base leading-tight">Placa Detectada: <span className="text-green-400">{toast.plate}</span></p>
+            <p className="text-sm text-slate-400">
+              {toast.action} registrada — {new Date().toLocaleTimeString("es-PE")}
+              {isSender && " · Transmitido a todos los viewers"}
+            </p>
+          </div>
+          <button onClick={() => setToast(null)} className="ml-4 text-slate-400 hover:text-white">
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
