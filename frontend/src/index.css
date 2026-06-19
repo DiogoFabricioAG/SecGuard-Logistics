@@ -163,7 +163,3 @@ body {
 
 @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .animate-slide-up { animation: slide-up 0.3s ease-out; }
-
-.camara-sender aside { display: none !important; }
-.camara-sender header { display: none !important; }
-.camara-sender > div { margin-left: 0 !important; }
