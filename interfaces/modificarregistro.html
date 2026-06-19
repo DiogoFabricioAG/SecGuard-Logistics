@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="light" lang="es" style=""><head>
+<!DOCTYPE html><html class="light" lang="es" ><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Modificar Registro de Acceso | SecGuard Logistics</title>
@@ -113,6 +113,57 @@
     </style>
 </head>
 <body class="font-body-md text-text-main antialiased">
+<!--
+Módulo: Accesos
+Origen: Se abre desde Estado_de_acceso.html o Detalledeacceso.html al hacer clic en "Modificar Registro".
+Descripción: Pantalla de edición para corregir datos de un registro de acceso vehicular. Permite modificar cualquier campo del registro original y guarda los cambios como un nuevo registro vinculado (auditoría).
+
+API utilizada:
+- POST /api/accesos/:id/modificar
+  Envía la corrección de un registro de acceso.
+  * id: ID del acceso original (ej. ACC-10128).
+  * Request body: 
+    - campos_corregidos: objeto con los campos que cambian (placa, puerta, estado, decisión, etc.).
+    - motivo_justificacion: texto explicando por qué se hace la corrección.
+  Retorna: ID del nuevo registro corregido vinculado al original.
+
+Secciones principales de la pantalla:
+1. Encabezado (Header):
+   - Ruta de navegación: "Gestión de Accesos > Modificar".
+   - Título: "Modificar Registro de Acceso".
+   - Botón "Atrás" (arrow_back): retorna a la pantalla anterior.
+   - Última sincronización: timestamp del último sync.
+
+2. Registro Original (Columna Izquierda - col-span-4):
+   - Muestra TODOS los datos actuales en modo lectura (readonly).
+   - Placa, movimiento, estado, puerta, cámara, punto de control, tipo de registro.
+   - Información del vehículo: empresa, tipo de unidad, capacidad.
+   - Información del conductor.
+   - Nota al pie: "Capturado automáticamente por el sensor...".
+
+3. Formulario de Corrección (Columna Derecha - col-span-8):
+   - Badge "Nueva Corrección" en naranja.
+   - Todos los campos son EDITABLES (inputs y selects).
+   - Grid de 2 columnas con campos de texto y selectores.
+   - Campos: placa, movimiento, estado, puerta, cámara, punto de control, confianza OCR, error lectura, empresa, tipo unidad, capacidad, conductor, administrador.
+   - Campo de texto amplio "Motivo de la corrección": justificación obligatoria.
+   - Nota importante: "Esta acción creará un nuevo registro vinculado al original para fines de auditoría."
+
+4. Información de Auditoría (Footer):
+   - Ícono de información.
+   - ID del registro original (#ACC-10128 ejemplo).
+   - Aclaración: "El registro original no se modificará para preservar la integridad del historial."
+   - Botones de acción: "Cancelar" y "Registrar Modificación".
+
+Botones de acción:
+- "Cancelar": Cierra la pantalla sin guardar cambios y retorna a Estado_de_acceso.html.
+- "Registrar Modificación" (con ícono save): Envía la corrección vía POST /api/accesos/:id/modificar.
+
+Flujo de auditoría:
+- El registro original se mantiene inmutable.
+- Los cambios se guardan como un nuevo registro de tipo "CORREGIDO".
+- Se crea un registro en tabla de auditoría con: campo modificado, valor original, valor nuevo, motivo, admin responsable, timestamp.
+-->
 <!-- Navigation Drawer -->
 <aside class="fixed left-0 top-0 h-screen w-[260px] flex flex-col z-50 bg-white border-r border-[#EEEEEF]">
 <div class="p-6">
@@ -126,7 +177,7 @@
 </div>
 </div>
 <nav class="flex-1 px-4 space-y-1 mt-4">
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="4.2.5_panel_de_control_y_monitoreo_general.html">
+<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="#">
 <span class="material-symbols-outlined text-[22px]" data-icon="grid_view">grid_view</span>
 <span class="font-headline-sm font-semibold text-[14px]">Dashboard</span>
 </a>
@@ -134,12 +185,12 @@
 <span class="material-symbols-outlined text-[22px]" data-icon="local_shipping">local_shipping</span>
 <span class="font-headline-sm font-semibold text-[14px]">Flota</span>
 </a>
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="registrar_viaje.html">
+<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="#">
 <span class="material-symbols-outlined text-[22px]" data-icon="route">route</span>
 <span class="font-headline-sm font-semibold text-[14px]">Rutas</span>
 </a>
 
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="configurar_kpi.html">
+<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-slate-50 transition-colors group" href="#">
 <span class="material-symbols-outlined text-[22px]" data-icon="analytics">analytics</span>
 <span class="font-headline-sm font-semibold text-[14px]">Analítica</span>
 </a>
@@ -149,7 +200,7 @@
 <span class="material-symbols-outlined text-[22px]" data-icon="help">help</span>
 <span class="font-headline-sm font-semibold text-[14px]">Soporte</span>
 </a>
-<a class="flex items-center gap-4 px-6 py-3 hover:bg-slate-50 transition-colors text-error" href="4.2.1_login.html">
+<a class="flex items-center gap-4 px-6 py-3 hover:bg-slate-50 transition-colors text-error" href="#">
 <span class="material-symbols-outlined text-[22px]" data-icon="logout">logout</span>
 <span class="font-headline-sm font-semibold text-[14px]">Cerrar Sesión</span>
 </a>
@@ -160,7 +211,8 @@
 <!-- TopAppBar -->
 <header class="fixed top-0 right-0 w-[calc(100%-260px)] h-16 flex items-center justify-between px-lg z-40 bg-white border-b border-[#EEEEEF]">
 <div class="flex items-center gap-lg">
-<button class="cursor-pointer transition-opacity active:opacity-70 flex items-center justify-center">
+<button class="cursor-pointer transition-opacity active:opacity-70 flex items-center justify-center" title="Volver a la pantalla anterior">
+<!-- Botón Atrás: Retorna a Estado_de_acceso.html o Detalledeacceso.html -->
 <span class="material-symbols-outlined text-[#004B57]" data-icon="arrow_back">arrow_back</span>
 </button>
 <div class="flex flex-col">
@@ -183,6 +235,7 @@
 <div class="p-lg max-w-[1400px] mx-auto w-full space-y-lg">
 <div class="grid grid-cols-12 gap-lg">
 <!-- Section 1: Original Record -->
+<!-- SECCIÓN: Registro Original (Lectura) - Muestra los datos actuales del acceso sin permitir modificación directa en esta sección -->
 <section class="col-span-12 lg:col-span-4">
 <div class="bg-white border border-border-subtle rounded-lg overflow-hidden h-full">
 <div class="p-md border-b border-border-subtle bg-slate-50/50">
@@ -251,6 +304,7 @@
 </div>
 </section>
 <!-- Section 2: Correction Form -->
+<!-- SECCIÓN: Formulario de Corrección - Todos los campos son EDITABLES. El usuario corrige los datos que considere incorrectos -->
 <section class="col-span-12 lg:col-span-8">
 <div class="bg-white border border-border-subtle rounded-lg shadow-sm">
 <div class="p-md border-b border-border-subtle flex justify-between items-center">
@@ -258,6 +312,7 @@
 <span class="material-symbols-outlined text-sm" data-icon="edit_note">edit_note</span>
                             Formulario de Corrección
                         </h3>
+<!-- Badge: Indica que se está registrando una nueva corrección -->
 <span class="font-label-sm text-warning-orange bg-warning-orange/10 px-sm py-xs rounded">Nueva Corrección</span>
 </div>
 <div class="p-lg space-y-lg">
@@ -323,11 +378,13 @@
 </div></div>
 <div class="flex flex-col gap-xs">
 <label class="font-label-md text-slate-700 font-body-md">Motivo de la corrección</label>
+<!-- Campo OBLIGATORIO: Justificación de por qué se corrige el registro. Este texto se almacena en auditoría -->
 <textarea class="w-full bg-white border border-border-subtle rounded py-3 px-md focus:ring-2 focus:ring-[#004B57]/10 focus:border-[#004B57] transition-all font-body-md outline-none resize-none" placeholder="Explique por qué es necesaria esta corrección..." rows="3"></textarea>
 <p class="text-[11px] text-slate-400 mt-xs italic font-body-md">Nota: Esta acción creará un nuevo registro vinculado al original para fines de auditoría.</p>
 </div>
 </div>
 <!-- Audit Information & Actions -->
+<!-- SECCIÓN: Información de Auditoría - Recordatorio de que el registro original no se modifica, solo se crea uno nuevo vinculado -->
 <div class="px-lg py-md bg-slate-50 border-t border-border-subtle flex flex-col md:flex-row md:items-center justify-between gap-md">
 <div class="flex items-center gap-md">
 <span class="material-symbols-outlined text-slate-400" data-icon="info">info</span>
@@ -337,10 +394,13 @@
 </div>
 </div>
 <div class="flex items-center gap-md font-headline-sm">
-<button class="px-lg py-3 text-[#004B57] font-semibold text-[14px] hover:bg-slate-200 rounded transition-colors">
+<!-- Botón Cancelar: Cierra sin guardar y retorna a la pantalla anterior -->
+<button class="px-lg py-3 text-[#004B57] font-semibold text-[14px] hover:bg-slate-200 rounded transition-colors" title="Descarta los cambios y vuelve atrás">
                                 Cancelar
                             </button>
-<button class="bg-[#004B57] text-white px-lg py-3 rounded font-semibold text-[14px] shadow-sm hover:opacity-90 active:scale-[0.98] transition-all flex items-center gap-2"><span class="material-symbols-outlined text-[20px]" data-icon="save">save</span>
+<!-- Botón Registrar Modificación: POST /api/accesos/:id/modificar con los campos_corregidos y motivo_justificacion -->
+<button class="bg-[#004B57] text-white px-lg py-3 rounded font-semibold text-[14px] shadow-sm hover:opacity-90 active:scale-[0.98] transition-all flex items-center gap-2" title="Envía la corrección al servidor">
+<span class="material-symbols-outlined text-[20px]" data-icon="save">save</span>
                                 Registrar Modificación</button>
 </div>
 </div>
