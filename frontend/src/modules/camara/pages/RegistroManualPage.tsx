@@ -75,8 +75,8 @@ export default function RegistroManualPage() {
         <div>
           <h2 className="text-xl font-black text-[#002b32] uppercase tracking-tighter">Registrar Datos de Entrada / Salida</h2>
           {camion && (
-            <p className="text-xs font-bold text-[#006d33] mt-0.5">
-              {viajeInfo.codigo_reserva ? `Viaje ${viajeInfo.codigo_reserva}` : "Camión encontrado"}
+            <p className={`text-xs font-bold mt-0.5 ${viajeInfo.codigo_reserva ? "text-[#006d33]" : "text-amber-600"}`}>
+              {viajeInfo.codigo_reserva ? `Viaje ${viajeInfo.codigo_reserva}` : "Camión encontrado — sin viaje activo"}
             </p>
           )}
           {lookupDone && !camion && (

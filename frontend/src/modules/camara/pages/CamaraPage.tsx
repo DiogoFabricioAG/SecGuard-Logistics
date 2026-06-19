@@ -16,7 +16,7 @@ export default function CamaraPage() {
   const [alpr, setAlpr] = useState<AlprResult | null>(null);
   const [alprLoading, setAlprLoading] = useState(false);
   const [toast, setToast] = useState<{ plate: string; action: string; requiereManual?: boolean; capturaUrl?: string } | null>(null);
-  const [alertModal, setAlertModal] = useState<{ plate: string; capturaUrl?: string } | null>(null);
+  const [alertModal, setAlertModal] = useState<{ plate: string; capturaUrl?: string; reason: "desconocida" | "sin_viaje" } | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
   const alprInterval = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastResult = useRef<AlprResult | null>(null);
@@ -36,12 +36,11 @@ export default function CamaraPage() {
     if (msg.type === "plate-detected") {
       setAlpr({ plate: msg.plate, confidence: msg.confidence });
       if (msg.desconocida) {
-        setAlertModal({ plate: msg.plate, capturaUrl: msg.capturaUrl ?? undefined });
+        setAlertModal({ plate: msg.plate, capturaUrl: msg.capturaUrl ?? undefined, reason: "desconocida" });
+      } else if (msg.requiereManual) {
+        setAlertModal({ plate: msg.plate, capturaUrl: msg.capturaUrl ?? undefined, reason: "sin_viaje" });
       } else {
-        const action = msg.requiereManual
-          ? "Sin viaje asociado"
-          : `Viaje ${msg.codigoReserva || ""}`;
-        showToast(msg.plate, action, msg.capturaUrl);
+        showToast(msg.plate, `Viaje ${msg.codigoReserva || ""}`, msg.capturaUrl);
       }
     }
   }, []);
@@ -309,14 +308,18 @@ export default function CamaraPage() {
 
       {alertModal && (
         <div className="fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-[#1a0a00] border-2 border-amber-500/50 rounded-2xl p-6 sm:p-10 max-w-md w-full text-center shadow-2xl animate-scale-in">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber-500/15 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-              <span className="material-symbols-outlined text-amber-400 text-4xl sm:text-5xl">warning</span>
+          <div className={`rounded-2xl p-6 sm:p-10 max-w-md w-full text-center shadow-2xl animate-scale-in ${alertModal.reason === "desconocida" ? "bg-[#1a0a00] border-2 border-amber-500/50" : "bg-[#0a1a0a] border-2 border-yellow-500/50"}`}>
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse ${alertModal.reason === "desconocida" ? "bg-amber-500/15" : "bg-yellow-500/15"}`}>
+              <span className={`material-symbols-outlined text-4xl sm:text-5xl ${alertModal.reason === "desconocida" ? "text-amber-400" : "text-yellow-400"}`}>warning</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-white mb-2">¡Placa Desconocida!</h3>
+            <h3 className="text-xl sm:text-2xl font-black text-white mb-2">
+              {alertModal.reason === "desconocida" ? "¡Placa Desconocida!" : "¡Camión sin Viaje!"}
+            </h3>
             <p className="text-2xl sm:text-4xl font-black text-amber-400 tracking-widest mb-4 break-all">{alertModal.plate}</p>
             <p className="text-xs sm:text-sm text-slate-400 mb-6 sm:mb-8 break-words">
-              Esta placa no está registrada en el sistema. Se requiere registro manual por un administrador.
+              {alertModal.reason === "desconocida"
+                ? "Esta placa no está registrada en el sistema. Se requiere registro manual por un administrador."
+                : "El camión está registrado pero no tiene un viaje activo. Confirme o cancele el acceso manualmente."}
             </p>
             <div className="flex flex-col gap-3">
               <button onClick={() => { navigate(`/camara/registro-manual?placa=${alertModal.plate}${alertModal.capturaUrl ? `&captura=${encodeURIComponent(alertModal.capturaUrl)}` : ""}`); setAlertModal(null); }} className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 sm:py-3.5 rounded-xl text-sm sm:text-base flex items-center justify-center gap-2 transition-colors">
