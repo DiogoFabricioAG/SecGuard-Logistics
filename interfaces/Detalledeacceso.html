@@ -68,6 +68,51 @@
     </style>
 </head>
 <body class="bg-surface text-on-surface font-body overflow-x-hidden">
+<!--
+Módulo: Accesos
+Origen: Se abre desde Estado_de_acceso.html al hacer clic en "Ver detalle" en una fila de la tabla.
+Descripción: Pantalla de detalle completo de un registro de acceso vehicular, mostrando información técnica, detalles del vehículo, conductor y decisión de acceso.
+
+API utilizada:
+- GET /api/accesos/:id/detalle
+  Recupera la información completa del registro de acceso.
+  * id: ID del acceso (ej. ACC-10326).
+  Retorna: placa, timestamp, conductor, vehículo, foto ALPR, nivel de confianza, puerta, estado de barrera, decisión de acceso, etc.
+
+Secciones principales de la pantalla:
+1. Captura de Cámara ALPR (col-span-4):
+   - Imagen de la lectura de placa.
+   - Confianza de la lectura (94%).
+   - ID de cámara (ej. ALPR-004).
+   - OCR detectado (la placa leída: ABC-123).
+
+2. Marcadores Técnicos (col-span-4):
+   - Nivel de iluminación, obstrucción, latencia de detección.
+   - Información técnica del sensor.
+
+3. Detalles del Evento y Decisión (col-span-4):
+   - Información del conductor (nombres).
+   - Tipo de evento (Entrada/Salida).
+   - Puerta asignada y muelle dock.
+   - Estado de barrera.
+   - Decisión de acceso (Autorizado/Rechazado).
+   - Prioridad de envío.
+
+4. Información del Vehículo (col-span-6):
+   - Placa detectada.
+   - Modelo y tipo de unidad.
+   - Capacidad de toneladas.
+   - Detalles registrales del vehículo.
+
+5. Información del Conductor (col-span-6):
+   - Nombres y apellidos.
+   
+
+Botones de acción en header:
+- "Imprimir Ticket": Genera e imprime un ticket del acceso.
+- "Exportar Detalle": Descarga los detalles del acceso en formato PDF o similar.
+- "Volver" (icono atrás): Retorna a la pantalla Estado_de_acceso.html.
+-->
 <!-- Sidebar -->
 <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
 <!-- Logo -->
@@ -83,7 +128,7 @@
 </div>
 <!-- Nav Links -->
 <nav class="flex-1 px-sm space-y-1">
-<a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="4.2.5_panel_de_control_y_monitoreo_general.html">
+<a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
 <span class="material-symbols-outlined text-[20px]">dashboard</span>
 <span class="text-[13px] font-medium">Dashboard</span>
 </a>
@@ -91,11 +136,11 @@
 <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
 <span class="text-[13px] font-medium">Flota</span>
 </a>
-<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="registrar_viaje.html">
+<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
 <span class="material-symbols-outlined text-[20px]">route</span>
 <span class="text-[13px] font-medium">Rutas</span>
 </a>
-<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="configurar_kpi.html">
+<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
 <span class="material-symbols-outlined text-[20px]">analytics</span>
 <span class="text-[13px] font-medium">Analítica</span>
 </a>
@@ -106,7 +151,7 @@
 <span class="material-symbols-outlined text-[20px]">help_outline</span>
 <span class="text-[13px] font-medium">Soporte</span>
 </a>
-<a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="4.2.1_login.html">
+<a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
 <span class="material-symbols-outlined text-[20px]">logout</span>
 <span class="text-[13px] font-medium">Cerrar Sesión</span>
 </a>
@@ -116,7 +161,13 @@
 <main class="ml-[220px] min-h-screen flex flex-col">
 <!-- TopAppBar -->
 <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
+<!-- Botón Volver: Retorna a Estado_de_acceso.html -->
+<div class="flex items-center gap-md">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface-container rounded-full transition-all" title="Volver a Gestión de Accesos">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
 <h1 class="font-headline text-[20px] font-semibold text-on-surface">Detalle de Acceso</h1>
+</div>
 <div class="flex items-center gap-md">
 <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
 <span class="material-symbols-outlined">notifications</span>
@@ -144,10 +195,12 @@
 <p class="text-[14px] text-text-main">Lunes, 23 de Octubre de 2023 — 18:44:02</p>
 </div>
 <div class="flex gap-sm">
+<!-- Botón: Imprime un ticket del registro de acceso actual -->
 <button class="bg-primary-container text-white px-md py-2 rounded-lg text-[13px] font-medium flex items-center gap-sm transition-all hover:opacity-90">
 <span class="material-symbols-outlined text-[18px]">print</span>
                             Imprimir Ticket
                         </button>
+<!-- Botón: Exporta los detalles completos del acceso (PDF, Excel, etc.) -->
 <button class="bg-white border border-border-subtle text-primary-container px-md py-2 rounded-lg text-[13px] font-medium flex items-center gap-sm transition-all hover:bg-surface-container">
 <span class="material-symbols-outlined text-[18px]">share</span>
                             Exportar Detalle
@@ -157,6 +210,7 @@
 <!-- Bento Layout for Content -->
 <div class="grid grid-cols-12 gap-lg">
 <!-- Column 1: Visual Proof -->
+<!-- SECCIÓN: Captura de Cámara ALPR - Muestra la fotografía del registro OCR con la lectura de placa (ABC-123), confianza porcentual y ID de cámara -->
 <div class="col-span-12 lg:col-span-4 space-y-lg">
 <div class="bg-white border border-border-subtle rounded-xl overflow-hidden">
 <div class="px-lg py-sm border-b border-border-subtle bg-surface-container/30">
@@ -174,7 +228,7 @@
 <p class="text-[11px] font-medium text-text-main mt-1">LECTURA OCR DETECTADA</p>
 </div>
 </div>
-<!-- Technical Markers -->
+<!-- SECCIÓN: Marcadores Técnicos - Información técnica del sensor/cámara (iluminación, obstrucción, latencia, etc.) -->
 <div class="bg-white border border-border-subtle rounded-xl p-lg space-y-md">
 <h4 class="text-[12px] font-bold uppercase text-text-main border-b border-border-subtle pb-sm mb-sm">Marcadores Técnicos</h4>
 <div class="flex justify-between items-center">
@@ -194,6 +248,7 @@
 </div>
 </div>
 <!-- Column 2: Data Details -->
+<!-- SECCIÓN: Detalles del Evento - Información del tránsito y la decisión de acceso (autorizado/rechazado, puerta, barrera, prioridad) -->
 <div class="col-span-12 lg:col-span-8 grid grid-cols-2 gap-lg h-fit">
 <!-- General Info Card -->
 <div class="bg-white border border-border-subtle rounded-xl p-lg col-span-2 md:col-span-1">
@@ -221,6 +276,7 @@
 </div>
 </div>
 <!-- Entity Info Card -->
+<!-- SECCIÓN: Detalles de la Unidad (Vehículo) - Información del transportista, tipo de vehículo y capacidad -->
 <div class="bg-white border border-border-subtle rounded-xl p-lg col-span-2 md:col-span-1">
 <h4 class="text-[12px] font-bold uppercase text-text-main border-b border-border-subtle pb-sm mb-lg">Detalles de la Unidad</h4>
 <div class="space-y-xl">
