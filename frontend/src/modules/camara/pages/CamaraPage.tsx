@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { usePeerCamera } from "../hooks/usePeerCamera";
 import { detectPlate, type AlprResult } from "../services/alprService";
 import { getCompletadosPesados, registrarDeteccion, buscarViajePorPlaca, type DeteccionCompletada } from "../services/monitoreoApi";
+import { useLayout } from "../../../shared/context/LayoutContext";
 
 interface BroadcastMessage {
   type: "plate-detected"; plate: string; confidence: number; timestamp: string;
@@ -17,6 +18,7 @@ function normalizarPlaca(raw: string): string {
 
 export default function CamaraPage() {
   const navigate = useNavigate();
+  const { setFullscreen } = useLayout();
   const [deteccion, setDeteccion] = useState<DeteccionCompletada | null>(null);
   const [alpr, setAlpr] = useState<AlprResult | null>(null);
   const [alprLoading, setAlprLoading] = useState(false);
@@ -45,6 +47,11 @@ export default function CamaraPage() {
     videoRef, status: camStatus, isSender,
     startSender, stopSender, disconnect, captureFrame, broadcast,
   } = usePeerCamera(onData);
+
+  useEffect(() => {
+    setFullscreen(isSender);
+    return () => setFullscreen(false);
+  }, [isSender, setFullscreen]);
 
   const pollBackend = useCallback(() => {
     getCompletadosPesados()

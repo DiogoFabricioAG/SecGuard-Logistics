@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./modules/auth/context/AuthContext";
 import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
 import { ViajeWizardProvider } from "./modules/flota/context/ViajeWizardContext";
+import { LayoutProvider } from "./shared/context/LayoutContext";
 import { Layout } from "./shared/components/Layout";
 import LoginPage from "./modules/auth/pages/LoginPage";
 import GestionFlotaPage from "./modules/flota/pages/GestionFlotaPage";
@@ -15,6 +16,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <LayoutProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route
@@ -56,6 +58,7 @@ export default function App() {
           </Route>
           <Route path="*" element={<Navigate to="/flota" replace />} />
         </Routes>
+        </LayoutProvider>
       </AuthProvider>
     </BrowserRouter>
   );
