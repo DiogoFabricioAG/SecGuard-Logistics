@@ -50,6 +50,48 @@ async function entradasDenegadas(_req, res, next) {
   } catch (err) { next(err); }
 }
 
+async function ultimoIntentoPlaca(req, res, next) {
+  try {
+    const data = await service.ultimoIntentoPlaca(req.params.placa);
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
+async function verificarPlaca(req, res, next) {
+  try {
+    const data = await service.verificarPlaca(req.params.placa);
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
+async function historialIntentos(req, res, next) {
+  try {
+    const data = await service.historialIntentos(req.params.placa);
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
+async function ultimaAnomalia(_req, res, next) {
+  try {
+    const data = await service.ultimaAnomalia();
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
+async function anomaliasSinRevisar(_req, res, next) {
+  try {
+    const data = await service.anomaliasSinRevisar();
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
+async function auditoriaAnomalia(req, res, next) {
+  try {
+    const data = await service.auditoriaAnomalia(req.params.placa);
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
 module.exports = {
   completadosPesados,
   erroresLectura,
@@ -58,4 +100,10 @@ module.exports = {
   salidasCerradasRevisadas,
   salidasAutorizadas,
   entradasDenegadas,
+  ultimoIntentoPlaca,
+  verificarPlaca,
+  historialIntentos,
+  ultimaAnomalia,
+  anomaliasSinRevisar,
+  auditoriaAnomalia,
 };
