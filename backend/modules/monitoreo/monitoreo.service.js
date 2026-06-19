@@ -253,14 +253,16 @@ async function registrarDeteccion({
   const { rows } = await pool.query(
     `INSERT INTO registro_acceso (
       placa_detectada_alpr, confianza_alpr, estado_deteccion,
-      timestamp_evento, tipo_evento, decision_acceso, estado_barrera,
-      latencia_ms, nivel_iluminacion, nivel_obstruccion,
-      id_viaje, id_camion, id_conductor, puerta_asignada,
-      url_foto_captura, id_acceso_original, tipo_anomalia, prioridad_envio
-    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5, $6, $7, $8, $9, $10, NULL, NULL, NULL, NULL, NULL, NULL)
+      timestamp_evento, latencia_ms, nivel_iluminacion, nivel_obstruccion,
+      tipo_evento, decision_acceso, estado_barrera,
+      id_viaje, id_camion, id_conductor,
+      revisado_por_admin, prioridad_envio
+    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5,
+      $6, $7, $8, $9, $10, NULL, NULL, NULL)
     RETURNING id_acceso`,
-    [placa_detectada_alpr, confianza_alpr, tipo_evento, decision_acceso,
-      estado_barrera, latencia_ms, nivel_iluminacion, nivel_obstruccion,
+    [placa_detectada_alpr, confianza_alpr,
+      latencia_ms, nivel_iluminacion, nivel_obstruccion,
+      tipo_evento, decision_acceso, estado_barrera,
       id_viaje || null, id_camion || null],
   );
   return rows[0];
@@ -268,10 +270,10 @@ async function registrarDeteccion({
 
 async function buscarViajePorPlaca(placa) {
   const { rows } = await pool.query(
-    `SELECT cr.id_camion, va.id_viaje, vp.codigo_reserva_patio, vp.estado_viaje
+    `SELECT cr.id_camion, vca.id_viaje, vp.codigo_reserva_patio, vp.estado_viaje
      FROM camion_ransa cr
-     LEFT JOIN viaje_asignacion va ON cr.id_camion = va.id_camion
-     LEFT JOIN viaje_programado vp ON va.id_viaje = vp.id_viaje
+     LEFT JOIN viaje_camion_asignado vca ON cr.id_camion = vca.id_camion
+     LEFT JOIN viaje_programado vp ON vca.id_viaje = vp.id_viaje
        AND vp.estado_viaje IN ('PENDIENTE', 'CONFIRMADO')
      WHERE cr.placa_matricula = $1
      ORDER BY vp.fecha_hora_estimada ASC

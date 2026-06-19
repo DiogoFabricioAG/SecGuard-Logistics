@@ -137,6 +137,28 @@ async function resumenPeriodo(fecha_inicio = "", fecha_fin = "", zona = "") {
   return rows[0];
 }
 
+async function generarReporte({ secciones = [], fecha_inicio = "", fecha_fin = "", zona = "", tipo_unidad = "" }) {
+  const result = {};
+  const calls = [];
+
+  const dispatch = {
+    disponibilidad: () => disponibilidadFlota(tipo_unidad).then(d => { result.disponibilidad = d; }),
+    utilizacion: () => utilizacionFlota(tipo_unidad).then(d => { result.utilizacion = d; }),
+    conversion: () => conversionViajes(fecha_inicio, fecha_fin, tipo_unidad).then(d => { result.conversion = d; }),
+    prevencion: () => prevencionMantenimiento(fecha_inicio, fecha_fin, tipo_unidad).then(d => { result.prevencion = d; }),
+    clientes: () => desempenoClientes(fecha_inicio, fecha_fin, zona).then(d => { result.clientes = d; }),
+    carga: () => distribucionCarga(fecha_inicio, fecha_fin).then(d => { result.carga = d; }),
+    resumen: () => resumenPeriodo(fecha_inicio, fecha_fin, zona).then(d => { result.resumen = d; }),
+  };
+
+  for (const sec of secciones) {
+    if (dispatch[sec]) calls.push(dispatch[sec]());
+  }
+
+  await Promise.all(calls);
+  return result;
+}
+
 module.exports = {
   listarKPIs,
   detalleKPI,
@@ -147,4 +169,5 @@ module.exports = {
   desempenoClientes,
   distribucionCarga,
   resumenPeriodo,
+  generarReporte,
 };
