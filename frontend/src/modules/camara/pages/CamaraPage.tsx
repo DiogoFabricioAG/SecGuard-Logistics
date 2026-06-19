@@ -1,13 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { usePeerCamera } from "../hooks/usePeerCamera";
+import { usePeerCamera, type BroadcastMessage } from "../hooks/usePeerCamera";
 import { detectPlate, type AlprResult } from "../services/alprService";
 import { getCompletadosPesados, registrarDeteccion, buscarViajePorPlaca, type DeteccionCompletada } from "../services/monitoreoApi";
-
-interface BroadcastMessage {
-  type: "plate-detected"; plate: string; confidence: number; timestamp: string;
-  requiereManual?: boolean; desconocida?: boolean; codigoReserva?: string;
-}
 
 function normalizarPlaca(raw: string): string {
   const limpia = raw.replace(/[^A-Z0-9]/gi, "").toUpperCase();
@@ -21,8 +16,14 @@ export default function CamaraPage() {
   const [alpr, setAlpr] = useState<AlprResult | null>(null);
   const [alprLoading, setAlprLoading] = useState(false);
   const [toast, setToast] = useState<{ plate: string; action: string; requiereManual?: boolean } | null>(null);
+  const [logs, setLogs] = useState<string[]>([]);
   const alprInterval = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastResult = useRef<AlprResult | null>(null);
+
+  function addLog(msg: string) {
+    const ts = new Date().toLocaleTimeString("es-PE");
+    setLogs((prev) => [...prev.slice(-19), `[${ts}] ${msg}`]);
+  }
 
   function showToast(plate: string, action: string) {
     setToast({ plate, action, requiereManual: action.includes("Sin viaje") || action.includes("desconocida") });
@@ -48,14 +49,16 @@ export default function CamaraPage() {
 
   useEffect(() => {
     document.body.style.overflow = isSender ? "hidden" : "";
+    addLog(isSender ? "Modo cámara activado" : "Modo cámara desactivado");
     return () => { document.body.style.overflow = ""; };
   }, [isSender]);
 
   useEffect(() => {
+    addLog(`Conexión: ${camStatus} ${isSender ? "(sender)" : "(receiver)"}`);
     if (isSender && camStatus === "connected" && videoRef.current) {
       videoRef.current.play().catch(() => {});
     }
-  }, [isSender, camStatus, videoRef]);
+  }, [camStatus, isSender]);
 
   const pollBackend = useCallback(() => {
     getCompletadosPesados()
@@ -74,33 +77,26 @@ export default function CamaraPage() {
       if (alprInterval.current) clearInterval(alprInterval.current);
       return;
     }
+    addLog("ALPR iniciado — capturando cada 4s");
     alprInterval.current = setInterval(async () => {
       if (alprLoading) return;
       setAlprLoading(true);
       const frame = captureFrame();
-      if (frame) {
-        const result = await detectPlate(frame);
-        if (result && result.plate !== lastResult.current?.plate) {
-          lastResult.current = result;
-          const placaNormalizada = normalizarPlaca(result.plate);
-          setAlpr({ plate: placaNormalizada, confidence: result.confidence });
-
-          const viaje = await buscarViajePorPlaca(placaNormalizada).then((r) => r.data).catch(() => ({ id_camion: null, id_viaje: null, codigo_reserva: null }));
-
-          const msg: BroadcastMessage = {
-            type: "plate-detected", plate: placaNormalizada, confidence: result.confidence,
-            timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje,
-            desconocida: !viaje.id_camion, codigoReserva: viaje.codigo_reserva ?? undefined,
-          };
-          broadcast(msg);
-
-          registrarDeteccion({
-            placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence,
-            tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO",
-            latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA",
-            id_viaje: viaje.id_viaje, id_camion: viaje.id_camion,
-          }).catch(() => {});
-        }
+      if (!frame) { addLog("ALPR: frame vacío — video no listo"); setAlprLoading(false); return; }
+      addLog("ALPR: enviando frame a Plate Recognizer...");
+      const result = await detectPlate(frame);
+      if (!result) { addLog("ALPR: sin placa detectada"); setAlprLoading(false); return; }
+      addLog(`ALPR: placa=${result.plate} conf=${result.confidence}%`);
+      if (result.plate !== lastResult.current?.plate) {
+        lastResult.current = result;
+        const placaNormalizada = normalizarPlaca(result.plate);
+        setAlpr({ plate: placaNormalizada, confidence: result.confidence });
+        const viaje = await buscarViajePorPlaca(placaNormalizada).then((r) => r.data).catch(() => ({ id_camion: null, id_viaje: null, codigo_reserva: null }));
+        addLog(`Viaje lookup: camion=${viaje.id_camion} viaje=${viaje.id_viaje}`);
+        broadcast({ type: "plate-detected", plate: placaNormalizada, confidence: result.confidence, timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje, desconocida: !viaje.id_camion, codigoReserva: viaje.codigo_reserva ?? undefined });
+        registrarDeteccion({ placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence, tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO", latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA", id_viaje: viaje.id_viaje, id_camion: viaje.id_camion })
+          .then(() => addLog("Backend: registro OK"))
+          .catch((e: Error) => addLog(`Backend ERROR: ${e.message}`));
       }
       setAlprLoading(false);
     }, 4000);
@@ -281,6 +277,10 @@ export default function CamaraPage() {
           <button onClick={() => setToast(null)} className="text-white/50 hover:text-white ml-2"><span className="material-symbols-outlined text-xl">close</span></button>
         </div>
       )}
+
+      <div className={`fixed bottom-2 left-2 z-[9998] bg-black/80 backdrop-blur-sm text-[10px] text-green-400 font-mono rounded-lg p-2 max-h-[180px] overflow-y-auto max-w-[380px] leading-relaxed ${logs.length === 0 ? "hidden" : ""}`}>
+        {logs.map((l, i) => <div key={i} className="whitespace-nowrap">{l}</div>)}
+      </div>
     </div>
   );
 }

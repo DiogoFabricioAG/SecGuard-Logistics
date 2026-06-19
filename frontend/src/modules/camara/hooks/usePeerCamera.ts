@@ -10,6 +10,9 @@ export interface BroadcastMessage {
   plate: string;
   confidence: number;
   timestamp: string;
+  requiereManual?: boolean;
+  desconocida?: boolean;
+  codigoReserva?: string;
 }
 
 export function usePeerCamera(onData?: (msg: BroadcastMessage) => void) {
