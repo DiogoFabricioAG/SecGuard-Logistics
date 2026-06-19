@@ -81,7 +81,7 @@ INSERT INTO camion_ransa (placa_matricula, modelo, capacidad_toneladas, tipo_uni
 ('P2W-104', 'Scania R500 V8', 30.00, 'TRACTO_CAMION', '2027-04-01', '2028-03-12', 'Flota Premium operaciones especiales', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-7.jpg', 'CARGA_PESADA', '2026-09-02'),
 ('M8I-673', 'Kenworth T660', 28.00, 'TRACTO_CAMION', '2026-09-30', '2027-08-25', 'Unidad asignada a ruta norte piura', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-1.avif', 'CARGA_PESADA', '2026-07-05'),
 ('Q3B-519', 'Freightliner M2 112', 20.00, 'CAMION_RIGIDO', '2026-10-11', '2027-09-14', 'Revisión técnica vencimiento cercano', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-3.avif', 'CARGA_MEDIA', '2026-07-11'),
-('O7R-402', 'Chevrolet NQR', 6.00, 'FURGON', '2027-01-22', '2028-01-10', 'Furgón Seco Operaciones Lima', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-5.webp', 'COMERCIAL_LIGERO', '20２６‐０８‐１５');
+('O7R-402', 'Chevrolet NQR', 6.00, 'FURGON', '2027-01-22', '2028-01-10', 'Furgón Seco Operaciones Lima', 'DISPONIBLE', 'https://secguard-vehicles.s3.us-east-2.amazonaws.com/stuck-car-5.webp', 'COMERCIAL_LIGERO', '2026-08-15');
 
 
 -- ===========================================================================

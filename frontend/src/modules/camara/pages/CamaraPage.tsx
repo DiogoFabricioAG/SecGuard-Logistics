@@ -1,0 +1,257 @@
+import { useEffect, useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
+import { usePeerCamera } from "../hooks/usePeerCamera";
+import { detectPlate, type AlprResult } from "../services/alprService";
+import { getCompletadosPesados, type DeteccionCompletada } from "../services/monitoreoApi";
+
+export default function CamaraPage() {
+  const {
+    videoRef, status: camStatus, isSender,
+    startSender, stopSender, disconnect, captureFrame,
+    startAutoConnect, stopAutoConnect,
+  } = usePeerCamera();
+
+  const [deteccion, setDeteccion] = useState<DeteccionCompletada | null>(null);
+  const [alpr, setAlpr] = useState<AlprResult | null>(null);
+  const [alprLoading, setAlprLoading] = useState(false);
+  const alprInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+  const lastResult = useRef<AlprResult | null>(null);
+
+  const pollBackend = useCallback(() => {
+    getCompletadosPesados()
+      .then((res) => { if (res.data.length > 0) setDeteccion(res.data[0]); })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    pollBackend();
+    const t = setInterval(pollBackend, 3000);
+    return () => clearInterval(t);
+  }, [pollBackend]);
+
+  useEffect(() => {
+    if (!isSender) startAutoConnect();
+    else stopAutoConnect();
+    return () => stopAutoConnect();
+  }, [isSender, startAutoConnect, stopAutoConnect]);
+
+  useEffect(() => {
+    if (camStatus !== "connected") {
+      if (alprInterval.current) clearInterval(alprInterval.current);
+      return;
+    }
+    alprInterval.current = setInterval(async () => {
+      if (alprLoading) return;
+      setAlprLoading(true);
+      const frame = captureFrame();
+      if (frame) {
+        const result = await detectPlate(frame);
+        if (result && result.plate !== lastResult.current?.plate) {
+          lastResult.current = result;
+          setAlpr(result);
+        }
+      }
+      setAlprLoading(false);
+    }, 4000);
+    return () => { if (alprInterval.current) clearInterval(alprInterval.current); };
+  }, [camStatus, captureFrame, alprLoading]);
+
+  function handleDisconnect() {
+    disconnect();
+    setAlpr(null);
+    lastResult.current = null;
+    if (!isSender) startAutoConnect();
+  }
+
+  const statusConfig = {
+    idle: { dot: "bg-slate-400", text: "Buscando cámara activa...", label: "ESPERANDO" },
+    connecting: { dot: "bg-yellow-500 animate-pulse", text: "Conectando a la cámara...", label: "CONECTANDO" },
+    connected: { dot: "bg-green-500 animate-pulse", text: "Transmisión en vivo activa", label: isSender ? "TRANSMITIENDO" : "CONECTADO" },
+    error: { dot: "bg-error animate-pulse", text: "Error de conexión — reintentando...", label: "ERROR" },
+  }[camStatus];
+
+  return (
+    <div className="flex-1 flex flex-col overflow-auto bg-[#f8f9ff]">
+      <div className="p-6 flex-1 flex flex-col min-h-0">
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-2xl font-extrabold text-primary tracking-tight">
+              Detección y Captura de Placa
+            </h2>
+            <p className="text-xs text-slate-500 font-medium">Punto de Control Norte - Real-time</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className={`w-2.5 h-2.5 rounded-full ${statusConfig.dot}`} />
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{statusConfig.label}</span>
+            </div>
+
+            {!isSender && camStatus !== "connected" && (
+              <button
+                onClick={startSender}
+                className="bg-primary text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-primary-container transition-colors flex items-center gap-1.5"
+              >
+                <span className="material-symbols-outlined text-sm">videocam</span>
+                Activar Cámara
+              </button>
+            )}
+
+            {isSender && (
+              <button onClick={stopSender} className="bg-error text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity">
+                Detener Cámara
+              </button>
+            )}
+
+            {!isSender && camStatus === "connected" && (
+              <button onClick={handleDisconnect} className="bg-slate-200 text-slate-600 px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-300 transition-colors">
+                Desconectar
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-white border border-outline-variant rounded-xl overflow-hidden flex flex-col flex-1 shadow-sm min-h-0">
+          <div className="px-5 py-2.5 border-b border-outline-variant bg-slate-50/50 flex justify-between items-center">
+            <div className="flex items-center gap-2 font-bold text-xs text-primary">
+              <span className="material-symbols-outlined text-primary text-lg">videocam</span>
+              Captura en Vivo — Cámara 04
+            </div>
+            <div className="flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full ${camStatus === "connected" ? "bg-error animate-pulse" : "bg-slate-300"}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-wider ${camStatus === "connected" ? "text-error" : "text-slate-400"}`}>
+                En Vivo
+              </span>
+            </div>
+          </div>
+
+          <div className="p-4 flex gap-4 flex-1 min-h-0 overflow-hidden">
+            <div className="flex-[1.2] relative bg-black rounded-lg overflow-hidden border border-slate-200">
+              {camStatus === "connected" ? (
+                <video ref={videoRef} className="w-full h-full object-cover" autoPlay playsInline muted />
+              ) : (
+                <img
+                  src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=1000"
+                  className="w-full h-full object-cover opacity-70"
+                  alt="Camera feed"
+                />
+              )}
+              <div className="scan-line" />
+
+              {alpr && (
+                <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 border border-green-400 bg-black/80 px-8 py-1.5 rounded-md backdrop-blur-sm z-10">
+                  <span className="text-white font-black tracking-[0.2em] text-xl">{alpr.plate}</span>
+                </div>
+              )}
+
+              <div className="absolute top-4 left-4 bg-black/60 px-2.5 py-1 rounded-md flex items-center gap-2 backdrop-blur-md">
+                <div className={`w-1.5 h-1.5 rounded-full ${camStatus === "connected" ? "bg-red-600 animate-pulse" : "bg-slate-500"}`} />
+                <span className="text-[9px] text-white font-bold uppercase tracking-widest">Live Feed 04</span>
+              </div>
+            </div>
+
+            <div className="flex-1 flex flex-col gap-2 min-w-[350px]">
+              {deteccion ? (
+                <>
+                  <DataCard label="Placa Detectada">
+                    <p className="text-3xl font-black text-primary leading-none py-1">
+                      {alpr?.plate || deteccion.placa_detectada_alpr}
+                    </p>
+                  </DataCard>
+
+                  <DataCard>
+                    <div className="flex justify-between text-[9px] font-bold mb-1">
+                      <span className="text-slate-400 uppercase">Confianza ALPR</span>
+                      <span className="text-[#006d33]">{alpr ? `${alpr.confidence}%` : `${deteccion.confianza_alpr}%`}</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                      <div className="bg-[#006d33] h-full rounded-full transition-all" style={{ width: `${alpr ? alpr.confidence : deteccion.confianza_alpr}%` }} />
+                    </div>
+                  </DataCard>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <DataCard label="Vehículo">
+                      <p className="text-[10px] text-slate-500">ID: VH-{deteccion.id_camion}</p>
+                    </DataCard>
+                    <DataCard label="Modelo">
+                      <p className="font-bold text-[11px] text-primary">{deteccion.modelo}</p>
+                    </DataCard>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <DataCard label="Tipo / Cap">
+                      <p className="font-bold text-[11px]">{deteccion.tipo_vehiculo} / {deteccion.capacidad_toneladas}T</p>
+                    </DataCard>
+                    <DataCard label="Estado">
+                      <span className="bg-[#75f999] text-[#007236] font-black text-[9px] px-2 py-0.5 rounded-full inline-block">COMPLETADO</span>
+                    </DataCard>
+                    <DataCard label="Fecha / Hora">
+                      <p className="font-bold text-[10.5px]">
+                        {new Date(deteccion.timestamp_evento).toLocaleDateString("es-PE")} ·{" "}
+                        {new Date(deteccion.timestamp_evento).toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })}
+                      </p>
+                    </DataCard>
+                    <DataCard label="Latencia">
+                      <p className="font-bold text-[11px]">{deteccion.latencia_ms}ms</p>
+                    </DataCard>
+                    <DataCard label="Iluminación">
+                      <p className="font-bold text-[11px]">{deteccion.nivel_iluminacion}</p>
+                    </DataCard>
+                    <DataCard label="Obstrucción">
+                      <p className="font-bold text-[11px] text-[#006d33]">{deteccion.nivel_obstruccion}</p>
+                    </DataCard>
+                  </div>
+                </>
+              ) : (
+                <div className="flex-1 flex items-center justify-center text-slate-400">
+                  {camStatus === "connected" ? (
+                    <div className="text-center">
+                      <p className="font-bold text-sm mb-1">Analizando transmisión...</p>
+                      <p className="text-xs">{alprLoading ? "Detectando placa..." : "Esperando detección"}</p>
+                    </div>
+                  ) : isSender && camStatus === "error" ? (
+                    <div className="text-center">
+                      <span className="material-symbols-outlined text-4xl text-slate-200 mb-3 block">no_photography</span>
+                      <p className="text-sm">No se pudo acceder a la cámara del dispositivo</p>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <span className="material-symbols-outlined text-4xl text-slate-200 mb-3 block">videocam_off</span>
+                      <p className="text-sm font-medium mb-1">Sin transmisión activa</p>
+                      <p className="text-xs">
+                        {camStatus === "connecting" ? "Conectando..." : "Active la cámara desde un celular para iniciar"}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-slate-50 border-t border-outline-variant px-5 py-2.5 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className={`w-3.5 h-3.5 border-2 rounded-full ${camStatus === "connected" ? "border-primary/20 border-t-primary animate-spin" : "border-slate-300"}`} />
+              <p className="text-[11px] font-bold text-primary/80">{statusConfig.text}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link to="/camara/accesos" className="text-[9px] font-bold text-primary/60 hover:text-primary uppercase tracking-widest transition-colors">
+                Ver registros de acceso →
+              </Link>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                {alprLoading ? "ALPR: Analizando..." : camStatus === "connected" ? "ALPR: Activo" : "ALPR: En espera"}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DataCard({ label, children }: { label?: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-[#eff4ff] p-2 rounded-[0.6rem] border border-[#e2e8f0]">
+      {label && <p className="text-[9px] font-bold text-slate-400 uppercase mb-0.5">{label}</p>}
+      {children}
+    </div>
+  );
+}

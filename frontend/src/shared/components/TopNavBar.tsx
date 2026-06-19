@@ -2,6 +2,10 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "../../modules/auth/context/AuthContext";
 
 function getTitle(path: string): string {
+  if (path.includes("/camara/registro-manual")) return "Registrar Datos de Entrada / Salida";
+  if (path.includes("/camara/accesos")) return "Aceptar Acceso Vehicular";
+  if (path.includes("/camara/falla")) return "Error de Identificación de Placa";
+  if (path.includes("/camara")) return "Detección y Captura de Placa";
   if (path.includes("/rutas")) return "Rutas";
   if (path.includes("/flota")) return "Gestión de Flota";
   if (path.includes("/dashboard")) return "Dashboard";
