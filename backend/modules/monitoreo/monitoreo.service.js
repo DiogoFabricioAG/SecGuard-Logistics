@@ -59,9 +59,9 @@ async function accesosPorDecision({ decision_acceso, tipo_evento, estado_barrera
   let idx = 1;
 
   if (tipo_evento) {
-    // tipo_evento can be 'ENTRADA,SALIDA' from the route
     const events = tipo_evento.split(',');
-    conditions.push(`ra.tipo_evento IN ($${idx++}, $${idx++})`);
+    const placeholders = events.map(() => `$${idx++}`).join(', ');
+    conditions.push(`ra.tipo_evento IN (${placeholders})`);
     params.push(...events);
   }
   if (decision_acceso) {
