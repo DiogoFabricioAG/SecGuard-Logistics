@@ -20,7 +20,7 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, message: 'SecGuard Logistics API v1.0.0' });
