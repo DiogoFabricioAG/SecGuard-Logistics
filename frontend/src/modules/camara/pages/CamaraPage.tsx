@@ -308,22 +308,22 @@ export default function CamaraPage() {
       )}
 
       {alertModal && (
-        <div className="fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm flex items-center justify-center animate-fade-in">
-          <div className="bg-[#1a0a00] border-2 border-amber-500/50 rounded-2xl p-8 max-w-md w-full mx-4 text-center shadow-2xl animate-scale-in">
-            <div className="w-20 h-20 bg-amber-500/15 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-              <span className="material-symbols-outlined text-amber-400 text-5xl">warning</span>
+        <div className="fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-[#1a0a00] border-2 border-amber-500/50 rounded-2xl p-6 sm:p-10 max-w-md w-full text-center shadow-2xl animate-scale-in">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber-500/15 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <span className="material-symbols-outlined text-amber-400 text-4xl sm:text-5xl">warning</span>
             </div>
-            <h3 className="text-2xl font-black text-white mb-2">¡Placa Desconocida!</h3>
-            <p className="text-4xl font-black text-amber-400 tracking-widest mb-4">{alertModal.plate}</p>
-            <p className="text-sm text-slate-400 mb-8">
+            <h3 className="text-xl sm:text-2xl font-black text-white mb-2">¡Placa Desconocida!</h3>
+            <p className="text-2xl sm:text-4xl font-black text-amber-400 tracking-widest mb-4 break-all">{alertModal.plate}</p>
+            <p className="text-xs sm:text-sm text-slate-400 mb-6 sm:mb-8 break-words">
               Esta placa no está registrada en el sistema. Se requiere registro manual por un administrador.
             </p>
             <div className="flex flex-col gap-3">
-              <button onClick={() => { navigate(`/camara/registro-manual?placa=${alertModal.plate}${alertModal.capturaUrl ? `&captura=${encodeURIComponent(alertModal.capturaUrl)}` : ""}`); setAlertModal(null); }} className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3.5 rounded-xl text-base flex items-center justify-center gap-2 transition-colors">
+              <button onClick={() => { navigate(`/camara/registro-manual?placa=${alertModal.plate}${alertModal.capturaUrl ? `&captura=${encodeURIComponent(alertModal.capturaUrl)}` : ""}`); setAlertModal(null); }} className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 sm:py-3.5 rounded-xl text-sm sm:text-base flex items-center justify-center gap-2 transition-colors">
                 <span className="material-symbols-outlined">edit_note</span>
                 Registrar Manualmente
               </button>
-              <button onClick={() => setAlertModal(null)} className="w-full bg-white/5 hover:bg-white/10 text-slate-400 font-bold py-2.5 rounded-xl text-sm transition-colors">
+              <button onClick={() => setAlertModal(null)} className="w-full bg-white/5 hover:bg-white/10 text-slate-400 font-bold py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm transition-colors">
                 Cerrar
               </button>
             </div>
