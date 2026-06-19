@@ -86,18 +86,24 @@ export default function CamaraPage() {
       addLog("ALPR: enviando frame a Plate Recognizer...");
       const result = await detectPlate(frame);
       if (!result) { addLog("ALPR: sin placa detectada"); setAlprLoading(false); return; }
-      addLog(`ALPR: placa=${result.plate} conf=${result.confidence}%`);
-      if (result.plate !== lastResult.current?.plate) {
-        lastResult.current = result;
-        const placaNormalizada = normalizarPlaca(result.plate);
-        setAlpr({ plate: placaNormalizada, confidence: result.confidence });
-        const viaje = await buscarViajePorPlaca(placaNormalizada).then((r) => r.data).catch(() => ({ id_camion: null, id_viaje: null, codigo_reserva: null }));
-        addLog(`Viaje lookup: camion=${viaje.id_camion} viaje=${viaje.id_viaje}`);
-        broadcast({ type: "plate-detected", plate: placaNormalizada, confidence: result.confidence, timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje, desconocida: !viaje.id_camion, codigoReserva: viaje.codigo_reserva ?? undefined });
-        registrarDeteccion({ placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence, tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO", latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA", id_viaje: viaje.id_viaje, id_camion: viaje.id_camion })
-          .then(() => addLog("Backend: registro OK"))
-          .catch((e: Error) => addLog(`Backend ERROR: ${e.message}`));
+      addLog(`ALPR: placa=${result.plate} conf=${result.confidence}% last=${lastResult.current?.plate || "null"}`);
+      if (result.plate === lastResult.current?.plate) {
+        addLog("ALPR: misma placa, omitiendo");
+        setAlprLoading(false);
+        return;
       }
+      addLog("ALPR: nueva placa detectada, procesando...");
+      lastResult.current = result;
+      const placaNormalizada = normalizarPlaca(result.plate);
+      setAlpr({ plate: placaNormalizada, confidence: result.confidence });
+      addLog(`Placa normalizada: ${placaNormalizada}`);
+      const viaje = await buscarViajePorPlaca(placaNormalizada).then((r) => r.data).catch(() => ({ id_camion: null, id_viaje: null, codigo_reserva: null }));
+      addLog(`Viaje lookup: camion=${viaje.id_camion} viaje=${viaje.id_viaje}`);
+      broadcast({ type: "plate-detected", plate: placaNormalizada, confidence: result.confidence, timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje, desconocida: !viaje.id_camion, codigoReserva: viaje.codigo_reserva ?? undefined });
+      addLog("Llamando registrarDeteccion...");
+      registrarDeteccion({ placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence, tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO", latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA", id_viaje: viaje.id_viaje, id_camion: viaje.id_camion })
+        .then(() => addLog("Backend: registro OK"))
+        .catch((e: Error) => addLog(`Backend ERROR: ${e.message}`));
       setAlprLoading(false);
     }, 4000);
     return () => { if (alprInterval.current) clearInterval(alprInterval.current); };
@@ -150,6 +156,7 @@ export default function CamaraPage() {
             )}
           </div>
         )}
+        <DebugLogs logs={logs} />
       </div>
     );
   }
@@ -278,9 +285,7 @@ export default function CamaraPage() {
         </div>
       )}
 
-      <div className={`fixed bottom-2 left-2 z-[9998] bg-black/80 backdrop-blur-sm text-[10px] text-green-400 font-mono rounded-lg p-2 max-h-[180px] overflow-y-auto max-w-[380px] leading-relaxed ${logs.length === 0 ? "hidden" : ""}`}>
-        {logs.map((l, i) => <div key={i} className="whitespace-nowrap">{l}</div>)}
-      </div>
+      <DebugLogs logs={logs} />
     </div>
   );
 }
@@ -290,6 +295,14 @@ function DataCard({ label, children }: { label?: string; children: React.ReactNo
     <div className="bg-[#eff4ff] p-2 rounded-[0.6rem] border border-[#e2e8f0]">
       {label && <p className="text-[9px] font-bold text-slate-400 uppercase mb-0.5">{label}</p>}
       {children}
+    </div>
+  );
+}
+
+function DebugLogs({ logs }: { logs: string[] }) {
+  return (
+    <div className={`fixed bottom-2 left-2 z-[9998] bg-black/80 backdrop-blur-sm text-[10px] text-green-400 font-mono rounded-lg p-2 max-h-[180px] overflow-y-auto max-w-[420px] leading-relaxed ${logs.length === 0 ? "hidden" : ""}`}>
+      {logs.map((l, i) => <div key={i} className="whitespace-nowrap">{l}</div>)}
     </div>
   );
 }
