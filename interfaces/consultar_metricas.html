@@ -176,6 +176,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-md shrink-0">
         
+        <!-- GET /api/kpi/disponibilidad-flota -->
         <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Disponibilidad de Flota</span>
@@ -196,6 +197,7 @@
           <p class="text-[11px] text-on-surface-variant" id="kpi-disponibilidad-estado">--</p>
         </div>
 
+        <!-- GET /api/kpi/utilizacion-flota -->
         <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Utilización de Flota</span>
@@ -216,6 +218,7 @@
           <p class="text-[11px] text-on-surface-variant" id="kpi-utilizacion-estado">--</p>
         </div>
 
+        <!-- GET /api/kpi/conversion-viajes -->
         <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Conversión de Viajes</span>
@@ -236,6 +239,7 @@
           <p class="text-[11px] text-on-surface-variant" id="kpi-conversion-estado">--</p>
         </div>
 
+        <!-- GET /api/kpi/prevencion-mantenimiento -->
         <div class="bg-white rounded-xl border border-border-subtle p-4 shadow-sm flex flex-col gap-2">
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Prevención de Mantenimiento</span>
@@ -260,6 +264,7 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-md flex-1 min-h-0">
         
+        <!-- GET /api/kpi/desempeno-clientes -->
         <div class="lg:col-span-2 bg-white rounded-xl border border-border-subtle flex flex-col overflow-hidden shadow-sm">
           <div class="p-4 border-b border-border-subtle flex justify-between items-center bg-white">
             <div>
@@ -296,6 +301,7 @@
           </div>
         </div>
 
+        <!-- GET /api/kpi/distribucion-carga -->
         <div class="lg:col-span-1 bg-white rounded-xl border border-border-subtle flex flex-col overflow-hidden shadow-sm">
           <div class="p-4 border-b border-border-subtle">
             <h2 class="font-headline text-[20px] font-semibold text-on-surface">Distribución por Tipo de Carga</h2>
@@ -406,6 +412,7 @@
       return Number(n).toLocaleString('es-PE');
     }
 
+    // → GET /api/kpi/disponibilidad-flota
     async function cargarDisponibilidadFlota() {
       const f = getFiltros();
       const params = new URLSearchParams();
@@ -422,6 +429,7 @@
         d.porcentaje >= 70 ? 'Flota con buena disponibilidad' : 'Baja disponibilidad de flota';
     }
 
+    // → GET /api/kpi/utilizacion-flota
     async function cargarUtilizacionFlota() {
       const f = getFiltros();
       const params = new URLSearchParams();
@@ -438,6 +446,7 @@
         d.activos + ' camiones activos hoy';
     }
 
+    // → GET /api/kpi/conversion-viajes
     async function cargarConversionViajes() {
       const f = getFiltros();
       const params = new URLSearchParams();
@@ -456,6 +465,7 @@
         d.porcentaje >= 60 ? 'Ritmo operativo saludable' : 'Muchos viajes pendientes de confirmar';
     }
 
+    // → GET /api/kpi/prevencion-mantenimiento
     async function cargarPrevencionMantenimiento() {
       const f = getFiltros();
       const params = new URLSearchParams();
@@ -474,6 +484,7 @@
         d.porcentaje >= 70 ? 'Buena cultura de prevención' : 'Exceso de mantenimientos correctivos';
     }
 
+    // → GET /api/kpi/desempeno-clientes
     async function cargarTablaClientes() {
       const f = getFiltros();
       const params = new URLSearchParams();
@@ -511,6 +522,7 @@
       `).join('');
     }
 
+    // → GET /api/kpi/distribucion-carga
     async function cargarSidebarCarga() {
       const f = getFiltros();
       const params = new URLSearchParams();
@@ -526,6 +538,7 @@
       }
     }
 
+    // → GET /api/kpi/resumen-periodo
     async function cargarResumen() {
       const f = getFiltros();
       const params = new URLSearchParams();
