@@ -1,3 +1,15 @@
+<!--
+Módulo: Detección
+Descripción: Esta pantalla se activa cuando un vehículo intenta ingresar al almacén y el sistema de reconocimiento automático de placas (ALPR) determina que NO cumple los requisitos para pasar, ya sea porque la placa no está registrada en la base de datos o porque su credencial está vencida. El flujo es el siguiente: la cámara detecta la placa, el motor ALPR la reconoce, el sistema la busca en la base de datos y, al no encontrar coincidencia válida, deniega el acceso y deja la barrera cerrada. La pantalla le muestra al administrador la foto capturada del vehículo con la placa resaltada, la lectura que hizo el sistema, un rótulo claro de "Acceso denegado", el motivo exacto del rechazo (por ejemplo "Placa no registrada" o "Credencial vencida"), la empresa a la que supuestamente pertenece el vehículo, el punto de control donde ocurrió el evento y la fecha/hora. También incluye un botón para revisar el historial de intentos previos de esa misma placa, lo cual es útil para detectar si se trata de un caso reincidente o un posible intento de intrusión.
+APIs utilizadas:
+- GET /api/monitoreo/intento-placa/XYZ-7890
+  Esta API trae los datos principales del evento denegado que se muestran en el panel central de la pantalla: la foto capturada del vehículo, el porcentaje de confianza del reconocimiento ALPR, el punto de control, la fecha/hora del intento y la decisión final del sistema (en este caso, DENEGADO). El último segmento de la URL (XYZ-7890) es la placa que se está consultando, es decir, se reemplaza dinámicamente según el vehículo detectado.
+- GET /api/monitoreo/verificar-placa/XYZ-7890
+  Esta API se usa para generar el badge o etiqueta que explica por qué la placa fue rechazada. Verifica si la placa existe como vehículo dado de alta en el sistema y, si no es así, devuelve el motivo correspondiente (por ejemplo, "PLACA_NO_REGISTRADA"). Igual que en el caso anterior, el último tramo de la URL es la placa a verificar.
+- GET /api/monitoreo/historial-intentos/XYZ-7890
+  Esta API se activa cuando el administrador presiona el botón "Ver historial de esta placa". Devuelve la lista completa de todos los intentos de acceso registrados para esa placa, ordenados del más reciente al más antiguo, incluyendo la foto de cada intento, el punto de control, la fecha/hora, el porcentaje de confianza del ALPR y la decisión tomada en cada caso. Esto le permite al administrador ver si existe un patrón de reincidencia.
+-->
+
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>

@@ -1,3 +1,15 @@
+<!--
+Módulo: Detección
+Descripción: Esta pantalla corresponde a un caso especial dentro del proceso de validación ALPR: cuando el sistema detecta una anomalía en los datos del vehículo (por ejemplo, información desactualizada) pero decide NO bloquear el acceso para no afectar la operación logística. En vez de denegar el paso, el sistema otorga un "ingreso preventivo autorizado" y, al mismo tiempo, genera automáticamente una alerta de auditoría para que un administrador la revise después. La pantalla muestra una alerta visual en la parte superior indicando que se detectó una anomalía, la imagen capturada del vehículo con la placa identificada, y un panel lateral con el detalle del caso: el tipo de anomalía, la placa detectada, la empresa asociada, el punto de control, la fecha/hora del evento y el estado actual de la barrera (que en este caso aparece como "Abierta — Preventivo", confirmando que el vehículo sí pudo ingresar). En la parte inferior hay un botón para que el administrador revise la auditoría generada y valide manualmente lo ocurrido.
+APIs utilizadas:
+- GET /api/monitoreo/ultima-anomalia
+  Esta API trae la información que se muestra en el panel lateral de la pantalla. Cruza la anomalía registrada con los datos del acceso, la cámara y el viaje programado para obtener el tipo de anomalía, una descripción detallada, si se autorizó el ingreso preventivo, la placa, la empresa, el punto de control, la fecha/hora y el estado de la barrera.
+- GET /api/monitoreo/anomalias-sin-revisar
+  Esta API controla si se muestra o no el banner de alerta en la parte superior de la pantalla. Cuenta cuántas anomalías del día siguen sin ser revisadas por ningún administrador (es decir, sin asignar a nadie todavía); si el número es mayor a cero, el banner se muestra para avisar que hay pendientes por atender.
+- GET /api/monitoreo/auditoria-anomalia/DFT-5521
+  Esta API se ejecuta cuando el administrador presiona el botón inferior "Revisar alerta de auditoría". Trae el registro completo de la auditoría asociada a esa placa: qué campo fue modificado, cuál era el valor original, cuál fue el valor corregido, la justificación del cambio y qué administrador hizo la revisión. El último tramo de la URL (DFT-5521) corresponde a la placa del vehículo bajo auditoría.
+-->
+
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>
