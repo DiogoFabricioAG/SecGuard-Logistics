@@ -50,6 +50,13 @@ async function entradasDenegadas(_req, res, next) {
   } catch (err) { next(err); }
 }
 
+async function registrarDeteccion(req, res, next) {
+  try {
+    const data = await service.registrarDeteccion(req.body);
+    res.status(201).json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
 module.exports = {
   completadosPesados,
   erroresLectura,
@@ -58,4 +65,5 @@ module.exports = {
   salidasCerradasRevisadas,
   salidasAutorizadas,
   entradasDenegadas,
+  registrarDeteccion,
 };

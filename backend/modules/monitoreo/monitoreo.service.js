@@ -1,4 +1,4 @@
-const pool = require('../../config/db');
+const pool = require("../../config/db");
 
 async function completadosPesados() {
   const { rows } = await pool.query(
@@ -14,7 +14,7 @@ async function completadosPesados() {
       AND ra.nivel_iluminacion = 'NORMAL'
       AND ra.nivel_obstruccion = 'NINGUNA'
       AND ra.revisado_por_admin IS NULL
-      AND cr.clasificacion_peso = 'CARGA_PESADA'`
+      AND cr.clasificacion_peso = 'CARGA_PESADA'`,
   );
   return rows;
 }
@@ -32,7 +32,7 @@ async function erroresLectura() {
       AND ra.nivel_iluminacion = 'INSUFICIENTE'
       AND ra.nivel_obstruccion = 'DETECTADA'
       AND ra.revisado_por_admin IS NULL
-      AND aa.tipo_anomalia = 'LECTURA_FALLIDA_ALPR'`
+      AND aa.tipo_anomalia = 'LECTURA_FALLIDA_ALPR'`,
   );
   return rows;
 }
@@ -48,19 +48,23 @@ async function entradasPendientes() {
     INNER JOIN camion_ransa c ON ra.id_camion = c.id_camion
     WHERE ra.tipo_evento = 'ENTRADA'
       AND ra.estado_deteccion = 'COMPLETADO'
-      AND ra.revisado_por_admin IS NULL`
+      AND ra.revisado_por_admin IS NULL`,
   );
   return rows;
 }
 
-async function accesosPorDecision({ decision_acceso, tipo_evento, estado_barrera }) {
-  const conditions = ['ra.revisado_por_admin IS NULL'];
+async function accesosPorDecision({
+  decision_acceso,
+  tipo_evento,
+  estado_barrera,
+}) {
+  const conditions = ["ra.revisado_por_admin IS NULL"];
   const params = [];
   let idx = 1;
 
   if (tipo_evento) {
-    const events = tipo_evento.split(',');
-    const placeholders = events.map(() => `$${idx++}`).join(', ');
+    const events = tipo_evento.split(",");
+    const placeholders = events.map(() => `$${idx++}`).join(", ");
     conditions.push(`ra.tipo_evento IN (${placeholders})`);
     params.push(...events);
   }
@@ -83,8 +87,8 @@ async function accesosPorDecision({ decision_acceso, tipo_evento, estado_barrera
       cr.clasificacion_peso AS tipo_vehiculo
     FROM registro_acceso ra
     INNER JOIN camion_ransa cr ON ra.id_camion = cr.id_camion
-    WHERE ${conditions.join(' AND ')}`,
-    params
+    WHERE ${conditions.join(" AND ")}`,
+    params,
   );
   return rows;
 }
@@ -107,7 +111,7 @@ async function salidasCerradasRevisadas() {
     INNER JOIN conductor_ransa cond ON ra.id_conductor = cond.id_conductor
     WHERE ra.tipo_evento = 'SALIDA'
       AND ra.estado_barrera = 'CERRADO'
-      AND ra.revisado_por_admin IS NOT NULL`
+      AND ra.revisado_por_admin IS NOT NULL`,
   );
   return rows;
 }
@@ -121,7 +125,7 @@ async function salidasAutorizadas() {
     WHERE decision_acceso = 'AUTORIZADO'
       AND tipo_evento = 'SALIDA'
       AND estado_barrera = 'ABIERTO'
-      AND revisado_por_admin IS NOT NULL`
+      AND revisado_por_admin IS NOT NULL`,
   );
   return rows;
 }
@@ -138,9 +142,40 @@ async function entradasDenegadas() {
     WHERE ra.decision_acceso = 'DENEGADO'
       AND ra.tipo_evento = 'ENTRADA'
       AND ra.estado_barrera = 'CERRADO'
-      AND aa.tipo_anomalia IN ('RESTRICCION_HORARIA_PROXIMA', 'DOCUMENTACION_VENCIDA')`
+      AND aa.tipo_anomalia IN ('RESTRICCION_HORARIA_PROXIMA', 'DOCUMENTACION_VENCIDA')`,
   );
   return rows;
+}
+
+async function registrarDeteccion({
+  placa_detectada_alpr,
+  confianza_alpr,
+  tipo_evento,
+  decision_acceso,
+  estado_barrera,
+  latencia_ms,
+  nivel_iluminacion,
+  nivel_obstruccion,
+}) {
+  const { rows } = await pool.query(
+    `INSERT INTO registro_acceso (
+      placa_detectada_alpr, confianza_alpr, estado_deteccion,
+      timestamp_evento, tipo_evento, decision_acceso, estado_barrera,
+      latencia_ms, nivel_iluminacion, nivel_obstruccion
+    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5, $6, $7, $8)
+    RETURNING id_acceso`,
+    [
+      placa_detectada_alpr,
+      confianza_alpr,
+      tipo_evento,
+      decision_acceso,
+      estado_barrera,
+      latencia_ms,
+      nivel_iluminacion,
+      nivel_obstruccion,
+    ],
+  );
+  return rows[0];
 }
 
 module.exports = {
@@ -151,4 +186,5 @@ module.exports = {
   salidasCerradasRevisadas,
   salidasAutorizadas,
   entradasDenegadas,
+  registrarDeteccion,
 };

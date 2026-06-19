@@ -102,3 +102,19 @@ export function getSalidasCerradas() {
 export function getEntradasDenegadas() {
   return api.get<ApiResponse<EntradaDenegada[]>>("/api/monitoreo/entradas-denegadas");
 }
+
+export function registrarDeteccion(payload: {
+  placa_detectada_alpr: string;
+  confianza_alpr: number;
+  tipo_evento: string;
+  decision_acceso: string;
+  estado_barrera: string;
+  latencia_ms: number;
+  nivel_iluminacion: string;
+  nivel_obstruccion: string;
+}) {
+  return api.post<ApiResponse<{ id_acceso: number }>>(
+    "/api/monitoreo/registrar-deteccion",
+    payload
+  );
+}

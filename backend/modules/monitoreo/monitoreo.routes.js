@@ -12,5 +12,6 @@ router.get('/accesos-decision', controller.accesosPorDecision);
 router.get('/salidas-cerradas', controller.salidasCerradasRevisadas);
 router.get('/salidas-autorizadas', controller.salidasAutorizadas);
 router.get('/entradas-denegadas', controller.entradasDenegadas);
+router.post('/registrar-deteccion', controller.registrarDeteccion);
 
 module.exports = router;

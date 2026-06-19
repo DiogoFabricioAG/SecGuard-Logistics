@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { usePeerCamera } from "../hooks/usePeerCamera";
 import { detectPlate, type AlprResult } from "../services/alprService";
-import { getCompletadosPesados, type DeteccionCompletada } from "../services/monitoreoApi";
+import { getCompletadosPesados, registrarDeteccion, type DeteccionCompletada } from "../services/monitoreoApi";
 
 interface BroadcastMessage { type: "plate-detected"; plate: string; confidence: number; timestamp: string; }
 
@@ -65,6 +65,17 @@ export default function CamaraPage() {
           };
           broadcast(msg);
           showToast(result.plate, "Entrada");
+
+          registrarDeteccion({
+            placa_detectada_alpr: result.plate,
+            confianza_alpr: result.confidence,
+            tipo_evento: "ENTRADA",
+            decision_acceso: "AUTORIZADO",
+            estado_barrera: "ABIERTO",
+            latencia_ms: 0,
+            nivel_iluminacion: "NORMAL",
+            nivel_obstruccion: "NINGUNA",
+          }).catch(() => {});
         }
       }
       setAlprLoading(false);
