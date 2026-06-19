@@ -1,3 +1,19 @@
+<!--
+Módulo: Dashboard
+Descripción: Esta es la pantalla principal que ve el Administrador apenas inicia sesión en el sistema SecGuard Logistics. Su objetivo es darle una "fotografía" general y en tiempo real de cómo va operando el control de acceso vehicular del almacén durante el día. En la parte superior se muestran tarjetas con los indicadores clave del día (cuántos vehículos han pasado en total, cuántos accesos fueron autorizados y cuántos fueron denegados), cada uno con su variación respecto al día anterior para que el administrador note de inmediato si hay algo inusual. Debajo, un gráfico de barras resume la actividad de los últimos 7 días (autorizados vs. denegados por día), mientras que un gráfico circular (donut) desglosa los motivos más frecuentes de denegación, ayudando a identificar patrones como fallas en cámaras, guías de remisión incompletas o intentos de intrusión. Más abajo hay una tabla con los eventos de acceso más recientes (punto de control, placa, empresa, fecha/hora y resultado), y al final un widget muestra el estado de salud del sistema (porcentaje de uptime y número de alertas activas). En conjunto, esta pantalla le permite al administrador supervisar todo el flujo de accesos sin tener que entrar a cada módulo por separado.
+APIs utilizadas:
+- GET /api/dashboard/kpi-cabecera
+  Esta API alimenta las tarjetas de KPIs en la parte superior (Vehículos Hoy, Accesos Autorizados, Accesos Denegados). Devuelve los totales acumulados del día actual junto con el porcentaje de variación respecto al día anterior, que es lo que se muestra como la flechita o el indicador de tendencia en cada tarjeta.
+- GET /api/dashboard/actividad-semanal
+  Esta API llena el gráfico de barras de "Actividad de accesos últimos 7 días". Devuelve, por cada uno de los últimos 7 días operativos, la fecha (fecha_snapshot), el nombre del día (dia_semana) y los totales de accesos autorizados y denegados (total_autorizados, total_denegados), permitiendo comparar visualmente el comportamiento diario.
+- GET /api/dashboard/motivos-denegacion
+  Esta API alimenta el gráfico donut de "Motivos de denegación". Agrupa todos los eventos denegados de la semana según su categoría (por ejemplo: FALLA_CAMARA, GUIA_CON_FALTANTES, INTRUSION_SOSPECHOSA) y calcula qué porcentaje representa cada motivo sobre el total, para que el administrador sepa cuál es la causa más recurrente de rechazo.
+- GET /api/dashboard/ultimos-eventos
+  Esta API llena la tabla de "Últimos eventos de acceso" en la parte inferior del dashboard. Combina información de varias tablas (registro de acceso, cámara/dispositivo y viaje programado) para mostrar en cada fila el punto de control donde ocurrió el evento, la placa detectada, la empresa asociada, la fecha/hora exacta y si el resultado fue autorizado, denegado o con anomalía.
+- GET /api/dashboard/estado-sistema
+  Esta API alimenta el widget de "Estado del sistema" ubicado al pie del dashboard. Devuelve el porcentaje de disponibilidad del sistema (uptime_pct) y la cantidad de alertas activas en ese momento, dando una idea rápida de si la plataforma está funcionando con normalidad.
+-->
+
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>
