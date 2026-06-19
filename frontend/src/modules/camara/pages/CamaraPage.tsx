@@ -2,27 +2,41 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { usePeerCamera } from "../hooks/usePeerCamera";
 import { detectPlate, type AlprResult } from "../services/alprService";
-import { getCompletadosPesados, registrarDeteccion, type DeteccionCompletada } from "../services/monitoreoApi";
+import { getCompletadosPesados, registrarDeteccion, buscarViajePorPlaca, type DeteccionCompletada } from "../services/monitoreoApi";
 
-interface BroadcastMessage { type: "plate-detected"; plate: string; confidence: number; timestamp: string; }
+interface BroadcastMessage {
+  type: "plate-detected"; plate: string; confidence: number; timestamp: string;
+  requiereManual?: boolean; desconocida?: boolean; codigoReserva?: string;
+}
+
+function normalizarPlaca(raw: string): string {
+  const limpia = raw.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+  if (limpia.length >= 4) return limpia.slice(0, 3) + "-" + limpia.slice(3);
+  return limpia;
+}
 
 export default function CamaraPage() {
   const [deteccion, setDeteccion] = useState<DeteccionCompletada | null>(null);
   const [alpr, setAlpr] = useState<AlprResult | null>(null);
   const [alprLoading, setAlprLoading] = useState(false);
-  const [toast, setToast] = useState<{ plate: string; action: string } | null>(null);
+  const [toast, setToast] = useState<{ plate: string; action: string; requiereManual?: boolean } | null>(null);
   const alprInterval = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastResult = useRef<AlprResult | null>(null);
 
   const onData = useCallback((msg: BroadcastMessage) => {
     if (msg.type === "plate-detected") {
       setAlpr({ plate: msg.plate, confidence: msg.confidence });
-      showToast(msg.plate, "Entrada");
+      const action = msg.desconocida
+        ? "Placa desconocida"
+        : msg.requiereManual
+          ? "Sin viaje asociado"
+          : `Viaje ${msg.codigoReserva || ""}`;
+      showToast(msg.plate, action);
     }
   }, []);
 
   function showToast(plate: string, action: string) {
-    setToast({ plate, action });
+    setToast({ plate, action, requiereManual: action.includes("Sin viaje") || action.includes("desconocida") });
     setTimeout(() => setToast(null), 5000);
   }
 
@@ -56,18 +70,30 @@ export default function CamaraPage() {
         const result = await detectPlate(frame);
         if (result && result.plate !== lastResult.current?.plate) {
           lastResult.current = result;
-          setAlpr(result);
+          const placaNormalizada = normalizarPlaca(result.plate);
+          setAlpr({ plate: placaNormalizada, confidence: result.confidence });
+
+          const viaje = await buscarViajePorPlaca(placaNormalizada).then((r) => r.data).catch(() => ({ id_camion: null, id_viaje: null, codigo_reserva: null }));
+
           const msg: BroadcastMessage = {
             type: "plate-detected",
-            plate: result.plate,
+            plate: placaNormalizada,
             confidence: result.confidence,
             timestamp: new Date().toISOString(),
+            requiereManual: !viaje.id_viaje,
+            desconocida: !viaje.id_camion,
+            codigoReserva: viaje.codigo_reserva ?? undefined,
           };
           broadcast(msg);
-          showToast(result.plate, "Entrada");
+
+          if (viaje.id_camion) {
+            showToast(placaNormalizada, viaje.id_viaje ? `Viaje ${viaje.codigo_reserva}` : "Sin viaje asociado");
+          } else {
+            showToast(placaNormalizada, "Placa desconocida");
+          }
 
           registrarDeteccion({
-            placa_detectada_alpr: result.plate,
+            placa_detectada_alpr: placaNormalizada,
             confianza_alpr: result.confidence,
             tipo_evento: "ENTRADA",
             decision_acceso: "AUTORIZADO",
@@ -75,6 +101,8 @@ export default function CamaraPage() {
             latencia_ms: 0,
             nivel_iluminacion: "NORMAL",
             nivel_obstruccion: "NINGUNA",
+            id_viaje: viaje.id_viaje,
+            id_camion: viaje.id_camion,
           }).catch(() => {});
         }
       }
@@ -245,18 +273,25 @@ export default function CamaraPage() {
       </div>
 
       {toast && (
-        <div className="fixed bottom-6 right-6 bg-[#001e23] text-white px-6 py-4 rounded-xl flex items-center gap-4 z-50 border border-[#0a3a40] shadow-xl animate-slide-up">
-          <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
-            <span className="material-symbols-outlined text-green-400 text-2xl">check_circle</span>
+        <div className={`fixed bottom-6 right-6 px-6 py-4 rounded-xl flex items-center gap-4 z-50 border shadow-xl animate-slide-up ${toast.requiereManual ? "bg-[#3d1c00] border-[#5c3100] text-white" : "bg-[#001e23] border-[#0a3a40] text-white"}`}>
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${toast.requiereManual ? "bg-amber-500/20" : "bg-green-500/20"}`}>
+            <span className={`material-symbols-outlined text-2xl ${toast.requiereManual ? "text-amber-400" : "text-green-400"}`}>
+              {toast.requiereManual ? "warning" : "check_circle"}
+            </span>
           </div>
           <div>
-            <p className="font-bold text-base leading-tight">Placa Detectada: <span className="text-green-400">{toast.plate}</span></p>
-            <p className="text-sm text-slate-400">
-              {toast.action} registrada — {new Date().toLocaleTimeString("es-PE")}
+            <p className="font-bold text-base leading-tight">Placa Detectada: <span className={toast.requiereManual ? "text-amber-400" : "text-green-400"}>{toast.plate}</span></p>
+            <p className="text-sm opacity-70">
+              {toast.action} — {new Date().toLocaleTimeString("es-PE")}
               {isSender && " · Transmitido a todos los viewers"}
             </p>
           </div>
-          <button onClick={() => setToast(null)} className="ml-4 text-slate-400 hover:text-white">
+          {toast.requiereManual && (
+            <Link to={`/camara/registro-manual?placa=${toast.plate}`} className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
+              Registrar Manual
+            </Link>
+          )}
+          <button onClick={() => setToast(null)} className="text-white/50 hover:text-white ml-2">
             <span className="material-symbols-outlined text-xl">close</span>
           </button>
         </div>

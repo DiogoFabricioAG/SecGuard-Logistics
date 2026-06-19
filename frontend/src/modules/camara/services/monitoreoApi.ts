@@ -112,9 +112,17 @@ export function registrarDeteccion(payload: {
   latencia_ms: number;
   nivel_iluminacion: string;
   nivel_obstruccion: string;
+  id_viaje?: number | null;
+  id_camion?: number | null;
 }) {
   return api.post<ApiResponse<{ id_acceso: number }>>(
     "/api/monitoreo/registrar-deteccion",
     payload
+  );
+}
+
+export function buscarViajePorPlaca(placa: string) {
+  return api.get<ApiResponse<{ id_camion: number | null; id_viaje: number | null; codigo_reserva: string | null }>>(
+    `/api/monitoreo/viaje-por-placa/${placa}`
   );
 }

@@ -57,6 +57,13 @@ async function registrarDeteccion(req, res, next) {
   } catch (err) { next(err); }
 }
 
+async function viajePorPlaca(req, res, next) {
+  try {
+    const data = await service.buscarViajePorPlaca(req.params.placa);
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
+}
+
 module.exports = {
   completadosPesados,
   erroresLectura,
@@ -66,4 +73,5 @@ module.exports = {
   salidasAutorizadas,
   entradasDenegadas,
   registrarDeteccion,
+  viajePorPlaca,
 };

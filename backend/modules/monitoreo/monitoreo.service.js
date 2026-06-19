@@ -148,43 +148,47 @@ async function entradasDenegadas() {
 }
 
 async function registrarDeteccion({
-  placa_detectada_alpr,
-  confianza_alpr,
-  tipo_evento,
-  decision_acceso,
-  estado_barrera,
-  latencia_ms,
-  nivel_iluminacion,
-  nivel_obstruccion,
+  placa_detectada_alpr, confianza_alpr, tipo_evento, decision_acceso,
+  estado_barrera, latencia_ms, nivel_iluminacion, nivel_obstruccion,
+  id_viaje, id_camion,
 }) {
   const { rows } = await pool.query(
     `INSERT INTO registro_acceso (
       placa_detectada_alpr, confianza_alpr, estado_deteccion,
       timestamp_evento, tipo_evento, decision_acceso, estado_barrera,
-      latencia_ms, nivel_iluminacion, nivel_obstruccion
-    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5, $6, $7, $8)
+      latencia_ms, nivel_iluminacion, nivel_obstruccion,
+      id_viaje, id_camion
+    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING id_acceso`,
-    [
-      placa_detectada_alpr,
-      confianza_alpr,
-      tipo_evento,
-      decision_acceso,
-      estado_barrera,
-      latencia_ms,
-      nivel_iluminacion,
-      nivel_obstruccion,
-    ],
+    [placa_detectada_alpr, confianza_alpr, tipo_evento, decision_acceso,
+      estado_barrera, latencia_ms, nivel_iluminacion, nivel_obstruccion,
+      id_viaje || null, id_camion || null],
   );
   return rows[0];
 }
 
+async function buscarViajePorPlaca(placa) {
+  const { rows } = await pool.query(
+    `SELECT cr.id_camion, va.id_viaje, vp.codigo_reserva_patio, vp.estado_viaje
+     FROM camion_ransa cr
+     LEFT JOIN viaje_asignacion va ON cr.id_camion = va.id_camion
+     LEFT JOIN viaje_programado vp ON va.id_viaje = vp.id_viaje
+       AND vp.estado_viaje IN ('PENDIENTE', 'CONFIRMADO')
+     WHERE cr.placa_matricula = $1
+     ORDER BY vp.fecha_hora_estimada ASC
+     LIMIT 1`,
+    [placa]
+  );
+  if (rows.length === 0) return { id_camion: null, id_viaje: null };
+  return {
+    id_camion: rows[0].id_camion,
+    id_viaje: rows[0].id_viaje || null,
+    codigo_reserva: rows[0].codigo_reserva_patio || null,
+  };
+}
+
 module.exports = {
-  completadosPesados,
-  erroresLectura,
-  entradasPendientes,
-  accesosPorDecision,
-  salidasCerradasRevisadas,
-  salidasAutorizadas,
-  entradasDenegadas,
-  registrarDeteccion,
+  completadosPesados, erroresLectura, entradasPendientes,
+  accesosPorDecision, salidasCerradasRevisadas, salidasAutorizadas,
+  entradasDenegadas, registrarDeteccion, buscarViajePorPlaca,
 };

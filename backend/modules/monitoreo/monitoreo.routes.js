@@ -13,5 +13,6 @@ router.get('/salidas-cerradas', controller.salidasCerradasRevisadas);
 router.get('/salidas-autorizadas', controller.salidasAutorizadas);
 router.get('/entradas-denegadas', controller.entradasDenegadas);
 router.post('/registrar-deteccion', controller.registrarDeteccion);
+router.get('/viaje-por-placa/:placa', controller.viajePorPlaca);
 
 module.exports = router;

@@ -256,8 +256,8 @@ CREATE TABLE intento_acceso_no_registrado (
 
 CREATE TABLE registro_acceso (
     id_acceso           SERIAL PRIMARY KEY,
-    id_viaje            INT          NOT NULL,
-    id_camion           INT          NOT NULL,
+    id_viaje            INT          ,
+    id_camion           INT          ,
     id_conductor        INT          NOT NULL,
     id_camara           INT          NOT NULL,
     tipo_evento         VARCHAR(20)  NOT NULL, -- SALIDA_RUTA, RETORNO_RUTA
