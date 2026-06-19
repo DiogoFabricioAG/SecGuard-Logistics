@@ -28,6 +28,7 @@ export interface ErrorLectura {
 }
 
 export interface AccesoDecision {
+  id_acceso: number;
   id_camion: number;
   placa_detectada_alpr: string;
   fecha_hora_registro: string;
@@ -38,6 +39,7 @@ export interface AccesoDecision {
   modelo: string;
   capacidad_toneladas: number;
   tipo_vehiculo: string;
+  url_foto_captura: string | null;
 }
 
 export interface SalidaCerrada {

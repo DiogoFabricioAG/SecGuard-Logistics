@@ -58,7 +58,7 @@ async function accesosPorDecision({
   tipo_evento,
   estado_barrera,
 }) {
-  const conditions = ["ra.revisado_por_admin IS NULL"];
+  const conditions = [];
   const params = [];
   let idx = 1;
 
@@ -77,17 +77,22 @@ async function accesosPorDecision({
     params.push(estado_barrera);
   }
 
+  const where = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+
   const { rows } = await pool.query(
     `SELECT
+      ra.id_acceso,
       ra.id_camion, ra.placa_detectada_alpr,
       ra.timestamp_evento AS fecha_hora_registro,
       ra.tipo_evento, ra.decision_acceso AS estado_registro,
       ra.estado_barrera, ra.revisado_por_admin,
       cr.modelo, cr.capacidad_toneladas,
-      cr.clasificacion_peso AS tipo_vehiculo
+      cr.clasificacion_peso AS tipo_vehiculo,
+      ra.url_foto_captura
     FROM registro_acceso ra
-    INNER JOIN camion_ransa cr ON ra.id_camion = cr.id_camion
-    WHERE ${conditions.join(" AND ")}`,
+    LEFT JOIN camion_ransa cr ON ra.id_camion = cr.id_camion
+    ${where}
+    ORDER BY ra.timestamp_evento DESC`,
     params,
   );
   return rows;

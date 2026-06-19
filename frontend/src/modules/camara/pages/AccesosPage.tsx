@@ -28,7 +28,7 @@ export default function AccesosPage() {
       .catch(() => setLoading(false));
   }, [filterEvento, filterModelo]);
 
-  const selected = accesos.find((a) => a.id_camion === selectedId);
+  const selected = accesos.find((a) => a.id_acceso === selectedId);
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden bg-[#f8f9ff]">
@@ -94,10 +94,10 @@ export default function AccesosPage() {
                 ) : (
                   accesos.map((a) => (
                     <tr
-                      key={a.id_camion + a.fecha_hora_registro}
-                      onClick={() => setSelectedId(selectedId === a.id_camion ? null : a.id_camion)}
+                      key={`acc-${a.id_acceso}`}
+                      onClick={() => setSelectedId(selectedId === a.id_acceso ? null : a.id_acceso)}
                       className={`cursor-pointer transition-colors ${
-                        selectedId === a.id_camion
+                        selectedId === a.id_acceso
                           ? "bg-[#f1f9f4] border-l-4 border-l-[#007236]"
                           : "hover:bg-slate-50 border-l-4 border-l-transparent"
                       }`}
@@ -108,15 +108,15 @@ export default function AccesosPage() {
                             <span className="material-symbols-outlined text-lg">local_shipping</span>
                           </div>
                           <div>
-                            <div className="font-bold text-[#007236] text-[12px]">{a.modelo}</div>
-                            <div className="text-[9px] text-slate-400 font-bold">VH-{a.id_camion}</div>
+                            <div className="font-bold text-[#007236] text-[12px]">{a.modelo || "—"}</div>
+                            <div className="text-[9px] text-slate-400 font-bold">{a.id_camion ? `VH-${a.id_camion}` : "Manual"}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-2.5 py-3 border-b border-slate-50 font-bold text-slate-600 text-[11px]">{a.modelo}</td>
+                      <td className="px-2.5 py-3 border-b border-slate-50 font-bold text-slate-600 text-[11px]">{a.modelo || "—"}</td>
                       <td className="px-2.5 py-3 border-b border-slate-50 font-black text-primary text-[12px]">{a.placa_detectada_alpr}</td>
                       <td className="px-2.5 py-3 border-b border-slate-50 text-slate-400 font-bold text-[11px]">
-                        {a.tipo_vehiculo} / {a.capacidad_toneladas}T
+                        {a.tipo_vehiculo ? `${a.tipo_vehiculo} / ${a.capacidad_toneladas}T` : "—"}
                       </td>
                       <td className="px-2.5 py-3 border-b border-slate-50 text-slate-500 font-bold text-[11px]">{a.tipo_evento}</td>
                       <td className="px-2.5 py-3 border-b border-slate-50">
@@ -159,13 +159,16 @@ export default function AccesosPage() {
             </div>
 
             <div className="relative rounded-xl overflow-hidden aspect-video shadow-sm border border-slate-100">
-              <img
-                src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=600"
-                alt="Truck"
-                className="w-full h-full object-cover"
-              />
+              {selected.url_foto_captura ? (
+                <img src={selected.url_foto_captura} alt="Captura ALPR" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-slate-100 flex flex-col items-center justify-center gap-1">
+                  <span className="material-symbols-outlined text-3xl text-slate-300">no_photography</span>
+                  <span className="text-[9px] font-bold text-slate-400 uppercase">Sin captura</span>
+                </div>
+              )}
               <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm text-white text-[8px] px-2 py-1 rounded font-bold">
-                {selected.modelo} · {selected.tipo_vehiculo}
+                {selected.modelo || "Sin modelo"} · {selected.tipo_vehiculo || "Sin clasificación"}
               </div>
             </div>
 
