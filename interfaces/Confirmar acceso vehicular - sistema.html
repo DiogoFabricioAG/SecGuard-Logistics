@@ -1,3 +1,8 @@
+<!-- Modulo : Detección 
+Descripción: Es la pantalla de que le sigue a la pantalla html : Vigilancia y captura de placa.html, recordar que esto en si el sistema lo hace de manera automatica, es decir despues de la primera pantalla debe de pasar en prom de 15 segundos a 20 segundos para que aparezca esta pantalla, tener en cuenta que deben de funcionar los botones como Filtrar , Todos, Entrada , Salida, ahi tendrias que clasificarlo segun el campo de DIRECCIÓN para cuando hacer click en entrada por ejemplo me aparezca solo los registros de dichoe entradas, igualmente para salida que sea su direccion salida y en caso del boton que dice todos obviamente la suma de ambos, osea que aparezca tanto los registros de Entrada y Salida, en caso de Filtrar se puede escoger valores del campo MODELO 
+API Utilizada : GET /api/monitoreo/accesos-decision?decision_acceso=AUTORIZADO&tipo_evento=ENTRADA,SALIDA&estado_barrera=ABIERTO , con este endopoint se tendria que vizualizar los datos que se va a mostrar en esta pantalla-->
+
+
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>
@@ -69,7 +74,7 @@
             </div>
 
             <nav class="space-y-2">
-                <a href="4.2.5_panel_de_control_y_monitoreo_general.html" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                <a href="#" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
                     <span class="material-symbols-outlined mr-3">grid_view</span>
                     <span class="font-bold text-sm">Dashboard</span>
                 </a>
@@ -77,11 +82,11 @@
                     <span class="material-symbols-outlined mr-3">local_shipping</span>
                     <span class="font-bold text-sm">Flota</span>
                 </a>
-                <a href="registrar_viaje.html" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                <a href="#" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
                     <span class="material-symbols-outlined mr-3">alt_route</span>
                     <span class="font-bold text-sm">Rutas</span>
                 </a>
-                <a href="configurar_kpi.html" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+                <a href="#" class="flex items-center px-3 py-2 text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
                     <span class="material-symbols-outlined mr-3">analytics</span>
                     <span class="font-bold text-sm">Analítica</span>
                 </a>
@@ -93,7 +98,7 @@
                 <span class="material-symbols-outlined mr-3">help_outline</span>
                 <span class="font-bold text-sm">Soporte</span>
             </a>
-            <a href="4.2.1_login.html" class="flex items-center px-3 py-2 text-red-600 hover:bg-red-50 rounded-xl transition-all">
+            <a href="#" class="flex items-center px-3 py-2 text-red-600 hover:bg-red-50 rounded-xl transition-all">
                 <span class="material-symbols-outlined mr-3">logout</span>
                 <span class="font-bold text-sm">Cerrar Sesión</span>
             </a>
@@ -138,7 +143,7 @@
                         <span class="material-symbols-outlined text-sm">filter_list</span> Filtrar
                     </button>
                 </div>
-
+             <!--Tener en cuenta que todos los valores de cada campo deben de hacer de acuerdo al api : /api/monitoreo/accesos-decision?decision_acceso=AUTORIZADO&tipo_evento=ENTRADA,SALIDA&estado_barrera=ABIERTO , osea deben de mantener su valor respecto a lo mencionado, teniendo en cuenta que el primer registro debe de ser de la placa que se ha detectada en la anterior pantalla con sus respectivos datos de los otros campos, ya luego haces uso de la API mencionada para mostrar los demas registros-->
                 <div class="bg-white border border-slate-100 rounded-xl overflow-hidden shadow-sm">
                     <table class="w-full custom-table">
                         <thead class="bg-white">
@@ -212,7 +217,7 @@
                     </table>
                     <div class="p-4 border-t border-slate-50 flex justify-between items-center bg-white">
                         <div class="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase">
-                            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full"></span> SISTEMA EN LÍNEA - PROCESANDO...
+                            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full"></span> El registro de A1B-234 ha sido sincronizado...
                         </div>
                         <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest">Mostrando 3 de 128 registros</p>
                     </div>
@@ -235,7 +240,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
                         <p class="text-[7px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Placa</p>
-                        <p class="text-sm font-black text-primary">ABC-123</p>
+                        <p class="text-sm font-black text-primary">A1B-234</p>
                     </div>
                     <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
                         <p class="text-[7px] text-slate-400 font-black uppercase tracking-widest mb-0.5">Modelo</p>
@@ -269,9 +274,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="mt-auto space-y-2">
-                    <button class="w-full bg-primary text-white py-3 rounded-xl font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-primary/20" onclick="window.location.href='Confirmar Acceso vehicular - Administrador.html'">
+                    <button class="w-full bg-primary text-white py-3 rounded-xl font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
                         <span class="material-symbols-outlined text-sm">print</span> Imprimir Ticket
                     </button>
                     <button class="w-full border border-slate-100 text-slate-400 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest hover:bg-slate-50">
