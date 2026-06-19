@@ -13,6 +13,7 @@ export interface BroadcastMessage {
   requiereManual?: boolean;
   desconocida?: boolean;
   codigoReserva?: string;
+  capturaUrl?: string | null;
 }
 
 export function usePeerCamera(onData?: (msg: BroadcastMessage) => void) {

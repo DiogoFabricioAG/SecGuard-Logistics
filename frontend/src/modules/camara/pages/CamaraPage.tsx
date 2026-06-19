@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { usePeerCamera, type BroadcastMessage } from "../hooks/usePeerCamera";
 import { detectPlate, type AlprResult } from "../services/alprService";
-import { getCompletadosPesados, registrarDeteccion, buscarViajePorPlaca, type DeteccionCompletada } from "../services/monitoreoApi";
+import { getCompletadosPesados, registrarDeteccion, buscarViajePorPlaca, uploadCaptura, type DeteccionCompletada } from "../services/monitoreoApi";
 
 function normalizarPlaca(raw: string): string {
   const limpia = raw.replace(/[^A-Z0-9]/gi, "").toUpperCase();
@@ -15,18 +15,19 @@ export default function CamaraPage() {
   const [deteccion, setDeteccion] = useState<DeteccionCompletada | null>(null);
   const [alpr, setAlpr] = useState<AlprResult | null>(null);
   const [alprLoading, setAlprLoading] = useState(false);
-  const [toast, setToast] = useState<{ plate: string; action: string; requiereManual?: boolean } | null>(null);
+  const [toast, setToast] = useState<{ plate: string; action: string; requiereManual?: boolean; capturaUrl?: string } | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
   const alprInterval = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastResult = useRef<AlprResult | null>(null);
+  const lastCapturaUrl = useRef<string | null>(null);
 
   function addLog(msg: string) {
     const ts = new Date().toLocaleTimeString("es-PE");
     setLogs((prev) => [...prev.slice(-19), `[${ts}] ${msg}`]);
   }
 
-  function showToast(plate: string, action: string) {
-    setToast({ plate, action, requiereManual: action.includes("Sin viaje") || action.includes("desconocida") });
+  function showToast(plate: string, action: string, capturaUrl?: string | null) {
+    setToast({ plate, action, requiereManual: action.includes("Sin viaje") || action.includes("desconocida"), capturaUrl: capturaUrl ?? undefined });
     setTimeout(() => setToast(null), 5000);
   }
 
@@ -38,7 +39,7 @@ export default function CamaraPage() {
         : msg.requiereManual
           ? "Sin viaje asociado"
           : `Viaje ${msg.codigoReserva || ""}`;
-      showToast(msg.plate, action);
+      showToast(msg.plate, action, msg.capturaUrl);
     }
   }, []);
 
@@ -99,9 +100,13 @@ export default function CamaraPage() {
       addLog(`Placa normalizada: ${placaNormalizada}`);
       const viaje = await buscarViajePorPlaca(placaNormalizada).then((r) => r.data).catch(() => ({ id_camion: null, id_viaje: null, codigo_reserva: null }));
       addLog(`Viaje lookup: camion=${viaje.id_camion} viaje=${viaje.id_viaje}`);
-      broadcast({ type: "plate-detected", plate: placaNormalizada, confidence: result.confidence, timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje, desconocida: !viaje.id_camion, codigoReserva: viaje.codigo_reserva ?? undefined });
-      addLog("Llamando registrarDeteccion...");
-      registrarDeteccion({ placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence, tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO", latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA", id_viaje: viaje.id_viaje, id_camion: viaje.id_camion })
+      addLog("Llamando uploadCaptura...");
+      const upload = await uploadCaptura(placaNormalizada, frame).then((r) => r.data).catch(() => ({ url: null }));
+      addLog(upload.url ? "S3 upload OK" : "S3 upload FAILED");
+      lastCapturaUrl.current = upload.url;
+      addLog(`Captura URL: ${upload.url}`);
+      broadcast({ type: "plate-detected", plate: placaNormalizada, confidence: result.confidence, timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje, desconocida: !viaje.id_camion, codigoReserva: viaje.codigo_reserva ?? undefined, capturaUrl: upload.url });
+      registrarDeteccion({ placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence, tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO", latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA", id_viaje: viaje.id_viaje, id_camion: viaje.id_camion, url_foto_captura: upload.url })
         .then(() => addLog("Backend: registro OK"))
         .catch((e: Error) => addLog(`Backend ERROR: ${e.message}`));
       setAlprLoading(false);
@@ -279,7 +284,7 @@ export default function CamaraPage() {
             <p className="text-sm opacity-70">{toast.action} — {new Date().toLocaleTimeString("es-PE")}</p>
           </div>
           {toast.requiereManual && (
-            <button onClick={() => navigate(`/camara/registro-manual?placa=${toast.plate}`)} className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
+            <button onClick={() => navigate(`/camara/registro-manual?placa=${toast.plate}${toast.capturaUrl ? `&captura=${encodeURIComponent(toast.capturaUrl)}` : ""}`)} className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
               Registrar Manual
             </button>
           )}

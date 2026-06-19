@@ -114,6 +114,7 @@ export function registrarDeteccion(payload: {
   nivel_obstruccion: string;
   id_viaje?: number | null;
   id_camion?: number | null;
+  url_foto_captura?: string | null;
 }) {
   return api.post<ApiResponse<{ id_acceso: number }>>(
     "/api/monitoreo/registrar-deteccion",
@@ -125,4 +126,8 @@ export function buscarViajePorPlaca(placa: string) {
   return api.get<ApiResponse<{ id_camion: number | null; id_viaje: number | null; codigo_reserva: string | null }>>(
     `/api/monitoreo/viaje-por-placa/${placa}`
   );
+}
+
+export function uploadCaptura(placa: string, imagen: string) {
+  return api.post<ApiResponse<{ url: string }>>("/api/monitoreo/upload-captura", { placa, imagen });
 }

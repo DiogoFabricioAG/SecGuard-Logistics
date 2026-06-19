@@ -106,6 +106,17 @@ async function viajePorPlaca(req, res, next) {
   } catch (err) { next(err); }
 }
 
+const { uploadCaptura } = require("../../config/s3");
+
+async function uploadCapturaHandler(req, res, next) {
+  try {
+    const { placa, imagen } = req.body;
+    if (!placa || !imagen) return res.status(400).json({ success: false, error: { message: "placa e imagen requeridos" } });
+    const url = await uploadCaptura(placa, imagen);
+    res.status(201).json({ success: true, data: { url } });
+  } catch (err) { next(err); }
+}
+
 module.exports = {
   completadosPesados,
   erroresLectura,
@@ -122,4 +133,5 @@ module.exports = {
   auditoriaAnomalia,
   registrarDeteccion,
   viajePorPlaca,
+  uploadCaptura: uploadCapturaHandler,
 };

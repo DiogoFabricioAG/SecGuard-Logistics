@@ -248,7 +248,7 @@ async function auditoriaAnomalia(placa) {
 async function registrarDeteccion({
   placa_detectada_alpr, confianza_alpr, tipo_evento, decision_acceso,
   estado_barrera, latencia_ms, nivel_iluminacion, nivel_obstruccion,
-  id_viaje, id_camion,
+  id_viaje, id_camion, url_foto_captura,
 }) {
   const { rows } = await pool.query(
     `INSERT INTO registro_acceso (
@@ -256,14 +256,14 @@ async function registrarDeteccion({
       timestamp_evento, latencia_ms, nivel_iluminacion, nivel_obstruccion,
       tipo_evento, decision_acceso, estado_barrera,
       id_viaje, id_camion, id_conductor,
-      revisado_por_admin, prioridad_envio
+      revisado_por_admin, prioridad_envio, url_foto_captura
     ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5,
-      $6, $7, $8, $9, $10, NULL, NULL, NULL)
+      $6, $7, $8, $9, $10, NULL, NULL, NULL, $11)
     RETURNING id_acceso`,
     [placa_detectada_alpr, confianza_alpr,
       latencia_ms, nivel_iluminacion, nivel_obstruccion,
       tipo_evento, decision_acceso, estado_barrera,
-      id_viaje || null, id_camion || null],
+      id_viaje || null, id_camion || null, url_foto_captura || null],
   );
   return rows[0];
 }

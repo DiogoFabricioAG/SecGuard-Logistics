@@ -8,6 +8,7 @@ export default function RegistroManualPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const placaParam = searchParams.get("placa") || "";
+  const capturaParam = searchParams.get("captura") || "";
 
   const [placa, setPlaca] = useState(placaParam);
   const [modelo, setModelo] = useState("");
@@ -109,6 +110,15 @@ export default function RegistroManualPage() {
                 </div>
               </div>
             </div>
+
+            {capturaParam && (
+              <div className="bg-white rounded-xl border border-[#e2e8f0] p-4 mb-3 shadow-sm">
+                <h4 className="flex items-center gap-2 text-[#002b32] font-extrabold text-[10px] uppercase mb-2">
+                  <span className="material-symbols-outlined text-base">photo_camera</span> Captura ALPR
+                </h4>
+                <img src={capturaParam} alt="Captura placa" className="w-full rounded-lg border border-slate-200" />
+              </div>
+            )}
 
             <div className="bg-white rounded-xl border border-[#e2e8f0] p-5 shadow-sm">
               <h4 className="flex items-center gap-2 text-[#002b32] font-extrabold text-xs uppercase border-b border-[#f1f5f9] pb-2 mb-3">

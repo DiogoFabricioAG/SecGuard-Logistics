@@ -20,5 +20,6 @@ router.get('/anomalias-sin-revisar', controller.anomaliasSinRevisar);
 router.get('/auditoria-anomalia/:placa', controller.auditoriaAnomalia);
 router.post('/registrar-deteccion', controller.registrarDeteccion);
 router.get('/viaje-por-placa/:placa', controller.viajePorPlaca);
+router.post('/upload-captura', controller.uploadCaptura);
 
 module.exports = router;
