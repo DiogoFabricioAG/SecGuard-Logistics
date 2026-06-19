@@ -140,7 +140,7 @@ export function usePeerCamera(onData?: (msg: BroadcastMessage) => void) {
       const p = new Peer(STREAM_PEER_ID, { debug: 0 });
       peerRef.current = p;
       p.on("open", () => {});
-      p.on("error", () => setStatus("error"));
+      p.on("error", (err) => { console.warn("PeerJS sender error:", err?.type); });
       p.on("call", (call) => {
         call.answer(localStreamRef.current!);
         call.on("close", () => {});

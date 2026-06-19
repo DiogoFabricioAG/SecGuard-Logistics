@@ -38,7 +38,10 @@ export default function App() {
             <Route path="/camara" element={<CamaraPage />} />
             <Route path="/camara/falla" element={<FallaPlacaPage />} />
             <Route path="/camara/accesos" element={<AccesosPage />} />
-            <Route path="/camara/registro-manual" element={<RegistroManualPage />} />
+            <Route
+              path="/camara/registro-manual"
+              element={<RegistroManualPage />}
+            />
             <Route
               path="/dashboard"
               element={
@@ -48,7 +51,10 @@ export default function App() {
               }
             />
             <Route path="/analitica" element={<ConsultarMetricasPage />} />
-            <Route path="/analitica/generar-reporte" element={<GenerarReportePage />} />
+            <Route
+              path="/analitica/generar-reporte"
+              element={<GenerarReportePage />}
+            />
           </Route>
           <Route path="*" element={<Navigate to="/flota" replace />} />
         </Routes>
