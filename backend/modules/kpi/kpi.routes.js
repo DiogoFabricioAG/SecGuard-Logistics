@@ -6,7 +6,6 @@ const router = Router();
 router.use(authenticate);
 
 // Rutas específicas (deben ir antes de /:id)
-router.get('/inactivos', controller.listarKPIsInactivos);
 router.get('/disponibilidad-flota', controller.disponibilidadFlota);
 router.get('/utilizacion-flota', controller.utilizacionFlota);
 router.get('/conversion-viajes', controller.conversionViajes);

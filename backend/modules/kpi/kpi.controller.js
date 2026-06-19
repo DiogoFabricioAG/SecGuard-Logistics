@@ -15,14 +15,7 @@ function colorBadge(estado) {
 
 async function listarKPIs(req, res, next) {
   try {
-    const data = await service.listarKPIs('ACTIVO');
-    res.json({ success: true, data });
-  } catch (err) { next(err); }
-}
-
-async function listarKPIsInactivos(req, res, next) {
-  try {
-    const data = await service.listarKPIs('INACTIVO');
+    const data = await service.listarKPIs();
     res.json({ success: true, data });
   } catch (err) { next(err); }
 }
@@ -124,7 +117,6 @@ async function generarReporte(req, res, next) {
 
 module.exports = {
   listarKPIs,
-  listarKPIsInactivos,
   detalleKPI,
   disponibilidadFlota,
   utilizacionFlota,
