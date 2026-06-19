@@ -78,14 +78,14 @@ SECCIÓN 1: Panel de "Última detección" (tarjeta superior con placa, foto y de
 
 SECCIÓN 2: Tabla "Historial de acceso y auditoría" (con paginación)
 - SIN búsqueda (inicial): Muestra el historial general de todos los accesos.
-  API: GET /api/accesos?page=1&limit=10 → historial paginado de todos los accesos.
+  API: GET /api/accesos?page=1&limit=4 → historial paginado de todos los accesos.
   * page: Número de página.
-  * limit: Cantidad de registros por página (10 en este caso).
+  * limit: Cantidad de registros por página (4 en este caso).
 - CON búsqueda por placa: Filtra y muestra solo los accesos de esa placa.
-  API: GET /api/accesos/placa/:placa/historial?page=1&limit=10 → historial paginado por placa.
+  API: GET /api/accesos/placa/:placa/historial?page=1&limit=4 → historial paginado por placa.
   * placa: Identificador de la placa a filtrar.
   * page: Número de página.
-  * limit: Cantidad de registros por página (10 en este caso).
+  * limit: Cantidad de registros por página (4 en este caso).
 
 Pantallas secundarias relacionadas que se abren desde este listado:
 - Detalledeacceso.html
