@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { generarReporte, type ReporteData } from "../services/kpiApi";
+import ReportePrint from "../components/ReportePrint";
 
 const NOMBRES_SECCION: Record<string, string> = {
   disponibilidad: "Disponibilidad de Flota",
@@ -41,7 +42,12 @@ export default function GenerarReportePage() {
   const [progressLabel, setProgressLabel] = useState("");
   const [stepState, setStepState] = useState<Record<string, "pending" | "done" | "active">>({});
   const [reporteData, setReporteData] = useState<ReporteData | null>(null);
+  const [showPrintReport, setShowPrintReport] = useState(false);
 
+  const handlePrintReady = useCallback(() => {
+    window.print();
+    setTimeout(() => setShowPrintReport(false), 1000);
+  }, []);
 
   useEffect(() => {
     const hoy = new Date();
@@ -140,7 +146,7 @@ export default function GenerarReportePage() {
 
   function descargarReporte() {
     if (formato === "pdf") {
-      window.print();
+      setShowPrintReport(true);
       return;
     }
     const csv = generarCSV();
@@ -540,8 +546,27 @@ export default function GenerarReportePage() {
         </div>
       )}
 
+      {showPrintReport && reporteData && (
+        <div className="fixed inset-0 z-[200] bg-white overflow-y-auto">
+          <ReportePrint
+            data={reporteData}
+            secciones={secciones}
+            fechaInicio={fechaInicio}
+            fechaFin={fechaFin}
+            zona={zona}
+            tipoUnidad={tipoUnidad}
+            onReady={handlePrintReady}
+          />
+        </div>
+      )}
+
       <style>{`
         .report-checkbox:checked { accent-color: #00333c; }
+        @media print {
+          body * { visibility: hidden; }
+          .print-report, .print-report * { visibility: visible; }
+          .print-report { position: absolute; left: 0; top: 0; width: 100%; }
+        }
       `}</style>
     </div>
   );
