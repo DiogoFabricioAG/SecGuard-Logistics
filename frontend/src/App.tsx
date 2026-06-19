@@ -12,6 +12,7 @@ import AccesosPage from "./modules/camara/pages/AccesosPage";
 import RegistroManualPage from "./modules/camara/pages/RegistroManualPage";
 import ConsultarMetricasPage from "./modules/kpi/pages/ConsultarMetricasPage";
 import GenerarReportePage from "./modules/kpi/pages/GenerarReportePage";
+import DashboardPage from "./modules/dashboard/pages/DashboardPage";
 
 export default function App() {
   return (
@@ -42,14 +43,7 @@ export default function App() {
               path="/camara/registro-manual"
               element={<RegistroManualPage />}
             />
-            <Route
-              path="/dashboard"
-              element={
-                <div className="p-lg text-on-surface-variant">
-                  Dashboard — próximamente
-                </div>
-              }
-            />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/analitica" element={<ConsultarMetricasPage />} />
             <Route
               path="/analitica/generar-reporte"
