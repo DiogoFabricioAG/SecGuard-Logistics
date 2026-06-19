@@ -1,5 +1,9 @@
+<!-- Modulo : Detección 
+Descripción: Es la primera pantalla de este modulo en donde se va a cargar la detección de placa , esto se va a obtener mediante la api : https://secguard-logistics.seenode.app/, que se basa en la detección de placa (que seria por medio de la camara tipo streaming)
+API Utilizada : GET /api/monitoreo/completados-pesados , con este endopoint se tendria que vizualizar los datos que se va a mostrar en esta pantalla-->
+
 <!DOCTYPE html>
-<html class="light" lang="es">
+<html class="light" lang="es">  
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -97,7 +101,7 @@
     </div>
     
     <nav class="flex-1 px-3 space-y-0.5">
-        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="4.2.5_panel_de_control_y_monitoreo_general.html">
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">grid_view</span> 
             <span class="font-semibold text-xs">Dashboard</span>
         </a>
@@ -105,11 +109,11 @@
             <span class="material-symbols-outlined mr-3 text-[20px]">local_shipping</span> 
             <span class="font-semibold text-xs">Flota</span>
         </a>
-        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="registrar_viaje.html">
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">alt_route</span> 
             <span class="font-semibold text-xs">Rutas</span>
         </a>
-        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="configurar_kpi.html">
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">analytics</span> 
             <span class="font-semibold text-xs">Analítica</span>
         </a>
@@ -120,7 +124,7 @@
             <span class="material-symbols-outlined mr-3 text-[20px]">help</span> 
             <span class="font-semibold text-xs">Soporte</span>
         </a>
-        <a class="flex items-center px-4 py-2 text-error hover:bg-red-50 rounded-lg transition-colors" href="4.2.1_login.html">
+        <a class="flex items-center px-4 py-2 text-error hover:bg-red-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">logout</span> 
             <span class="font-semibold text-xs">Cerrar Sesión</span>
         </a>
@@ -186,13 +190,13 @@
                         <span class="text-[9px] text-white font-bold uppercase tracking-widest">Live Feed 04</span>
                     </div>
                 </div>
-
+                <!--En esta parte del campo de Placa Detectada debe ser respecto a la api : https://secguard-logistics.seenode.app/  , de esta api debe de salir su verdadero valor-->
                 <div class="flex-1 flex flex-col gap-2 min-w-[350px]">
                     <div class="data-card">
                         <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Placa Detectada</p>
-                        <p class="text-3xl font-black text-primary leading-none py-1">ABC-123</p>
+                        <p class="text-3xl font-black text-primary leading-none py-1">A1B-234</p>
                     </div>
-
+                <!--En esta parte del campo de Confianza OpenALPR debe ser respecto a la api : https://secguard-logistics.seenode.app/  , de esta api debe de salir su verdadero valor en porcentaje-->
                     <div class="data-card">
                         <div class="flex justify-between text-[9px] font-bold mb-1">
                             <span class="text-slate-400 uppercase">Confianza OpenALPR</span>
@@ -202,17 +206,15 @@
                             <div class="bg-secondary h-full rounded-full" style="width: 94%"></div>
                         </div>
                     </div>
-
+                <!--En esta parte de aqui los campos como Vehiculo, Modelo, Tipo / Cap debe de ser respecto al api : GET /api/monitoreo/completados-pesados , osea deben de mantener su valor respecto a lo mencionado-->
                     <div class="grid grid-cols-2 gap-2">
                         <div class="data-card">
                             <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Vehículo</p>
-                            <p class="font-bold text-[11px] text-primary">Volvo FH16</p>
                             <p class="text-[10px] text-slate-500">ID: VH-284</p>
                         </div>
                         <div class="data-card">
                             <p class="text-[9px] font-bold text-slate-400 uppercase mb-0.5">Modelo</p>
-                            <p class="font-bold text-[11px] text-primary truncate">Scania R500 Highline</p>
-                            <p class="text-[10px] text-slate-500">Series 2026</p>
+                            <p class="font-bold text-[11px] text-primary">Volvo FH16</p>
                         </div>
                     </div>
 
@@ -221,14 +223,17 @@
                             <p class="text-[9px] font-bold text-slate-400 uppercase">Tipo / Cap</p>
                             <p class="font-bold text-[11px]">Carga Pesada / 40T</p>
                         </div>
+                    <!--En esta parte del campo de Estado debe ser respecto a la api : https://secguard-logistics.seenode.app/ , de esta api debe de salir su verdadero valor-->
                         <div class="data-card">
                             <p class="text-[9px] font-bold text-slate-400 uppercase">Estado</p>
                             <span class="bg-secondary-container text-on-secondary-container font-black text-[9px] px-2 py-0.5 rounded-full inline-block">COMPLETADO</span>
                         </div>
+                    <!--En esta parte del campo de Fecha / Hora debe ser respecto al tiempo real en donde se logra detectar la placa osea cuando se hace uso de la api : https://secguard-logistics.seenode.app/ , debe de marcar la fecha y hora en tiempo real-->
                         <div class="data-card">
                             <p class="text-[9px] font-bold text-slate-400 uppercase">Fecha / Hora</p>
                             <p class="font-bold text-[10.5px]">29/05/2026 · 10:07 a.m.</p>
                         </div>
+                    <!--En esta parte de aqui los campos como Latencia, Iluminación, Obstrucción debe de ser respecto al api : GET /api/monitoreo/completados-pesados , osea deben de mantener su valor respecto a lo mencionado-->
                         <div class="data-card">
                             <p class="text-[9px] font-bold text-slate-400 uppercase">Latencia</p>
                             <p class="font-bold text-[11px]">14ms</p>
@@ -245,10 +250,10 @@
                 </div>
             </div>
 
-            <div class="bg-slate-50 border-t border-outline-variant px-5 py-2.5 flex items-center justify-between" onclick="window.location.href='Confirmar acceso vehicular - sistema.html'" style="cursor:pointer">
+            <div class="bg-slate-50 border-t border-outline-variant px-5 py-2.5 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="w-3.5 h-3.5 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-                    <p class="text-[11px] font-bold text-primary/80">Cargando los datos de la placa capturada del vehículo...</p>
+                    <p class="text-[11px] font-bold text-primary/80">Comparando, procesando y cargando los datos de la placa capturada del vehículo...</p>
                 </div>
                 <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Motor IA: OpenALPR</div>
             </div>
