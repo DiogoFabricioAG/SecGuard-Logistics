@@ -10,6 +10,8 @@ import CamaraPage from "./modules/camara/pages/CamaraPage";
 import FallaPlacaPage from "./modules/camara/pages/FallaPlacaPage";
 import AccesosPage from "./modules/camara/pages/AccesosPage";
 import RegistroManualPage from "./modules/camara/pages/RegistroManualPage";
+import ConsultarMetricasPage from "./modules/kpi/pages/ConsultarMetricasPage";
+import GenerarReportePage from "./modules/kpi/pages/GenerarReportePage";
 
 export default function App() {
   return (
@@ -45,14 +47,8 @@ export default function App() {
                 </div>
               }
             />
-            <Route
-              path="/analitica"
-              element={
-                <div className="p-lg text-on-surface-variant">
-                  Analítica — próximamente
-                </div>
-              }
-            />
+            <Route path="/analitica" element={<ConsultarMetricasPage />} />
+            <Route path="/analitica/generar-reporte" element={<GenerarReportePage />} />
           </Route>
           <Route path="*" element={<Navigate to="/flota" replace />} />
         </Routes>
