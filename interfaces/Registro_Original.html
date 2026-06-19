@@ -57,6 +57,47 @@
   </style>
 </head>
 <body class="bg-surface font-body text-on-surface overflow-hidden">
+<!--
+Módulo: Accesos
+Origen: Se abre desde Estado_de_acceso.html al hacer clic en "Ver registro original" en una fila de tipo de registro "CORREGIDO".
+Descripción: Pantalla de auditoría que muestra el historial completo de correcciones realizadas a un registro de acceso vehicular. Compara valores originales con valores corregidos, motivos de corrección y administrador responsable.
+
+API utilizada:
+- GET /api/accesos/:id/auditoria/original
+  Recupera el historial de auditoría y todas las correcciones aplicadas al registro de acceso.
+  * id: ID del acceso (ej. ACC-10430).
+  Retorna: registro original inmutable, valores corregidos, campos modificados, motivo de justificación, administrador modificador, timestamps.
+
+Secciones principales de la pantalla:
+1. Encabezado (Header):
+   - ID del Expediente / Registro (ej. ACC-10430).
+   - Badge de estado: "Corrección" indicando que este registro fue modificado.
+   - Botón "Cerrar": cierra la pantalla y retorna a Estado_de_acceso.html.
+   - Botón "Atrás" (icono arrow_back): navegación rápida de regreso.
+
+2. Detalles de Auditoría:
+   - Fecha Corrección: cuándo se aplicó la corrección.
+   - Estado Anterior: estado original del registro (ej. Pendiente).
+   - Estado Actual: estado después de la corrección (ej. Validado).
+
+3. Observaciones:
+   - Texto justificativo: motivo de la corrección (ej. "Se procedió con la corrección debido a que la placa detectada inicialmente era incorrecta").
+
+4. Tabla de Correcciones (lado derecho):
+   - Muestra cada campo que fue modificado.
+   - Valor Original: dato inmutable antes de la corrección.
+   - Valor Corregido: dato nuevo después de la corrección.
+   - Tipo de Cambio: tipo de dato modificado (placa, puerta, decisión, etc.).
+
+5. Firma Digital / Footer:
+   - Nombre del Administrador que hizo la corrección (ej. Luis).
+   - Rol: "Administrador Auditor".
+   - Verificación: ícono de verificación indicando que la firma digital es válida.
+
+Flujo de navegación:
+- "Volver" / "Atrás" → regresa a Estado_de_acceso.html.
+- "Cerrar" → cierra la modal/vista y regresa a Estado_de_acceso.html.
+-->
 <!-- ===================== SIDEBAR ===================== -->
 <aside class="fixed left-0 top-0 w-[220px] h-screen bg-white flex flex-col py-lg z-50 border-r border-border-subtle">
 <!-- Logo -->
@@ -72,7 +113,7 @@
 </div>
 <!-- Nav Links -->
 <nav class="flex-1 px-sm space-y-1">
-<a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="4.2.5_panel_de_control_y_monitoreo_general.html">
+<a class="flex items-center gap-md px-md py-[10px] rounded-[6px] text-on-surface-variant hover:bg-surface-container transition-colors" href="#">
 <span class="material-symbols-outlined text-[20px]">dashboard</span>
 <span class="text-[13px] font-medium">Dashboard</span>
 </a>
@@ -80,12 +121,12 @@
 <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
 <span class="text-[13px] font-medium">Flota</span>
 </a>
-<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="registrar_viaje.html">
+<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
 <span class="material-symbols-outlined text-[20px]">route</span>
 <span class="text-[13px] font-medium">Rutas</span>
 </a>
 
-<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="configurar_kpi.html">
+<a class="flex items-center gap-md px-md py-[10px] text-on-surface-variant hover:bg-surface-container transition-colors rounded-[6px]" href="#">
 <span class="material-symbols-outlined text-[20px]">analytics</span>
 <span class="text-[13px] font-medium">Analítica</span>
 </a>
@@ -96,7 +137,7 @@
 <span class="material-symbols-outlined text-[20px]">help_outline</span>
 <span class="text-[13px] font-medium">Soporte</span>
 </a>
-<a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="4.2.1_login.html">
+<a class="flex items-center gap-md px-md py-[10px] text-error hover:bg-error/5 transition-colors rounded-[6px]" href="#">
 <span class="material-symbols-outlined text-[20px]">logout</span>
 <span class="text-[13px] font-medium">Cerrar Sesión</span>
 </a>
@@ -108,7 +149,8 @@
 <!-- Header -->
 <header class="h-[48px] bg-white border-b border-border-subtle flex items-center justify-between px-lg z-40 flex-shrink-0">
 <div class="flex items-center gap-sm">
-<button class="text-on-surface-variant hover:text-primary transition-colors">
+<!-- Botón Volver: Retorna a Estado_de_acceso.html -->
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="Volver a Gestión de Accesos">
 <span class="material-symbols-outlined">arrow_back</span>
 </button>
 <h1 class="font-headline text-[20px] font-semibold text-on-surface">
@@ -144,8 +186,10 @@
 <h2 class="text-[24px] font-headline font-bold text-primary">ACC-10430</h2>
 </div>
 <div class="flex items-center gap-md">
+<!-- Badge de estado: Indica que este registro fue corregido -->
 <span class="bg-warning-orange/10 text-warning-orange px-md py-1.5 rounded-full text-[12px] font-bold border border-warning-orange/20">Corrección</span>
-<button class="bg-primary text-white px-lg py-2 rounded-lg text-[14px] font-medium hover:bg-primary-container transition-colors">
+<!-- Botón Cerrar: Cierra la pantalla y retorna a Estado_de_acceso.html -->
+<button class="bg-primary text-white px-lg py-2 rounded-lg text-[14px] font-medium hover:bg-primary-container transition-colors" title="Cierra la pantalla de auditoría">
               Cerrar
             </button>
 </div>
@@ -153,7 +197,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
 <!-- Lado Izquierdo: Detalles y Observaciones -->
 <div class="space-y-lg">
-<!-- Detalles de Auditoría -->
+<!-- SECCIÓN: Detalles de Auditoría - Información de cuándo, quién y cómo se corrigió el registro -->
 <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
 <div class="px-lg py-md border-b border-border-subtle bg-surface-container/30">
 <h3 class="font-headline text-[14px] font-bold text-primary uppercase tracking-wider">Detalles de Auditoría</h3>
@@ -173,7 +217,7 @@
 </div>
 </div>
 </div>
-<!-- Observaciones -->
+<!-- SECCIÓN: Observaciones - Motivo y justificación de por qué se hizo la corrección -->
 <div class="bg-white rounded-xl border border-border-subtle shadow-sm overflow-hidden">
 <div class="px-lg py-md border-b border-border-subtle bg-surface-container/30">
 <h3 class="font-headline text-[14px] font-bold text-primary uppercase tracking-wider">Observaciones</h3>
@@ -189,6 +233,7 @@
 
 </div>
 <!-- Audit Signature / Footer -->
+<!-- SECCIÓN: Firma Digital - Información del administrador que realizó la corrección y verificación de autenticidad -->
 <div class="bg-white p-lg rounded-xl border border-border-subtle shadow-sm flex items-center justify-between">
 <div class="flex items-center gap-md">
 <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-[16px] shadow-inner">L</div>
@@ -197,6 +242,7 @@
 <span class="text-on-surface-variant text-[11px] uppercase tracking-wide font-semibold">Administrador Auditor</span>
 </div>
 </div>
+<!-- Verificación de firma digital -->
 <div class="text-on-surface-variant text-[12px] flex items-center gap-xs">
 <span class="material-symbols-outlined text-[18px]">verified_user</span>
             Firma Digital Verificada
