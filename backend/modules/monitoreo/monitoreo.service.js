@@ -157,8 +157,9 @@ async function registrarDeteccion({
       placa_detectada_alpr, confianza_alpr, estado_deteccion,
       timestamp_evento, tipo_evento, decision_acceso, estado_barrera,
       latencia_ms, nivel_iluminacion, nivel_obstruccion,
-      id_viaje, id_camion
-    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5, $6, $7, $8, $9, $10)
+      id_viaje, id_camion, id_conductor, puerta_asignada,
+      url_foto_captura, id_acceso_original, tipo_anomalia, prioridad_envio
+    ) VALUES ($1, $2, 'COMPLETADO', NOW(), $3, $4, $5, $6, $7, $8, $9, $10, NULL, NULL, NULL, NULL, NULL, NULL)
     RETURNING id_acceso`,
     [placa_detectada_alpr, confianza_alpr, tipo_evento, decision_acceso,
       estado_barrera, latencia_ms, nivel_iluminacion, nivel_obstruccion,
