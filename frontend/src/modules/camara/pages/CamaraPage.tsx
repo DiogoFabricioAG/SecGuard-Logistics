@@ -47,9 +47,15 @@ export default function CamaraPage() {
   } = usePeerCamera(onData);
 
   useEffect(() => {
-    document.body.classList.toggle("camara-sender", isSender);
-    return () => document.body.classList.remove("camara-sender");
+    document.body.style.overflow = isSender ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [isSender]);
+
+  useEffect(() => {
+    if (isSender && camStatus === "connected" && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [isSender, camStatus, videoRef]);
 
   const pollBackend = useCallback(() => {
     getCompletadosPesados()
@@ -112,10 +118,10 @@ export default function CamaraPage() {
 
   if (isSender) {
     return (
-      <div className="flex-1 flex flex-col bg-black relative overflow-hidden">
+      <div className="fixed inset-0 z-[9999] bg-black flex flex-col">
+        <video ref={videoRef} className={`absolute inset-0 w-full h-full object-cover ${camStatus === "connected" ? "" : "hidden"}`} autoPlay playsInline muted />
         {camStatus === "connected" ? (
           <>
-            <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" autoPlay playsInline muted />
             <div className="absolute top-4 left-4 bg-black/60 px-2.5 py-1 rounded-md flex items-center gap-2 backdrop-blur-md z-10">
               <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />
               <span className="text-[9px] text-white font-bold uppercase tracking-widest">TRANSMITIENDO</span>
@@ -125,13 +131,13 @@ export default function CamaraPage() {
                 <span className="text-white font-black tracking-[0.2em] text-xl">{alpr.plate}</span>
               </div>
             )}
-            <button onClick={stopSender} className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-error/90 hover:bg-error text-white px-8 py-3 rounded-full font-bold text-sm shadow-lg backdrop-blur-sm z-20 flex items-center gap-2 transition-all">
+            <button onClick={stopSender} className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-error/90 hover:bg-error text-white px-8 py-3 rounded-full font-bold text-sm shadow-lg backdrop-blur-sm z-20 flex items-center gap-2">
               <span className="material-symbols-outlined">stop_circle</span>
               Detener Cámara
             </button>
           </>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center gap-4 p-6 text-white">
+          <div className="flex-1 flex flex-col items-center justify-center gap-4 p-6 text-white z-10 relative">
             <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mb-2">
               <span className="material-symbols-outlined text-5xl text-white/40">videocam</span>
             </div>

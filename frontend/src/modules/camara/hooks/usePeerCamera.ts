@@ -150,6 +150,14 @@ export function usePeerCamera(onData?: (msg: BroadcastMessage) => void) {
 
       setIsSender(true);
       setStatus("connected");
+
+      requestAnimationFrame(() => {
+        const v2 = videoRef.current;
+        if (v2 && v2 !== v && localStreamRef.current) {
+          v2.srcObject = localStreamRef.current;
+          v2.play().catch(() => {});
+        }
+      });
     } catch {
       setStatus("error");
       setIsSender(false);
