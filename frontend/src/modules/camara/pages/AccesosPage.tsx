@@ -94,10 +94,10 @@ export default function AccesosPage() {
                 ) : (
                   accesos.map((a) => (
                     <tr
-                      key={`acc-${a.id_acceso}`}
-                      onClick={() => setSelectedId(selectedId === a.id_acceso ? null : a.id_acceso)}
+                      key={a.id_acceso || a.placa_detectada_alpr + a.fecha_hora_registro}
+                      onClick={() => a.id_acceso && setSelectedId(selectedId === a.id_acceso ? null : a.id_acceso)}
                       className={`cursor-pointer transition-colors ${
-                        selectedId === a.id_acceso
+                        selectedId != null && selectedId === a.id_acceso
                           ? "bg-[#f1f9f4] border-l-4 border-l-[#007236]"
                           : "hover:bg-slate-50 border-l-4 border-l-transparent"
                       }`}

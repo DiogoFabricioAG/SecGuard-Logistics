@@ -16,6 +16,7 @@ export default function CamaraPage() {
   const [alpr, setAlpr] = useState<AlprResult | null>(null);
   const [alprLoading, setAlprLoading] = useState(false);
   const [toast, setToast] = useState<{ plate: string; action: string; requiereManual?: boolean; capturaUrl?: string } | null>(null);
+  const [alertModal, setAlertModal] = useState<{ plate: string; capturaUrl?: string } | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
   const alprInterval = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastResult = useRef<AlprResult | null>(null);
@@ -28,18 +29,20 @@ export default function CamaraPage() {
 
   function showToast(plate: string, action: string, capturaUrl?: string | null) {
     setToast({ plate, action, requiereManual: action.includes("Sin viaje") || action.includes("desconocida"), capturaUrl: capturaUrl ?? undefined });
-    setTimeout(() => setToast(null), 5000);
+    setTimeout(() => setToast(null), 8000);
   }
 
   const onData = useCallback((msg: BroadcastMessage) => {
     if (msg.type === "plate-detected") {
       setAlpr({ plate: msg.plate, confidence: msg.confidence });
-      const action = msg.desconocida
-        ? "Placa desconocida"
-        : msg.requiereManual
+      if (msg.desconocida) {
+        setAlertModal({ plate: msg.plate, capturaUrl: msg.capturaUrl ?? undefined });
+      } else {
+        const action = msg.requiereManual
           ? "Sin viaje asociado"
           : `Viaje ${msg.codigoReserva || ""}`;
-      showToast(msg.plate, action, msg.capturaUrl);
+        showToast(msg.plate, action, msg.capturaUrl);
+      }
     }
   }, []);
 
@@ -98,17 +101,34 @@ export default function CamaraPage() {
       const placaNormalizada = normalizarPlaca(result.plate);
       setAlpr({ plate: placaNormalizada, confidence: result.confidence });
       addLog(`Placa normalizada: ${placaNormalizada}`);
+
+      if (placaNormalizada.length < 6) {
+        addLog(`ALPR: placa "${placaNormalizada}" ignorada — menos de 6 caracteres`);
+        setAlprLoading(false);
+        return;
+      }
+
       const viaje = await buscarViajePorPlaca(placaNormalizada).then((r) => r.data).catch(() => ({ id_camion: null, id_viaje: null, codigo_reserva: null }));
       addLog(`Viaje lookup: camion=${viaje.id_camion} viaje=${viaje.id_viaje}`);
+
       addLog("Llamando uploadCaptura...");
       const upload = await uploadCaptura(placaNormalizada, frame).then((r) => r.data).catch(() => ({ url: null }));
       addLog(upload.url ? "S3 upload OK" : "S3 upload FAILED");
       lastCapturaUrl.current = upload.url;
       addLog(`Captura URL: ${upload.url}`);
-      broadcast({ type: "plate-detected", plate: placaNormalizada, confidence: result.confidence, timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje, desconocida: !viaje.id_camion, codigoReserva: viaje.codigo_reserva ?? undefined, capturaUrl: upload.url });
-      registrarDeteccion({ placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence, tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO", latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA", id_viaje: viaje.id_viaje, id_camion: viaje.id_camion, url_foto_captura: upload.url })
-        .then(() => addLog("Backend: registro OK"))
-        .catch((e: Error) => addLog(`Backend ERROR: ${e.message}`));
+
+      const esDesconocida = !viaje.id_camion;
+
+      broadcast({ type: "plate-detected", plate: placaNormalizada, confidence: result.confidence, timestamp: new Date().toISOString(), requiereManual: !viaje.id_viaje, desconocida: esDesconocida, codigoReserva: viaje.codigo_reserva ?? undefined, capturaUrl: upload.url });
+
+      if (esDesconocida) {
+        addLog("ALPR: placa desconocida — esperando registro manual, no se auto-registra");
+      } else {
+        addLog("ALPR: camion conocido — registrando automáticamente");
+        registrarDeteccion({ placa_detectada_alpr: placaNormalizada, confianza_alpr: result.confidence, tipo_evento: "ENTRADA", decision_acceso: "AUTORIZADO", estado_barrera: "ABIERTO", latencia_ms: 0, nivel_iluminacion: "NORMAL", nivel_obstruccion: "NINGUNA", id_viaje: viaje.id_viaje, id_camion: viaje.id_camion, url_foto_captura: upload.url })
+          .then(() => addLog("Backend: registro OK"))
+          .catch((e: Error) => addLog(`Backend ERROR: ${e.message}`));
+      }
       setAlprLoading(false);
     }, 4000);
     return () => { if (alprInterval.current) clearInterval(alprInterval.current); };
@@ -275,20 +295,39 @@ export default function CamaraPage() {
       </div>
 
       {toast && !isSender && (
-        <div className={`fixed bottom-6 right-6 px-6 py-4 rounded-xl flex items-center gap-4 z-50 border shadow-xl animate-slide-up ${toast.requiereManual ? "bg-[#3d1c00] border-[#5c3100] text-white" : "bg-[#001e23] border-[#0a3a40] text-white"}`}>
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${toast.requiereManual ? "bg-amber-500/20" : "bg-green-500/20"}`}>
-            <span className={`material-symbols-outlined text-2xl ${toast.requiereManual ? "text-amber-400" : "text-green-400"}`}>{toast.requiereManual ? "warning" : "check_circle"}</span>
+        <div className="fixed bottom-6 right-6 bg-[#001e23] border border-[#0a3a40] text-white px-6 py-4 rounded-xl flex items-center gap-4 z-50 shadow-xl animate-slide-up">
+          <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+            <span className="material-symbols-outlined text-green-400 text-2xl">check_circle</span>
           </div>
           <div>
-            <p className="font-bold text-base leading-tight">Placa Detectada: <span className={toast.requiereManual ? "text-amber-400" : "text-green-400"}>{toast.plate}</span></p>
+            <p className="font-bold text-base leading-tight">Placa Detectada: <span className="text-green-400">{toast.plate}</span></p>
             <p className="text-sm opacity-70">{toast.action} — {new Date().toLocaleTimeString("es-PE")}</p>
           </div>
-          {toast.requiereManual && (
-            <button onClick={() => navigate(`/camara/registro-manual?placa=${toast.plate}${toast.capturaUrl ? `&captura=${encodeURIComponent(toast.capturaUrl)}` : ""}`)} className="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
-              Registrar Manual
-            </button>
-          )}
           <button onClick={() => setToast(null)} className="text-white/50 hover:text-white ml-2"><span className="material-symbols-outlined text-xl">close</span></button>
+        </div>
+      )}
+
+      {alertModal && (
+        <div className="fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm flex items-center justify-center animate-fade-in">
+          <div className="bg-[#1a0a00] border-2 border-amber-500/50 rounded-2xl p-8 max-w-md w-full mx-4 text-center shadow-2xl animate-scale-in">
+            <div className="w-20 h-20 bg-amber-500/15 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <span className="material-symbols-outlined text-amber-400 text-5xl">warning</span>
+            </div>
+            <h3 className="text-2xl font-black text-white mb-2">¡Placa Desconocida!</h3>
+            <p className="text-4xl font-black text-amber-400 tracking-widest mb-4">{alertModal.plate}</p>
+            <p className="text-sm text-slate-400 mb-8">
+              Esta placa no está registrada en el sistema. Se requiere registro manual por un administrador.
+            </p>
+            <div className="flex flex-col gap-3">
+              <button onClick={() => { navigate(`/camara/registro-manual?placa=${alertModal.plate}${alertModal.capturaUrl ? `&captura=${encodeURIComponent(alertModal.capturaUrl)}` : ""}`); setAlertModal(null); }} className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3.5 rounded-xl text-base flex items-center justify-center gap-2 transition-colors">
+                <span className="material-symbols-outlined">edit_note</span>
+                Registrar Manualmente
+              </button>
+              <button onClick={() => setAlertModal(null)} className="w-full bg-white/5 hover:bg-white/10 text-slate-400 font-bold py-2.5 rounded-xl text-sm transition-colors">
+                Cerrar
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
