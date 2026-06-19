@@ -8,7 +8,6 @@ export default function CamaraPage() {
   const {
     videoRef, status: camStatus, isSender,
     startSender, stopSender, disconnect, captureFrame,
-    startAutoConnect, stopAutoConnect,
   } = usePeerCamera();
 
   const [deteccion, setDeteccion] = useState<DeteccionCompletada | null>(null);
@@ -28,12 +27,6 @@ export default function CamaraPage() {
     const t = setInterval(pollBackend, 3000);
     return () => clearInterval(t);
   }, [pollBackend]);
-
-  useEffect(() => {
-    if (!isSender) startAutoConnect();
-    else stopAutoConnect();
-    return () => stopAutoConnect();
-  }, [isSender, startAutoConnect, stopAutoConnect]);
 
   useEffect(() => {
     if (camStatus !== "connected") {
@@ -60,7 +53,6 @@ export default function CamaraPage() {
     disconnect();
     setAlpr(null);
     lastResult.current = null;
-    if (!isSender) startAutoConnect();
   }
 
   const statusConfig = {
@@ -126,15 +118,12 @@ export default function CamaraPage() {
 
           <div className="p-4 flex gap-4 flex-1 min-h-0 overflow-hidden">
             <div className="flex-[1.2] relative bg-black rounded-lg overflow-hidden border border-slate-200">
-              {camStatus === "connected" ? (
-                <video ref={videoRef} className="w-full h-full object-cover" autoPlay playsInline muted />
-              ) : (
-                <img
-                  src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=1000"
-                  className="w-full h-full object-cover opacity-70"
-                  alt="Camera feed"
-                />
-              )}
+              <video ref={videoRef} className={`w-full h-full object-cover ${camStatus === "connected" ? "" : "hidden"}`} autoPlay playsInline muted />
+              <img
+                src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=1000"
+                className={`w-full h-full object-cover opacity-70 ${camStatus === "connected" ? "hidden" : ""}`}
+                alt="Camera feed"
+              />
               <div className="scan-line" />
 
               {alpr && (

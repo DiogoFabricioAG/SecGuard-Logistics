@@ -12,40 +12,79 @@ export function usePeerCamera() {
   const localStreamRef = useRef<MediaStream | null>(null);
   const [status, setStatus] = useState<CameraStatus>("idle");
   const [isSender, setIsSender] = useState(false);
-  const autoConnectTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const autoConnectRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isSenderRef = useRef(false);
 
-  function destroyPeer() {
-    if (autoConnectTimer.current) { clearInterval(autoConnectTimer.current); autoConnectTimer.current = null; }
+  useEffect(() => { isSenderRef.current = isSender; }, [isSender]);
+
+  function stopInterval() {
+    if (autoConnectRef.current) { clearInterval(autoConnectRef.current); autoConnectRef.current = null; }
+  }
+
+  function cleanupPeer() {
+    stopInterval();
     if (callRef.current) { callRef.current.close(); callRef.current = null; }
     if (peerRef.current) { peerRef.current.destroy(); peerRef.current = null; }
-    if (videoRef.current) videoRef.current.srcObject = null;
+  }
+
+  const tryCall = useCallback(() => {
+    if (isSenderRef.current) return;
+    if (!peerRef.current) return;
+    if (callRef.current) { callRef.current.close(); callRef.current = null; }
+    setStatus("connecting");
+
+    const call = peerRef.current.call(STREAM_PEER_ID, createDummyStream());
+    callRef.current = call;
+
+    call.on("stream", (stream) => {
+      const v = videoRef.current;
+      if (v) { v.srcObject = stream; v.play().catch(() => {}); }
+      setStatus("connected");
+    });
+    call.on("close", () => { callRef.current = null; setStatus("idle"); });
+    call.on("error", () => { callRef.current = null; setStatus("error"); });
+  }, []);
+
+  function startPolling() {
+    stopInterval();
+    if (isSenderRef.current) return;
+    tryCall();
+    autoConnectRef.current = setInterval(() => {
+      if (isSenderRef.current) { stopInterval(); return; }
+      if (videoRef.current?.srcObject) return;
+      tryCall();
+    }, 5000);
   }
 
   useEffect(() => {
     const p = new Peer({ debug: 0 });
     peerRef.current = p;
-
     p.on("open", () => {});
-    p.on("error", () => setStatus("error"));
 
     p.on("call", (call) => {
-      if (isSender && localStreamRef.current) {
+      if (isSenderRef.current && localStreamRef.current) {
         call.answer(localStreamRef.current);
-        call.on("close", () => {});
         callRef.current = call;
       } else {
         call.answer();
         call.on("stream", (stream) => {
-          if (videoRef.current) { videoRef.current.srcObject = stream; videoRef.current.play().catch(() => {}); }
+          const v = videoRef.current;
+          if (v) { v.srcObject = stream; v.play().catch(() => {}); }
           setStatus("connected");
         });
-        call.on("close", () => setStatus("idle"));
+        call.on("close", () => { callRef.current = null; setStatus("idle"); });
         callRef.current = call;
       }
     });
 
-    return () => { p.destroy(); };
-  }, [isSender]);
+    p.on("error", () => setStatus("error"));
+
+    startPolling();
+
+    return () => {
+      cleanupPeer();
+    };
+  }, []);
 
   const startSender = useCallback(async () => {
     try {
@@ -55,67 +94,82 @@ export function usePeerCamera() {
       });
       localStreamRef.current = stream;
 
-      destroyPeer();
+      cleanupPeer();
 
       const p = new Peer(STREAM_PEER_ID, { debug: 0 });
       peerRef.current = p;
-
       p.on("open", () => {});
       p.on("error", () => setStatus("error"));
-
       p.on("call", (call) => {
         call.answer(localStreamRef.current!);
         callRef.current = call;
       });
 
-      if (videoRef.current) { videoRef.current.srcObject = stream; videoRef.current.play().catch(() => {}); }
+      const v = videoRef.current;
+      if (v) { v.srcObject = stream; v.play().catch(() => {}); }
+
       setIsSender(true);
       setStatus("connected");
-    } catch { setStatus("error"); }
+    } catch {
+      setStatus("error");
+      setIsSender(false);
+    }
   }, []);
 
   const stopSender = useCallback(() => {
     if (localStreamRef.current) { localStreamRef.current.getTracks().forEach((t) => t.stop()); localStreamRef.current = null; }
-    destroyPeer();
+    cleanupPeer();
     setIsSender(false);
     setStatus("idle");
-  }, []);
 
-  const connectFixed = useCallback(() => {
-    if (isSender) return;
-    if (!peerRef.current) return;
-    if (callRef.current) { callRef.current.close(); callRef.current = null; }
-    setStatus("connecting");
-    const call = peerRef.current.call(STREAM_PEER_ID, createDummyStream());
-    callRef.current = call;
-    call.on("stream", (stream) => {
-      if (videoRef.current) { videoRef.current.srcObject = stream; videoRef.current.play().catch(() => {}); }
-      setStatus("connected");
+    const p = new Peer({ debug: 0 });
+    peerRef.current = p;
+    p.on("open", () => {});
+    p.on("error", () => setStatus("error"));
+    p.on("call", (call) => {
+      if (isSenderRef.current && localStreamRef.current) {
+        call.answer(localStreamRef.current);
+        callRef.current = call;
+      } else {
+        call.answer();
+        call.on("stream", (stream) => {
+          const v = videoRef.current;
+          if (v) { v.srcObject = stream; v.play().catch(() => {}); }
+          setStatus("connected");
+        });
+        call.on("close", () => { callRef.current = null; setStatus("idle"); });
+        callRef.current = call;
+      }
     });
-    call.on("close", () => setStatus("idle"));
-    call.on("error", () => {
-      setStatus("error");
-    });
-  }, [isSender]);
-
-  const startAutoConnect = useCallback(() => {
-    if (autoConnectTimer.current) return;
-    connectFixed();
-    autoConnectTimer.current = setInterval(() => {
-      connectFixed();
-    }, 5000);
-  }, [connectFixed]);
-
-  const stopAutoConnect = useCallback(() => {
-    if (autoConnectTimer.current) { clearInterval(autoConnectTimer.current); autoConnectTimer.current = null; }
+    startPolling();
   }, []);
 
   const disconnect = useCallback(() => {
-    stopAutoConnect();
-    if (callRef.current) { callRef.current.close(); callRef.current = null; }
-    if (!isSender && videoRef.current) videoRef.current.srcObject = null;
-    if (!isSender) setStatus("idle");
-  }, [stopAutoConnect, isSender]);
+    cleanupPeer();
+    if (videoRef.current) videoRef.current.srcObject = null;
+    setStatus("idle");
+
+    const p = new Peer({ debug: 0 });
+    peerRef.current = p;
+    p.on("open", () => {});
+    p.on("error", () => setStatus("error"));
+    p.on("call", (call) => {
+      if (isSenderRef.current && localStreamRef.current) {
+        call.answer(localStreamRef.current);
+        callRef.current = call;
+      } else {
+        call.answer();
+        call.on("stream", (stream) => {
+          const v = videoRef.current;
+          if (v) { v.srcObject = stream; v.play().catch(() => {}); }
+          setStatus("connected");
+        });
+        call.on("close", () => { callRef.current = null; setStatus("idle"); });
+        callRef.current = call;
+      }
+    });
+    startPolling();
+  }, []);
 
   const captureFrame = useCallback((): string | null => {
     const video = videoRef.current;
@@ -129,12 +183,7 @@ export function usePeerCamera() {
     return canvas.toDataURL("image/jpeg", 0.8);
   }, []);
 
-  return {
-    videoRef, status, isSender,
-    startSender, stopSender,
-    connectFixed, disconnect, captureFrame,
-    startAutoConnect, stopAutoConnect,
-  };
+  return { videoRef, status, isSender, startSender, stopSender, disconnect, captureFrame };
 }
 
 function createDummyStream() {
