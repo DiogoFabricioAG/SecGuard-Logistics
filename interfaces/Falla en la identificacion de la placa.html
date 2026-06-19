@@ -1,3 +1,8 @@
+<!-- Modulo : Detección 
+Descripción: Es la pantalla que va aparecer en caso la deteccion de la placa sea de baja visibilidad o erronea (osea que no se puede identificar la lectura de la placa), esto se va a obtener mediante la api : https://secguard-logistics.seenode.app/, que se basa en la detección de placa (que seria como la camara tipo streaming)
+API Utilizada : GET /api/monitoreo/errores-lectura con este endopoint se tendria que vizualizar los datos que se va a mostrar en la pantalla -->
+
+
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>
@@ -58,7 +63,6 @@
             border: 1px solid #e2e8f0;
         }
 
-        /* CONTENEDOR CON BORDE DEFINIDO */
         .video-feed-container {
             position: relative;
             background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=2070&auto=format&fit=crop'); 
@@ -68,7 +72,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            border: 3px solid #ba1a1a; /* Borde rojo definido */
+            border: 3px solid #ba1a1a; 
             border-radius: 1rem;
             overflow: hidden;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -115,7 +119,7 @@
     </div>
     
     <nav class="flex-1 px-3 space-y-0.5">
-        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="4.2.5_panel_de_control_y_monitoreo_general.html">
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">grid_view</span> 
             <span class="font-semibold text-xs">Dashboard</span>
         </a>
@@ -123,11 +127,11 @@
             <span class="material-symbols-outlined mr-3 text-[20px]">local_shipping</span> 
             <span class="font-semibold text-xs">Flota</span>
         </a>
-        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="registrar_viaje.html">
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">alt_route</span> 
             <span class="font-semibold text-xs">Rutas</span>
         </a>
-        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="configurar_kpi.html">
+        <a class="flex items-center px-4 py-2.5 text-on-surface-variant hover:bg-slate-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">analytics</span> 
             <span class="font-semibold text-xs">Analítica</span>
         </a>
@@ -138,7 +142,7 @@
             <span class="material-symbols-outlined mr-3 text-[20px]">help</span> 
             <span class="font-semibold text-xs">Soporte</span>
         </a>
-        <a class="flex items-center px-4 py-2 text-error hover:bg-red-50 rounded-lg transition-colors" href="4.2.1_login.html">
+        <a class="flex items-center px-4 py-2 text-error hover:bg-red-50 rounded-lg transition-colors" href="#">
             <span class="material-symbols-outlined mr-3 text-[20px]">logout</span> 
             <span class="font-semibold text-xs">Cerrar Sesión</span>
         </a>
@@ -168,10 +172,11 @@
         
         <div class="flex justify-between items-center mb-4">
             <div>
-                <h2 class="text-2xl font-extrabold text-primary tracking-tight">Error de Identificación</h2>
+                <h2 class="text-2xl font-extrabold text-primary tracking-tight">Error de Identificación de Placa</h2>
                 <p class="text-xs text-slate-500 font-medium">Monitoreo de accesos en tiempo real - Punto de Control Norte</p>
             </div>
-            <button class="bg-primary text-white px-5 py-2 rounded-lg flex items-center gap-2 text-xs font-bold shadow-lg" onclick="window.location.href='Registrar la Placa y los demas datos.html'">
+        <!--Este boton de : Nuevo Registro debe de funcionar, el cual te debe de llevar a la siguiente pantalla de esta pantalla que perteneces al archivo : Registrar datos de entrada_salida-Administrador.html , en donde en esa pantalla se va a registrar de manera manual los datos que se solictan en dicha pantalla para luego aceptar o cancelar acceso -->
+            <button class="bg-primary text-white px-5 py-2 rounded-lg flex items-center gap-2 text-xs font-bold shadow-lg">
                 <span class="material-symbols-outlined text-base">add</span> Nuevo Registro
             </button>
         </div>
@@ -205,6 +210,7 @@
                     <div class="bg-red-50 border border-red-100 rounded-xl p-4">
                         <div class="flex items-center gap-2 text-error mb-2">
                             <span class="material-symbols-outlined text-xl">memory</span>
+                <!--En esta parte de Diagnostico IA, se debe de mantener como esta-->
                             <h3 class="font-bold text-sm">Diagnóstico IA</h3>
                         </div>
                         <p class="text-primary font-bold text-sm mb-1">Error en motor de detección</p>
@@ -212,14 +218,14 @@
                             Baja visibilidad detectada. El sistema no pudo encontrar un área de placa válida en el cuadro actual. Por favor, verifique la posición del vehículo.
                         </p>
                     </div>
-
                     <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 px-1">Métricas de Fallo</h4>
-                    
+                    <!--En esta parte del campo de Confianza OpenALPR debe ser respecto a la api : https://secguard-logistics.seenode.app/, de esta api debe de salir su verdadero valor en porcentaje-->
                     <div class="grid grid-cols-2 gap-3">
                         <div class="data-card-error">
-                            <p class="text-[9px] font-bold text-slate-400 uppercase mb-1">Confianza OCR</p>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase mb-1">Confianza OpenALPR</p>
                             <p class="text-2xl font-black text-error">12%</p>
                         </div>
+                    <!--En esta parte de aqui los campos como Latencia, Iluminación, Obstrucción debe de ser respecto al api : GET /api/monitoreo/errores-lectura , osea deben de mantener su valor respecto a lo mencionado-->
                         <div class="data-card-error">
                             <p class="text-[9px] font-bold text-slate-400 uppercase mb-1">Iluminación</p>
                             <p class="text-xl font-bold text-primary">Insuficiente</p>
@@ -233,8 +239,8 @@
                             <p class="text-xl font-bold text-primary">14ms</p>
                         </div>
                     </div>
-
-                    <button class="w-full mt-auto bg-primary text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-primary-container transition-all shadow-md" onclick="window.location.href='Vigilancia y captura de placa.html'">
+                <!--Este boton de : Reiniciar Escaneo debe de funcionar para el caso que se quiera realizar de nuevo la deteccion de captura de la placa por medio de la api :  https://secguard-logistics.seenode.app/ -->
+                    <button class="w-full mt-auto bg-primary text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-primary-container transition-all shadow-md">
                         <span class="material-symbols-outlined text-lg">refresh</span>
                         Reiniciar Escaneo
                     </button>
