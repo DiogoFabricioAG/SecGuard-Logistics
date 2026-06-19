@@ -124,19 +124,21 @@ export default function CamaraPage() {
         <video ref={videoRef} className={`absolute inset-0 w-full h-full object-cover ${camStatus === "connected" ? "" : "hidden"}`} autoPlay playsInline muted />
         {camStatus === "connected" ? (
           <>
-            <div className="absolute top-4 left-4 bg-black/60 px-2.5 py-1 rounded-md flex items-center gap-2 backdrop-blur-md z-10">
-              <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />
-              <span className="text-[9px] text-white font-bold uppercase tracking-widest">TRANSMITIENDO</span>
+            <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-20">
+              <div className="bg-black/60 px-2.5 py-1 rounded-md flex items-center gap-2 backdrop-blur-md">
+                <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />
+                <span className="text-[9px] text-white font-bold uppercase tracking-widest">TRANSMITIENDO</span>
+              </div>
+              <button onClick={stopSender} className="bg-error/90 hover:bg-error text-white px-4 py-2 rounded-full font-bold text-xs shadow-lg backdrop-blur-sm flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-base">stop_circle</span>
+                Detener
+              </button>
             </div>
             {alpr && (
               <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 border border-green-400 bg-black/80 px-8 py-1.5 rounded-md backdrop-blur-sm z-10">
                 <span className="text-white font-black tracking-[0.2em] text-xl">{alpr.plate}</span>
               </div>
             )}
-            <button onClick={stopSender} className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-error/90 hover:bg-error text-white px-8 py-3 rounded-full font-bold text-sm shadow-lg backdrop-blur-sm z-20 flex items-center gap-2">
-              <span className="material-symbols-outlined">stop_circle</span>
-              Detener Cámara
-            </button>
           </>
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center gap-4 p-6 text-white z-10 relative">
