@@ -114,9 +114,6 @@
           <span class="material-symbols-outlined text-[18px]">description</span>
           Generar Reporte
         </a>
-        <a href="eliminar_metrica.html" class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface-container rounded-full transition-colors" aria-label="Eliminar métrica">
-          <span class="material-symbols-outlined text-error">delete</span>
-        </a>
         <button class="relative w-8 h-8 flex items-center justify-center text-on-surface-variant">
           <span class="material-symbols-outlined">notifications</span>
           <span class="absolute top-1 right-1 w-4 h-4 bg-error text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
@@ -284,12 +281,11 @@
                   <th class="p-3 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-right">Peso Total (kg)</th>
                   <th class="p-3 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-right">Bultos Totales</th>
                   <th class="p-3 pr-4 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-center">Estado Principal</th>
-                  <th class="p-3 pr-4 text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider border-b border-border-subtle text-center">Acción</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-surface-variant text-[14px]" id="tabla-clientes">
                 <tr>
-                  <td class="p-3 pl-4 text-center text-on-surface-variant" colspan="6">Cargando datos...</td>
+                  <td class="p-3 pl-4 text-center text-on-surface-variant" colspan="5">Cargando datos...</td>
                 </tr>
               </tbody>
             </table>
@@ -489,7 +485,7 @@
       if (!json.success) return;
       const tbody = document.getElementById('tabla-clientes');
       if (json.data.length === 0) {
-        tbody.innerHTML = '<tr><td class="p-3 pl-4 text-center text-on-surface-variant" colspan="6">Sin datos</td></tr>';
+        tbody.innerHTML = '<tr><td class="p-3 pl-4 text-center text-on-surface-variant" colspan="5">Sin datos</td></tr>';
         return;
       }
       tbody.innerHTML = json.data.map(c => `
@@ -510,11 +506,6 @@
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full ${c.color_badge} text-[11px] font-medium border">
               ${c.estado_principal}
             </span>
-          </td>
-          <td class="p-3 pr-4 text-center">
-            <a href="eliminar_metrica.html" class="text-error hover:text-error/80 transition-colors" title="Eliminar">
-              <span class="material-symbols-outlined text-[18px]">delete</span>
-            </a>
           </td>
         </tr>
       `).join('');

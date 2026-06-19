@@ -1,14 +1,12 @@
 const pool = require("../../config/db");
 
-async function listarKPIs(estado = "ACTIVO") {
+async function listarKPIs() {
   const { rows } = await pool.query(
     `SELECT id_kpi, nombre_kpi, categoria_operativa, unidad_medida,
             formula_defined, umbral_critico, valor_meta, umbral_alerta,
             estado_kpi, creado_en
      FROM configuracion_kpi
-     WHERE estado_kpi = $1
      ORDER BY id_kpi ASC`,
-    [estado],
   );
   return rows;
 }
