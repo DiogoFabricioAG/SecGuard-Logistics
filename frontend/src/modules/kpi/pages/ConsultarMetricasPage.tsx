@@ -139,7 +139,14 @@ export default function ConsultarMetricasPage() {
               onChange={e => setFechaFin(e.target.value)}
             />
           </div>
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center gap-3">
+            <Link
+              to="/analitica/generar-reporte"
+              className="bg-white border border-border-subtle text-primary-container px-4 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:bg-surface-container transition-colors"
+            >
+              <span className="material-symbols-outlined text-[16px]">download</span>
+              Exportar
+            </Link>
             <button
               className="bg-primary-container text-white px-5 py-2 rounded text-[12px] font-semibold flex items-center gap-2 hover:bg-primary transition-colors shadow-sm"
               onClick={cargarTodo}
@@ -198,13 +205,6 @@ export default function ConsultarMetricasPage() {
               <h2 className="font-headline text-[20px] font-semibold text-on-surface">Desempeño por Cliente</h2>
               <p className="text-[14px] text-on-surface-variant mt-0.5">Últimos 30 días · {zona || "Todas las zonas"}</p>
             </div>
-            <Link
-              to="/analitica/generar-reporte"
-              className="bg-white border border-border-subtle text-primary-container px-3 py-1.5 rounded text-[12px] font-semibold flex items-center gap-1 hover:bg-slate-50 transition-colors"
-            >
-              <span className="material-symbols-outlined text-[16px]">download</span>
-              Exportar
-            </Link>
           </div>
           <div className="overflow-y-auto flex-1">
             <table className="w-full text-left border-collapse">
