@@ -526,7 +526,31 @@ INSERT INTO registro_acceso (
 -- [ID_ACCESO 43] Jue 19 Jun — Volvo FM 420 (Y6N-221) / Jaime Ugarte — DENEGADO: SOAT por vencer hoy
 (3, 11, 15, 1, 'ENTRADA', 'Y6N-221', 97.50, '/img/capturas/alpr_y6n221_soat_0619.jpg', '2026-06-19 11:20:00', 'EN REVISION', 118, 'NORMAL', 'NINGUNA', 1, NULL, 'CERRADO', 'DENEGADO', 'ALPR', NULL, 'ALTO'),
 -- [ID_ACCESO 44] Jue 19 Jun — Chevrolet NQR (O7R-402) / Alan Gallardo — DENEGADO: sin inducción (reincidencia)
-(4, 15, 9, 1, 'ENTRADA', 'O7R-402', 98.10, '/img/capturas/alpr_o7r402_ind_0619.jpg', '2026-06-19 14:05:00', 'EN REVISION', 103, 'NORMAL', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 'ALPR', NULL, 'ALTO');
+(4, 15, 9, 1, 'ENTRADA', 'O7R-402', 98.10, '/img/capturas/alpr_o7r402_ind_0619.jpg', '2026-06-19 14:05:00', 'EN REVISION', 103, 'NORMAL', 'NINGUNA', 2, NULL, 'CERRADO', 'DENEGADO', 'ALPR', NULL, 'ALTO'),
+-- [ID_ACCESO 45] Vie 20 Jun — Kenworth T660 (M8I-673) / Ronald Morales — Ingreso ruta norte
+(7, 13, 11, 1, 'ENTRADA', 'M8I-673', 97.80, '/img/capturas/alpr_m8i673_in_0620.jpg', '2026-06-20 06:05:00', 'COMPLETADO', 102, 'NORMAL', 'NINGUNA', 1, 3, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'ALTO'),
+-- [ID_ACCESO 46] Vie 20 Jun — Scania R500 V8 (P2W-104) / Enrique Cáceres — Salida operación especial
+(9, 12, 8, 1, 'SALIDA', 'P2W-104', 99.30, '/img/capturas/alpr_p2w104_out_0620.jpg', '2026-06-20 09:15:00', 'COMPLETADO', 88, 'NORMAL', 'NINGUNA', 2, NULL, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'MEDIO'),
+-- [ID_ACCESO 47] Vie 20 Jun — Freightliner M2 (Q3B-519) / Félix Zegarra — DENEGADO: guía de remisión con faltantes
+(5, 14, 12, 1, 'ENTRADA', 'Q3B-519', 97.10, '/img/capturas/alpr_q3b519_rej_0620.jpg', '2026-06-20 11:40:00', 'EN REVISION', 134, 'NORMAL', 'NINGUNA', 1, NULL, 'CERRADO', 'DENEGADO', 'ALPR', 3, 'ALTO'),
+-- [ID_ACCESO 48] Lun 23 Jun — Volvo FMX (B7Y-912) / Carlos Mendoza — Ingreso inicio semana
+(1, 1, 1, 1, 'ENTRADA', 'B7Y-912', 99.00, '/img/capturas/alpr_b7y912_in_0623.jpg', '2026-06-23 06:00:00', 'COMPLETADO', 97, 'NORMAL', 'NINGUNA', 1, 2, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'ALTO'),
+-- [ID_ACCESO 49] Lun 23 Jun — Hyundai HD120 (V5T-702) / Walter Chura — Ingreso carga refrigerada Gloria
+(6, 8, 6, 1, 'ENTRADA', 'V5T-702', 98.80, '/img/capturas/alpr_v5t702_in_0623.jpg', '2026-06-23 08:30:00', 'COMPLETADO', 91, 'NORMAL', 'NINGUNA', 2, 4, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'ALTO'),
+-- [ID_ACCESO 50] Mar 24 Jun — Mercedes-Benz Axor (C5O-784) / Christian Aparicio — Salida post despacho
+(4, 3, 5, 1, 'SALIDA', 'C5O-784', 98.50, '/img/capturas/alpr_c5o784_out_0624.jpg', '2026-06-24 07:10:00', 'COMPLETADO', 105, 'NORMAL', 'NINGUNA', 1, NULL, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'MEDIO'),
+-- [ID_ACCESO 51] Mar 24 Jun — Kia Frontier (Z4E-809) / Yuri Poma — DENEGADO: placa con obstrucción parcial
+(2, 10, 14, 1, 'ENTRADA', 'Z4E-80B', 39.50, '/img/capturas/alpr_z4e80b_err_0624.jpg', '2026-06-24 10:25:00', 'ERROR EN LECTURA', 298, 'NORMAL', 'DETECTADA', 2, NULL, 'CERRADO', 'DENEGADO', 'ALPR', NULL, 'ALTO'),
+-- [ID_ACCESO 52] Mié 25 Jun — Scania G450 (A4K-205) / Julio Guerrero — Ingreso carga Lindley
+(1, 2, 2, 1, 'ENTRADA', 'A4K-205', 98.70, '/img/capturas/alpr_a4k205_in_0625.jpg', '2026-06-25 06:30:00', 'COMPLETADO', 109, 'NORMAL', 'NINGUNA', 1, 3, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'ALTO'),
+-- [ID_ACCESO 53] Mié 25 Jun — Isuzu Forward (W3O-891) / Jorge Altamirano — Ingreso distribución retail
+(3, 6, 4, 1, 'ENTRADA', 'W3O-891', 97.40, '/img/capturas/alpr_w3o891_in_0625.jpg', '2026-06-25 08:55:00', 'COMPLETADO', 116, 'NORMAL', 'NINGUNA', 2, 5, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'MEDIO'),
+-- [ID_ACCESO 54] Jue 26 Jun — Fuso FJ 2528 (E2P-445) / Oscar Vargas — Ingreso reparto Lima Norte
+(8, 7, 7, 1, 'ENTRADA', 'E2P-445', 99.10, '/img/capturas/alpr_e2p445_in_0626.jpg', '2026-06-26 06:15:00', 'COMPLETADO', 93, 'NORMAL', 'NINGUNA', 1, 1, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'ALTO'),
+-- [ID_ACCESO 55] Jue 26 Jun — JAC HFC (X1M-556) / Victor Haya de la Torre — Salida furgón
+(5, 9, 13, 1, 'SALIDA', 'X1M-556', 96.90, '/img/capturas/alpr_x1m556_out_0626.jpg', '2026-06-26 09:20:00', 'COMPLETADO', 128, 'NORMAL', 'NINGUNA', 2, NULL, 'ABIERTO', 'AUTORIZADO', 'ALPR', NULL, 'BAJO'),
+-- [ID_ACCESO 56] Jue 26 Jun — International WorkStar (F8U-112) / Gino Ribeiro — DENEGADO: conductor sin SCTR vigente
+(10, 4, 10, 1, 'ENTRADA', 'F8U-112', 98.30, '/img/capturas/alpr_f8u112_sctr_0626.jpg', '2026-06-26 11:50:00', 'EN REVISION', 139, 'NORMAL', 'NINGUNA', 1, NULL, 'CERRADO', 'DENEGADO', 'ALPR', 2, 'ALTO');
 
 -- ===========================================================================
 -- MÓDULO 4: ANOMALÍAS DE ACCESO 
@@ -571,7 +595,10 @@ INSERT INTO anomalia_acceso (id_acceso, tipo_anomalia, descripcion_detallada, au
 (33, 'LECTURA_FALLIDA_ALPR', 'La cámara ALPR procesó la cadena "Y6N-22I" con confianza de 38.20% debido a lluvia intensa en turno tarde del viernes. Placa Y6N-221 ilegible por acumulación de agua. Unidad retenida en garita principal. Pendiente revisión de administrador.', FALSE),
 (40, 'REVISION_TECNICA_VENCIDA', 'El camión D9X-334 (Hino FM1A) presenta la revisión técnica vehicular vencida según el módulo de flota. Acceso denegado en garita principal. Notificación enviada a jefe de taller para programar inspección urgente.', FALSE),
 (43, 'SOAT_POR_VENCER', 'El camión Y6N-221 (Volvo FM 420) presenta SOAT con vencimiento inminente detectado al ingreso. Acceso denegado en garita 1. Pendiente revisión de administrador.', FALSE),
-(44, 'INDUCCION_SEGURIDAD_AUSENTE', 'Reincidencia del conductor Alan Pierre Gallardo Segura sin inducción SSO vigente. Segunda denegación registrada. Pendiente revisión de administrador.', FALSE);
+(44, 'INDUCCION_SEGURIDAD_AUSENTE', 'Reincidencia del conductor Alan Pierre Gallardo Segura sin inducción SSO vigente. Segunda denegación registrada. Pendiente revisión de administrador.', FALSE),
+(47, 'GUIA_CON_FALTANTES', 'La guía de remisión GRR-2025-00342 presentada por el conductor Félix Zegarra registra faltantes en los bultos declarados vs los físicos verificados en garita. Acceso denegado hasta regularización con área de despacho.', FALSE),
+(51, 'LECTURA_FALLIDA_ALPR', 'La cámara ALPR procesó la cadena "Z4E-80B" con confianza de 39.50% por obstrucción parcial en el dígito final de la placa. Unidad retenida en garita secundaria para limpieza y nueva lectura.', FALSE),
+(56, 'DOCUMENTACION_VENCIDA', 'El conductor Gino Paolo Ribeiro Falconí presenta SCTR con vencimiento registrado como expirado en el sistema de RRHH. Acceso denegado hasta presentar renovación vigente. Notificación enviada a administración.', FALSE);
 
 -- ===========================================================================
 -- MÓDULO 4: INTENTOS DE ACCESO — PLACAS NO REGISTRADAS
@@ -635,7 +662,14 @@ INSERT INTO motivo_acceso (id_acceso, tipo_motivo) VALUES
 (43, 'FALLA_CAMARA'),
 (43, 'GUIA_CON_FALTANTES'),
 (44, 'INTRUSION_SOSPECHOSA'),
-(44, 'GUIA_CON_FALTANTES');
+(44, 'GUIA_CON_FALTANTES'),
+(47, 'GUIA_CON_FALTANTES'),
+(47, 'INTRUSION_SOSPECHOSA'),
+(51, 'FALLA_CAMARA'),
+(51, 'GUIA_CON_FALTANTES'),
+(56, 'GUIA_CON_FALTANTES'),
+(56, 'INTRUSION_SOSPECHOSA'),
+(56, 'FALLA_CAMARA');
 
 -- ===========================================================================
 -- MÓDULO 5: SNAPSHOTS KPI DIARIOS
@@ -670,7 +704,13 @@ VALUES
 ('2026-06-16', 151, 139, 12, 6,   4.86,   4.51,   9.09,  '2026-06-16 23:59:00'),
 ('2026-06-17', 158, 146, 12, 7,   4.64,   5.04,   0.00,  '2026-06-17 23:59:00'),
 ('2026-06-18', 162, 149, 13, 8,   2.53,   2.05,   8.33,  '2026-06-18 23:59:00'),
-('2026-06-19', 155, 143, 12, 6,  -4.32,  -4.03,  -7.69,  '2026-06-19 23:59:00'); -- hoy
+('2026-06-19', 155, 143, 12, 6,  -4.32,  -4.03,  -7.69,  '2026-06-19 23:59:00'), -- 19 junio
+('2026-06-20', 149, 136, 13, 7,  -3.87,  -4.90,   8.33,  '2026-06-20 23:59:00'), -- viernes
+('2026-06-21',  71,  67,  4, 2,  -52.35, -50.74, -69.23,  '2026-06-21 23:59:00'), -- sábado
+('2026-06-23', 146, 134, 12, 5,  105.63, 100.00, 200.00,  '2026-06-23 23:59:00'), -- lunes
+('2026-06-24', 153, 141, 12, 6,    4.79,   5.22,   0.00,  '2026-06-24 23:59:00'),
+('2026-06-25', 160, 147, 13, 7,    4.58,   4.26,   8.33,  '2026-06-25 23:59:00'),
+('2026-06-26', 157, 144, 13, 8,   -1.88,  -2.04,   0.00,  '2026-06-26 23:59:00'); -- hoy
 
 -- ===========================================================================
 -- MÓDULO 5: MÉTRICAS OPERACIONALES DEL SISTEMA
@@ -704,7 +744,13 @@ VALUES
 ('2026-06-16 23:59:00',  99.80,  4, 1, 1),
 ('2026-06-17 23:59:00',  99.90,  5, 1, 1),
 ('2026-06-18 23:59:00',  99.75,  6, 1, 1),
-('2026-06-19 23:59:00', 100.00,  3, 1, 1); -- hoy
+('2026-06-19 23:59:00', 100.00,  3, 1, 1), -- 19 junio
+('2026-06-20 23:59:00',  99.85,  5, 1, 1),
+('2026-06-21 23:59:00',  99.95,  2, 1, 1), -- sábado
+('2026-06-23 23:59:00', 100.00,  3, 1, 1), -- lunes
+('2026-06-24 23:59:00',  99.80,  4, 1, 1),
+('2026-06-25 23:59:00',  99.90,  5, 1, 1),
+('2026-06-26 23:59:00', 100.00,  4, 1, 1); -- hoy
 
 INSERT INTO auditoria_modificacion_acceso (
     id_acceso_original,
