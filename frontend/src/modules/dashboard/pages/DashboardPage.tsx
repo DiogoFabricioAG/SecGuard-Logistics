@@ -135,7 +135,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="p-lg overflow-y-auto flex flex-col gap-lg h-full">
+    <div className="p-lg overflow-y-auto flex flex-col gap-lg flex-1 min-h-0">
       <div className="flex items-center gap-lg">
         <h1 className="font-headline text-[20px] font-semibold text-on-surface">Dashboard Inicial</h1>
         <div className="flex items-center gap-1 text-on-surface-variant border border-border-subtle rounded-lg px-3 py-[5px] bg-surface">
@@ -237,7 +237,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-border-subtle overflow-hidden">
+      <div className="bg-white rounded-xl border border-border-subtle">
         <div className="px-lg py-md border-b border-border-subtle flex items-center justify-between">
           <h3 className="font-headline text-[20px] font-semibold">Últimos Eventos de Acceso</h3>
           <span className="text-primary-container text-[12px] font-semibold flex items-center gap-1 cursor-pointer">
@@ -245,9 +245,9 @@ export default function DashboardPage() {
             <span className="material-symbols-outlined text-[16px]">chevron_right</span>
           </span>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-y-auto max-h-[340px]" style={{ overflowX: "auto" }}>
           <table className="w-full text-left">
-            <thead className="bg-[#F8F9FA]">
+            <thead className="bg-[#F8F9FA] sticky top-0">
               <tr>
                 <th className="px-lg py-2 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Punto de Control</th>
                 <th className="px-lg py-2 text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Placa</th>

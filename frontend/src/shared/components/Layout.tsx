@@ -9,7 +9,7 @@ export function Layout() {
   if (fullscreen) {
     return (
       <div className="bg-black flex h-screen overflow-hidden antialiased">
-        <main className="flex-1 overflow-hidden flex flex-col">
+        <main className="flex-1 overflow-hidden flex flex-col min-h-0">
           <Outlet />
         </main>
       </div>
@@ -21,7 +21,7 @@ export function Layout() {
       <Sidebar />
       <div className="flex-1 ml-[260px] flex flex-col h-screen overflow-hidden">
         <TopNavBar />
-        <main className="flex-1 overflow-hidden flex flex-col bg-background">
+        <main className="flex-1 overflow-hidden flex flex-col min-h-0 bg-background">
           <Outlet />
         </main>
       </div>
