@@ -162,39 +162,39 @@ export default function ConsultarMetricasPage() {
         <KpiCard
           title="Disponibilidad de Flota"
           icon="local_shipping"
-          value={disponibilidad ? `${disponibilidad.porcentaje}%` : "--"}
+          value={disponibilidad?.porcentaje != null ? `${disponibilidad.porcentaje}%` : "--"}
           label={disponibilidad ? `${disponibilidad.disponibles} disponibles / ${disponibilidad.total} total` : "--"}
           pct={disponibilidad?.porcentaje ?? 0}
           barColor={kpiBarColor(disponibilidad?.porcentaje ?? 0)}
-          status={disponibilidad && disponibilidad.porcentaje >= 70 ? "Flota con buena disponibilidad" : "Baja disponibilidad de flota"}
+          status={disponibilidad?.porcentaje != null && disponibilidad.porcentaje >= 70 ? "Flota con buena disponibilidad" : "Sin datos suficientes"}
         />
         <KpiCard
           title="Utilización de Flota"
           icon="local_shipping"
-          value={utilizacion ? `${utilizacion.porcentaje}%` : "--"}
+          value={utilizacion?.porcentaje != null ? `${utilizacion.porcentaje}%` : "--"}
           label={utilizacion ? `${utilizacion.activos} activos / ${utilizacion.total} total` : "--"}
           pct={utilizacion?.porcentaje ?? 0}
           barColor={kpiBarColor(utilizacion?.porcentaje ?? 0)}
-          status={utilizacion ? `${utilizacion.activos} camiones activos hoy` : "--"}
+          status={utilizacion?.porcentaje != null ? `${utilizacion.activos} camiones activos` : "Sin datos suficientes"}
         />
         <KpiCard
           title="Conversión de Viajes"
           icon="route"
           iconColor="#F39200"
-          value={conversion ? `${conversion.porcentaje}%` : "--"}
+          value={conversion?.porcentaje != null ? `${conversion.porcentaje}%` : "--"}
           label={conversion ? `${conversion.activos} activos / ${conversion.total} total` : "--"}
           pct={conversion?.porcentaje ?? 0}
           barColor="#F39200"
-          status={conversion && conversion.porcentaje >= 60 ? "Ritmo operativo saludable" : "Muchos viajes pendientes de confirmar"}
+          status={conversion && conversion.porcentaje != null && conversion.porcentaje >= 60 ? "Ritmo operativo saludable" : "Sin datos suficientes"}
         />
         <KpiCard
           title="Prevención de Mantenimiento"
           icon="build"
-          value={prevencion ? `${prevencion.porcentaje}%` : "--"}
+          value={prevencion?.porcentaje != null ? `${prevencion.porcentaje}%` : "--"}
           label={prevencion ? `${prevencion.preventivos} preventivos / ${prevencion.total} total` : "--"}
           pct={prevencion?.porcentaje ?? 0}
           barColor={kpiBarColor(prevencion?.porcentaje ?? 0)}
-          status={prevencion && prevencion.porcentaje >= 70 ? "Buena cultura de prevención" : "Exceso de mantenimientos correctivos"}
+          status={prevencion?.porcentaje != null && prevencion.porcentaje >= 70 ? "Buena cultura de prevención" : "Sin datos suficientes"}
         />
       </div>
 
